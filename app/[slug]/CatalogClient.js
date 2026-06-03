@@ -277,52 +277,48 @@ export default function CatalogPage({ roaster }) {
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '1.5rem',
+              gap: '1.8rem',
               justifyContent: 'center',
               flexWrap: 'wrap'
             }}>
               {/* Logo 1: MOUSELAB */}
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <svg viewBox="0 0 50 50" width="28" height="28" style={{ marginRight: '0.4rem', flexShrink: 0 }}>
-                  <path d="M12 25 C12 14, 38 14, 38 25 C38 35, 34 38, 25 38 C16 38, 12 35, 12 25 Z" stroke="var(--text-primary)" strokeWidth="3.5" fill="none" />
-                  <path d="M25 15 L25 28" stroke="var(--text-primary)" strokeWidth="3.5" strokeLinecap="round" />
-                  <circle cx="25" cy="31" r="2.5" fill="var(--text-primary)" />
-                </svg>
-                <span style={{
-                  fontFamily: 'var(--font-montserrat), sans-serif',
-                  fontSize: '0.75rem',
-                  fontWeight: 900,
-                  letterSpacing: '0.08em',
-                  color: 'var(--text-primary)'
-                }}>MOUSELAB</span>
-              </div>
+              <img 
+                src="/logo-mouselab.png" 
+                alt="MOUSELAB" 
+                style={{ 
+                  height: '24px', 
+                  width: 'auto', 
+                  objectFit: 'contain',
+                  filter: 'var(--logo-filter)',
+                  transition: 'var(--t)'
+                }} 
+              />
 
               {/* Logo 2: AXISONE COFFEE */}
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <svg viewBox="0 0 50 50" width="26" height="26" style={{ marginRight: '0.4rem', flexShrink: 0 }}>
-                  <path d="M25 7 C18 7 13 15 13 24 C13 32 17 37 21 37 L29 37 C33 37 37 32 37 24 C37 15 32 7 25 7 Z" stroke="var(--text-primary)" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M25 18 L32 30 L18 30 Z" fill="var(--gold)" />
-                </svg>
-                <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
-                  <span style={{
-                    fontFamily: 'var(--font-montserrat), sans-serif',
-                    fontSize: '0.7rem',
-                    fontWeight: 500,
-                    letterSpacing: '0.04em',
-                    color: 'var(--text-primary)'
-                  }}>
-                    AXIS<span style={{ fontWeight: 800 }}>one</span>
-                  </span>
-                  <span style={{
-                    fontFamily: 'var(--font-montserrat), sans-serif',
-                    fontSize: '0.32rem',
-                    fontWeight: 700,
-                    letterSpacing: '0.35em',
-                    color: 'var(--text-muted)',
-                    marginTop: '0.1rem'
-                  }}>COFFEE</span>
-                </div>
-              </div>
+              <img 
+                src="/logo-axisone.png" 
+                alt="AXISONE COFFEE" 
+                style={{ 
+                  height: '32px', 
+                  width: 'auto', 
+                  objectFit: 'contain',
+                  filter: 'var(--logo-filter)',
+                  transition: 'var(--t)'
+                }} 
+              />
+
+              {/* Logo 3: SAGRADO CORAZÓN */}
+              <img 
+                src="/logo-sagrado.png" 
+                alt="SAGRADO CORAZÓN" 
+                style={{ 
+                  height: '36px', 
+                  width: 'auto', 
+                  objectFit: 'contain',
+                  filter: 'var(--logo-filter)',
+                  transition: 'var(--t)'
+                }} 
+              />
             </div>
 
             {/* Legal Notice */}

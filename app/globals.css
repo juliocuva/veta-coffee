@@ -71,6 +71,9 @@
   --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
   --smooth: cubic-bezier(0.4, 0, 0.2, 1);
   --t: all 0.28s var(--smooth);
+
+  /* Logo filters */
+  --logo-filter: invert(1) brightness(0.1);
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -137,6 +140,9 @@ body.dark-theme {
   --login-glow:    rgba(0, 97, 60, 0.15);
   --card-active-blend: rgba(80, 37, 20, 0.35);
   --on-gold:       #1F1E24;
+
+  /* Logo filters */
+  --logo-filter: none;
 }
 
 *, *::before, *::after {
