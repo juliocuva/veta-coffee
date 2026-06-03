@@ -169,14 +169,27 @@ export default function AdminLogin() {
       return
     }
 
-    setSuccessMsg(`¡Registro exitoso! 🎉 Se ha enviado un mensaje de confirmación a ${email}. Activa tu cuenta desde el correo para ingresar.`)
-    
+    // 3. Auto Sign In
+    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password })
+    if (signInError) {
+      setError(`❌ Registro exitoso, pero falló el ingreso automático: ${signInError.message}`)
+      setLoading(false)
+      return
+    }
+
+    localStorage.setItem('veta_saved_email', email)
+    localStorage.setItem('veta_saved_password', password)
+    localStorage.setItem('veta_saved_slug', slug)
+    setSavedSlug(slug)
+
     // Clear inputs
     setName('')
     setPhone('')
     setEmail('')
     setPassword('')
     setLoading(false)
+
+    router.push('/admin/dashboard')
   }
 
   const handleCopyStoreLink = () => {
