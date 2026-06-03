@@ -187,7 +187,7 @@ export default function LandingPage() {
                 minWidth: 210,
                 transition: 'var(--t)'
               }}>
-                Crear mi Catálogo
+                Armar mi catálogo ahora
               </Link>
               <Link href="/sagradocorazon" style={{
                 background: 'rgba(255,255,255,0.06)',
@@ -206,7 +206,7 @@ export default function LandingPage() {
                 transition: 'var(--t)',
                 backdropFilter: 'blur(8px)'
               }}>
-                Ver Tienda Demo
+                Ver cómo se ve en vivo
               </Link>
             </div>
             
