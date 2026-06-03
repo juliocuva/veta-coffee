@@ -279,15 +279,15 @@ export default function LandingPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
                 <div style={{ background: 'var(--green-dim)', borderRadius: '50%', width: 22, height: 22, display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', color: 'var(--green)', fontSize: '0.7rem', fontWeight: 700 }}>✓</div>
-                <p style={{ fontSize: '0.82rem', fontWeight: 500, margin: 0, color: 'var(--text-primary)' }}>Cada gramaje tiene sus propios selectores de cantidad independientes.</p>
+                <p style={{ fontSize: '0.82rem', fontWeight: 500, margin: 0, color: 'var(--text-primary)' }}>250g o 500g, grano o molido: tu cliente elige sin llamarte.</p>
               </div>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
                 <div style={{ background: 'var(--green-dim)', borderRadius: '50%', width: 22, height: 22, display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', color: 'var(--green)', fontSize: '0.7rem', fontWeight: 700 }}>✓</div>
-                <p style={{ fontSize: '0.82rem', fontWeight: 500, margin: 0, color: 'var(--text-primary)' }}>Permite combinar Grano y Molido en el mismo pedido al instante.</p>
+                <p style={{ fontSize: '0.82rem', fontWeight: 500, margin: 0, color: 'var(--text-primary)' }}>Un solo pedido puede tener varias presentaciones mezcladas. Sin confusión.</p>
               </div>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
                 <div style={{ background: 'var(--green-dim)', borderRadius: '50%', width: 22, height: 22, display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', color: 'var(--green)', fontSize: '0.7rem', fontWeight: 700 }}>✓</div>
-                <p style={{ fontSize: '0.82rem', fontWeight: 500, margin: 0, color: 'var(--text-primary)' }}>Carga ultrarrápida optimizada para conexiones móviles de datos.</p>
+                <p style={{ fontSize: '0.82rem', fontWeight: 500, margin: 0, color: 'var(--text-primary)' }}>Funciona perfecto desde el celular de tu cliente, aunque tenga mala señal.</p>
               </div>
             </div>
           </div>
