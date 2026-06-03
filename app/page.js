@@ -292,122 +292,21 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Right CSS Phone Mockup */}
+          {/* Right Column: Hands holding phone mockup photo */}
           <div style={{
             display: 'flex',
             justifyContent: 'center',
             position: 'relative'
           }}>
-            {/* Ambient Glow */}
-            <div style={{
-              position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-              width: '80%', height: '80%', background: 'radial-gradient(circle, rgba(158, 118, 63, 0.12) 0%, rgba(0,0,0,0) 70%)',
-              pointerEvents: 'none', zIndex: 1
-            }} />
             <div style={{
               width: '100%',
-              maxWidth: 320,
-              background: 'var(--bg-card)',
-              border: '10px solid #28211c',
-              borderRadius: '40px',
-              padding: '1.8rem 1.2rem',
-              boxShadow: '0 25px 60px rgba(80, 37, 20, 0.12)',
-              textAlign: 'left',
-              position: 'relative',
-              zIndex: 2
+              maxWidth: 420,
+              borderRadius: 'var(--r-xl)',
+              overflow: 'hidden',
+              boxShadow: '0 20px 45px rgba(80, 37, 20, 0.08)',
+              border: '1px solid var(--glass-border)'
             }}>
-              {/* Camera Notch */}
-              <div style={{
-                position: 'absolute', top: 8, left: '50%', transform: 'translateX(-50%)',
-                width: 80, height: 18, background: '#28211c', borderRadius: '10px', zIndex: 10
-              }} />
-
-              {/* Mockup Header */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.4rem', marginTop: '0.5rem' }}>
-                <span style={{ fontSize: '0.55rem', fontWeight: 700, color: 'var(--gold)', letterSpacing: '0.12em' }}>CATÁLOGO</span>
-                <span style={{ fontSize: '0.62rem', fontWeight: 600, color: 'var(--green)', display: 'flex', alignItems: 'center', gap: '3px' }}>
-                  <span style={{ display: 'inline-block', width: 6, height: 6, background: 'var(--green)', borderRadius: '50%' }} /> BeCoffee.pro
-                </span>
-              </div>
-
-              {/* Product Info Mock */}
-              <div style={{ marginBottom: '1.2rem' }}>
-                <span style={{ fontSize: '0.5rem', fontWeight: 700, background: 'var(--gold-dim)', color: 'var(--gold)', padding: '0.2rem 0.5rem', borderRadius: 4, textTransform: 'uppercase', letterSpacing: '0.04em' }}>Castillo · Honey</span>
-                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0.4rem 0 0.2rem', fontStyle: 'italic' }}>Bourbon Rosado</h3>
-                <p style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', fontWeight: 500, margin: 0 }}>Finca La Esperanza · Huila</p>
-              </div>
-
-              {/* 250g Row Mock */}
-              <div style={{
-                background: 'var(--bg-card-2)', border: '1px solid var(--glass-border)',
-                borderRadius: 'var(--r-sm)', padding: '0.75rem 0.9rem',
-                display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '0.8rem'
-              }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.76rem', fontWeight: 700 }}>250g</span>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--gold)', fontWeight: 600 }}>$35.000 c/u</span>
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'var(--gold-dim)', border: '1px solid var(--gold)', borderRadius: '8px', padding: '0.3rem 0.5rem' }}>
-                    <span style={{ fontSize: '0.58rem', fontWeight: 700, color: 'var(--text-primary)' }}>☕ Grano</span>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                      <span style={{ fontSize: '0.68rem', fontWeight: 700 }}>1</span>
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(0,0,0,0.02)', border: '1px solid var(--glass-border)', borderRadius: '8px', padding: '0.3rem 0.5rem' }}>
-                    <span style={{ fontSize: '0.58rem', fontWeight: 700, color: 'var(--text-primary)' }}>⚙️ Molido</span>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                      <span style={{ fontSize: '0.68rem', fontWeight: 700, color: 'var(--text-muted)' }}>0</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* 500g Row Mock */}
-              <div style={{
-                background: 'var(--bg-card-2)', border: '1px solid var(--glass-border)',
-                borderRadius: 'var(--r-sm)', padding: '0.75rem 0.9rem',
-                display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '1.4rem'
-              }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.76rem', fontWeight: 700 }}>500g</span>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--gold)', fontWeight: 600 }}>$60.000 c/u</span>
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(0,0,0,0.02)', border: '1px solid var(--glass-border)', borderRadius: '8px', padding: '0.3rem 0.5rem' }}>
-                    <span style={{ fontSize: '0.58rem', fontWeight: 700, color: 'var(--text-primary)' }}>☕ Grano</span>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                      <span style={{ fontSize: '0.68rem', fontWeight: 700, color: 'var(--text-muted)' }}>0</span>
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'var(--gold-dim)', border: '1px solid var(--gold)', borderRadius: '8px', padding: '0.3rem 0.5rem' }}>
-                    <span style={{ fontSize: '0.58rem', fontWeight: 700, color: 'var(--text-primary)' }}>⚙️ Molido</span>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                      <span style={{ fontSize: '0.68rem', fontWeight: 700 }}>2</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Add to Cart Mock Button */}
-              <div style={{
-                background: 'linear-gradient(135deg, var(--green), #004d2e)',
-                color: '#fff',
-                padding: '0.95rem 1rem',
-                borderRadius: 'var(--r-md)',
-                textAlign: 'center',
-                fontSize: '0.74rem',
-                fontWeight: 600,
-                letterSpacing: '0.06em',
-                textTransform: 'uppercase',
-                boxShadow: '0 4px 14px rgba(0, 92, 56, 0.2)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.5rem'
-              }}>
-                🛒 WhatsApp ($155.000)
-              </div>
+              <img src="/hands-mockup.jpg" alt="Celular mostrando el catálogo de café" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </div>
           </div>
         </section>
