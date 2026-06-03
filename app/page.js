@@ -376,18 +376,18 @@ export default function LandingPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
             
             <div style={{
-              background: 'var(--bg-card)', border: '1px solid var(--glass-border)',
+              background: '#1C1613', border: '1px solid rgba(158, 118, 63, 0.25)',
               borderRadius: 'var(--r-lg)', padding: '2.5rem 2rem', textAlign: 'left',
-              boxShadow: '0 4px 24px rgba(80,37,20,0.01)',
+              boxShadow: '0 12px 36px rgba(18, 14, 11, 0.15)',
               position: 'relative'
             }} className="step-card">
               <span style={{
                 position: 'absolute', top: '1.5rem', right: '2rem',
-                fontSize: '3rem', fontWeight: 800, color: 'rgba(158, 118, 63, 0.08)'
+                fontSize: '3rem', fontWeight: 800, color: 'rgba(255, 255, 255, 0.04)'
               }}>01</span>
               
               <div className="step-icon-wrap" style={{
-                width: 52, height: 52, background: 'var(--green-dim)', borderRadius: 14,
+                width: 52, height: 52, background: 'rgba(0, 92, 56, 0.25)', borderRadius: 14,
                 display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem'
               }}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 24, height: 24 }}>
@@ -403,21 +403,21 @@ export default function LandingPage() {
                 </svg>
               </div>
 
-              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.6rem', fontStyle: 'italic' }}>Configura tus cafés</h3>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
+              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.6rem', fontStyle: 'italic' }}>Configura tus cafés</h3>
+              <p style={{ fontSize: '0.8rem', color: '#D7CCC8', lineHeight: 1.55, margin: 0 }}>
                 Crea tu panel de tostador, ingresa tus variedades, notas de cata y el precio correspondiente de cada presentación y molienda.
               </p>
             </div>
 
             <div style={{
-              background: 'var(--bg-card)', border: '1px solid var(--glass-border)',
+              background: '#1C1613', border: '1px solid rgba(158, 118, 63, 0.25)',
               borderRadius: 'var(--r-lg)', padding: '2.5rem 2rem', textAlign: 'left',
-              boxShadow: '0 4px 24px rgba(80,37,20,0.01)',
+              boxShadow: '0 12px 36px rgba(18, 14, 11, 0.15)',
               position: 'relative'
             }} className="step-card">
               <span style={{
                 position: 'absolute', top: '1.5rem', right: '2rem',
-                fontSize: '3rem', fontWeight: 800, color: 'rgba(158, 118, 63, 0.08)'
+                fontSize: '3rem', fontWeight: 800, color: 'rgba(255, 255, 255, 0.04)'
               }}>02</span>
 
               <div className="step-icon-wrap" style={{
@@ -430,25 +430,25 @@ export default function LandingPage() {
                 </svg>
               </div>
 
-              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.6rem', fontStyle: 'italic' }}>Comparte tu link</h3>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
+              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.6rem', fontStyle: 'italic' }}>Comparte tu link</h3>
+              <p style={{ fontSize: '0.8rem', color: '#D7CCC8', lineHeight: 1.55, margin: 0 }}>
                 Envía tu URL exclusiva (`becoffee.pro/tu-marca`) por chat, publícala en Instagram o agrégala mediante códigos QR en tus empaques físicos.
               </p>
             </div>
 
             <div style={{
-              background: 'var(--bg-card)', border: '1px solid var(--glass-border)',
+              background: '#1C1613', border: '1px solid rgba(158, 118, 63, 0.25)',
               borderRadius: 'var(--r-lg)', padding: '2.5rem 2rem', textAlign: 'left',
-              boxShadow: '0 4px 24px rgba(80,37,20,0.01)',
+              boxShadow: '0 12px 36px rgba(18, 14, 11, 0.15)',
               position: 'relative'
             }} className="step-card">
               <span style={{
                 position: 'absolute', top: '1.5rem', right: '2rem',
-                fontSize: '3rem', fontWeight: 800, color: 'rgba(80, 37, 20, 0.06)'
+                fontSize: '3rem', fontWeight: 800, color: 'rgba(255, 255, 255, 0.04)'
               }}>03</span>
 
               <div className="step-icon-wrap" style={{
-                width: 52, height: 52, background: 'var(--brown-dim)', borderRadius: 14,
+                width: 52, height: 52, background: 'rgba(80, 37, 20, 0.35)', borderRadius: 14,
                 display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem'
               }}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="var(--brown)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 24, height: 24 }}>
@@ -456,8 +456,8 @@ export default function LandingPage() {
                 </svg>
               </div>
 
-              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.6rem', fontStyle: 'italic' }}>Despacha pedidos</h3>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
+              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.6rem', fontStyle: 'italic' }}>Despacha pedidos</h3>
+              <p style={{ fontSize: '0.8rem', color: '#D7CCC8', lineHeight: 1.55, margin: 0 }}>
                 Tus compradores eligen el producto, el sistema genera la orden formateada con datos de entrega y el cliente te la envía directo a WhatsApp.
               </p>
             </div>
