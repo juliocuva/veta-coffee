@@ -123,21 +123,7 @@ export default function LandingPage() {
             flexDirection: 'column',
             alignItems: 'flex-start'
           }}>
-            <span style={{
-              background: 'rgba(158, 118, 63, 0.15)',
-              color: 'var(--gold)',
-              border: '1px solid rgba(158, 118, 63, 0.3)',
-              padding: '0.5rem 1.2rem',
-              borderRadius: 30,
-              fontSize: '0.62rem',
-              fontWeight: 600,
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              marginBottom: '1.5rem',
-              boxShadow: 'inset 0 1px 4px rgba(255, 255, 255, 0.05)'
-            }}>
-              ☕ E-commerce para Café de Especialidad
-            </span>
+
 
             <h1 style={{
               fontSize: 'clamp(2.2rem, 5vw, 3.4rem)',
@@ -267,9 +253,7 @@ export default function LandingPage() {
         }}>
           {/* Left Description */}
           <div style={{ textAlign: 'left' }}>
-            <span style={{ fontSize: '0.62rem', fontWeight: 600, color: 'var(--gold)', letterSpacing: '0.15em', textTransform: 'uppercase', display: 'block', marginBottom: '0.8rem' }}>
-              Concepto UI/UX Superlativo
-            </span>
+
             <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.15, marginBottom: '1.5rem' }}>
               La experiencia móvil que tus <span style={{ fontStyle: 'italic' }}>clientes amarán</span>.
             </h2>
@@ -313,9 +297,7 @@ export default function LandingPage() {
 
         {/* Real App Showcase */}
         <section id="capturas" style={{ textAlign: 'center' }}>
-          <span style={{ fontSize: '0.62rem', fontWeight: 600, color: 'var(--gold)', letterSpacing: '0.15em', textTransform: 'uppercase', display: 'block', marginBottom: '0.8rem' }}>
-            Pantalla Real del Sistema
-          </span>
+
           <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '3.5rem' }}>
             Así se ve tu <span style={{ fontStyle: 'italic' }}>catálogo en acción</span>.
           </h2>
@@ -387,9 +369,7 @@ export default function LandingPage() {
 
         {/* 2. Three Step Workflow */}
         <section id="como-funciona" style={{ textAlign: 'center' }}>
-          <span style={{ fontSize: '0.62rem', fontWeight: 600, color: 'var(--gold)', letterSpacing: '0.15em', textTransform: 'uppercase', display: 'block', marginBottom: '0.8rem' }}>
-            Rapidez de Implementación
-          </span>
+
           <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '4rem' }}>
             Tu tienda en línea, en <span style={{ fontStyle: 'italic' }}>3 simples pasos</span>.
           </h2>
@@ -403,10 +383,27 @@ export default function LandingPage() {
             }} className="step-card">
               <span style={{
                 position: 'absolute', top: '1.5rem', right: '2rem',
-                fontSize: '3rem', fontWeight: 700, color: 'rgba(158, 118, 63, 0.08)'
+                fontSize: '3rem', fontWeight: 800, color: 'rgba(158, 118, 63, 0.08)'
               }}>01</span>
-              <div style={{ width: 52, height: 52, background: 'var(--green-dim)', borderRadius: 14, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', marginBottom: '1.5rem' }}>🏢</div>
-              <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.6rem', fontStyle: 'italic' }}>1. Configura tus cafés</h3>
+              
+              <div className="step-icon-wrap" style={{
+                width: 52, height: 52, background: 'var(--green-dim)', borderRadius: 14,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem'
+              }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 24, height: 24 }}>
+                  <line x1="4" y1="21" x2="4" y2="14" />
+                  <line x1="4" y1="10" x2="4" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="12" />
+                  <line x1="12" y1="8" x2="12" y2="3" />
+                  <line x1="20" y1="21" x2="20" y2="16" />
+                  <line x1="20" y1="12" x2="20" y2="3" />
+                  <line x1="1" y1="14" x2="7" y2="14" />
+                  <line x1="9" y1="8" x2="15" y2="8" />
+                  <line x1="17" y1="16" x2="23" y2="16" />
+                </svg>
+              </div>
+
+              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.6rem', fontStyle: 'italic' }}>Configura tus cafés</h3>
               <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
                 Crea tu panel de tostador, ingresa tus variedades, notas de cata y el precio correspondiente de cada presentación y molienda.
               </p>
@@ -420,10 +417,20 @@ export default function LandingPage() {
             }} className="step-card">
               <span style={{
                 position: 'absolute', top: '1.5rem', right: '2rem',
-                fontSize: '3rem', fontWeight: 700, color: 'rgba(158, 118, 63, 0.08)'
+                fontSize: '3rem', fontWeight: 800, color: 'rgba(158, 118, 63, 0.08)'
               }}>02</span>
-              <div style={{ width: 52, height: 52, background: 'var(--gold-dim)', borderRadius: 14, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', marginBottom: '1.5rem' }}>🔗</div>
-              <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.6rem', fontStyle: 'italic' }}>2. Comparte tu link</h3>
+
+              <div className="step-icon-wrap" style={{
+                width: 52, height: 52, background: 'var(--gold-dim)', borderRadius: 14,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem'
+              }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 24, height: 24 }}>
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                </svg>
+              </div>
+
+              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.6rem', fontStyle: 'italic' }}>Comparte tu link</h3>
               <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
                 Envía tu URL exclusiva (`becoffee.pro/tu-marca`) por chat, publícala en Instagram o agrégala mediante códigos QR en tus empaques físicos.
               </p>
@@ -437,10 +444,19 @@ export default function LandingPage() {
             }} className="step-card">
               <span style={{
                 position: 'absolute', top: '1.5rem', right: '2rem',
-                fontSize: '3rem', fontWeight: 700, color: 'rgba(80, 37, 20, 0.06)'
+                fontSize: '3rem', fontWeight: 800, color: 'rgba(80, 37, 20, 0.06)'
               }}>03</span>
-              <div style={{ width: 52, height: 52, background: 'var(--brown-dim)', borderRadius: 14, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', marginBottom: '1.5rem' }}>💬</div>
-              <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.6rem', fontStyle: 'italic' }}>3. Despacha pedidos</h3>
+
+              <div className="step-icon-wrap" style={{
+                width: 52, height: 52, background: 'var(--brown-dim)', borderRadius: 14,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem'
+              }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--brown)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 24, height: 24 }}>
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+              </div>
+
+              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.6rem', fontStyle: 'italic' }}>Despacha pedidos</h3>
               <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
                 Tus compradores eligen el producto, el sistema genera la orden formateada con datos de entrega y el cliente te la envía directo a WhatsApp.
               </p>
@@ -451,9 +467,7 @@ export default function LandingPage() {
 
         {/* 3. Pricing: Superlative Comparison Layout */}
         <section id="precios" style={{ textAlign: 'center' }}>
-          <span style={{ fontSize: '0.62rem', fontWeight: 600, color: 'var(--gold)', letterSpacing: '0.15em', textTransform: 'uppercase', display: 'block', marginBottom: '0.8rem' }}>
-            Suscripción Directa
-          </span>
+
           <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1.2rem' }}>
             Planes a la <span style={{ fontStyle: 'italic' }}>medida de tu negocio</span>.
           </h2>

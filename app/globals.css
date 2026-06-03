@@ -342,3 +342,20 @@ html:has(.landing-container) {
   }
 }
 
+/* Modern Step Card Micro-interactions */
+.step-card {
+  transition: all 0.35s var(--smooth) !important;
+}
+.step-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(80, 37, 20, 0.04) !important;
+  border-color: rgba(158, 118, 63, 0.3) !important;
+}
+.step-card .step-icon-wrap {
+  transition: all 0.3s var(--spring);
+}
+.step-card:hover .step-icon-wrap {
+  transform: scale(1.08) rotate(4deg);
+}
+
+
