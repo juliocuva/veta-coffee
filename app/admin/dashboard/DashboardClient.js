@@ -325,18 +325,18 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
               onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.15)'}
               onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.05)'}
             >
-              👁️ Ver Catálogo ↗
+              Ver Catálogo ↗
             </a>
             <button 
               onClick={handleCopyLink} 
               style={{
-                background: 'rgba(211,178,127,0.12)',
-                border: '1px solid rgba(211,178,127,0.3)',
+                background: 'rgba(110, 207, 151, 0.05)',
+                border: '1px solid rgba(110, 207, 151, 0.4)',
                 borderRadius: 6,
                 padding: '0.25rem 0.55rem',
                 fontSize: '0.55rem',
                 fontWeight: 700,
-                color: 'var(--gold)',
+                color: '#6FCF97',
                 cursor: 'pointer',
                 transition: 'var(--t)',
                 display: 'inline-flex',
@@ -344,10 +344,10 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
                 gap: '0.25rem',
                 height: '24px'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(211,178,127,0.2)'}
-              onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(211,178,127,0.12)'}
+              onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.15)'}
+              onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.05)'}
             >
-              {copied ? '¡Copiado! ✅' : '🔗 Copiar Link'}
+              {copied ? '¡Copiado! ✅' : 'Copiar Link'}
             </button>
           </div>
 
@@ -361,12 +361,12 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
                 setProfileModalOpen(true)
               }} 
               style={{
-                background: 'rgba(158, 118, 63, 0.06)', 
-                border: '1px solid rgba(158, 118, 63, 0.35)', 
+                background: 'rgba(110, 207, 151, 0.05)', 
+                border: '1px solid rgba(110, 207, 151, 0.4)', 
                 cursor: 'pointer', 
                 fontSize: '0.55rem', 
                 fontWeight: 700,
-                color: 'var(--gold)',
+                color: '#6FCF97',
                 padding: '0.25rem 0.55rem', 
                 borderRadius: '6px',
                 display: 'inline-flex',
@@ -375,17 +375,17 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
                 transition: 'var(--t)',
                 height: '24px'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(158, 118, 63, 0.18)'}
-              onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(158, 118, 63, 0.06)'}
+              onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.15)'}
+              onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.05)'}
               title="Editar Perfil / Datos"
             >
-              👤 Editar
+              Editar
             </button>
             <button 
               onClick={handleLogout} 
               style={{
                 background: 'rgba(110, 207, 151, 0.05)', 
-                border: '1px solid rgba(110, 207, 151, 0.3)', 
+                border: '1px solid rgba(110, 207, 151, 0.4)', 
                 borderRadius: 6,
                 fontSize: '0.55rem', 
                 fontWeight: 700, 
