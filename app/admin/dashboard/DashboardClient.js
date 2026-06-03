@@ -347,7 +347,7 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
               onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.15)'}
               onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.05)'}
             >
-              {copied ? '¡Copiado! ✅' : 'Copiar Link'}
+              {copied ? '¡Copiado! ✅' : 'Link de mi tienda'}
             </button>
           </div>
 
