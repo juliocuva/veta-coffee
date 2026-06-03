@@ -523,7 +523,7 @@ export default function LandingPage() {
                   <li>Panel de administración móvil</li>
                 </ul>
               </div>
-              <Link href="/admin" style={{
+              <a href="https://wa.me/573013970002?text=Hola!%20Me%20interesa%20adquirir%20el%20Plan%20Mensual%20de%20beCOFFEE.pro" target="_blank" rel="noopener noreferrer" style={{
                 display: 'block',
                 background: 'var(--bg-card-2)',
                 border: '1px solid var(--glass-border)',
@@ -539,7 +539,7 @@ export default function LandingPage() {
                 transition: 'var(--t)'
               }}>
                 Elegir Mensual
-              </Link>
+              </a>
             </div>
 
             {/* Annual Card (Most Popular) */}
@@ -584,7 +584,7 @@ export default function LandingPage() {
                   <li>Estadísticas de visitas e intención</li>
                 </ul>
               </div>
-              <Link href="/admin" style={{
+              <a href="https://wa.me/573013970002?text=Hola!%20Me%20interesa%20adquirir%20el%20Plan%20Anual%20de%20beCOFFEE.pro" target="_blank" rel="noopener noreferrer" style={{
                 display: 'block',
                 background: 'linear-gradient(135deg, var(--green), #004d2e)',
                 color: '#fff',
@@ -600,7 +600,7 @@ export default function LandingPage() {
                 transition: 'var(--t)'
               }}>
                 Elegir Anual
-              </Link>
+              </a>
             </div>
           </div>
         </section>
