@@ -164,6 +164,22 @@ body {
   color: var(--text-primary);
 }
 
+/* Full-screen scroll override for the Landing Page */
+body:has(.landing-container) {
+  display: block;
+  height: auto;
+  min-height: 100vh;
+  overflow-y: auto;
+  background: var(--bg);
+  background-image: none;
+  padding: 0 !important;
+}
+
+html:has(.landing-container) {
+  height: auto;
+  overflow-y: auto;
+}
+
 /* App shell — phone container */
 .app-shell {
   position: relative;
@@ -301,3 +317,28 @@ body {
 @keyframes slideUp { from { transform:translateY(30px); opacity:0 } to { transform:translateY(0); opacity:1 } }
 @keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
 @keyframes popIn { from { transform:scale(0) rotate(-20deg); opacity:0 } to { transform:scale(1) rotate(0deg); opacity:1 } }
+
+/* Landing Page Navigation Menu */
+.landing-nav-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+.landing-nav-link {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #DCECE5;
+  text-decoration: none;
+  transition: var(--t);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.landing-nav-link:hover {
+  color: var(--gold);
+}
+@media (max-width: 768px) {
+  .landing-nav-links {
+    display: none;
+  }
+}
+
