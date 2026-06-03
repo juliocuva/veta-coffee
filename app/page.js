@@ -653,7 +653,18 @@ export default function LandingPage() {
                 height: '48px', 
                 width: 'auto', 
                 objectFit: 'contain',
-                filter: 'var(--logo-filter)',
+                transition: 'var(--t)'
+              }} 
+            />
+
+            {/* Logo 3: SAGRADO CORAZÓN */}
+            <img 
+              src="/logo-sagrado.png" 
+              alt="SAGRADO CORAZÓN" 
+              style={{ 
+                height: '48px', 
+                width: 'auto', 
+                objectFit: 'contain',
                 transition: 'var(--t)'
               }} 
             />

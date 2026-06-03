@@ -302,7 +302,6 @@ export default function CatalogPage({ roaster }) {
                   height: '32px', 
                   width: 'auto', 
                   objectFit: 'contain',
-                  filter: 'var(--logo-filter)',
                   transition: 'var(--t)'
                 }} 
               />
@@ -315,7 +314,6 @@ export default function CatalogPage({ roaster }) {
                   height: '36px', 
                   width: 'auto', 
                   objectFit: 'contain',
-                  filter: 'var(--logo-filter)',
                   transition: 'var(--t)'
                 }} 
               />
