@@ -55,19 +55,6 @@ export default function LandingPage() {
           zIndex: 10
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <div style={{
-              width: 42,
-              height: 42,
-              background: 'rgba(255, 255, 255, 0.08)',
-              border: '1px solid rgba(255, 255, 255, 0.18)',
-              borderRadius: 14,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
-            }}>
-              <img src="/logo.png" alt="Logo" style={{ width: 24, height: 24, filter: 'brightness(0) invert(1)' }} />
-            </div>
             <span style={{ fontSize: '1.25rem', color: '#FFFFFF', letterSpacing: '0.02em' }}>
               <span style={{ fontWeight: 400 }}>be</span>
               <span style={{ fontWeight: 900 }}>COFFEE</span>

@@ -212,10 +212,11 @@ export default function AdminLogin() {
         
         {/* Header */}
         <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem' }}>
-          <div style={{ width: 64, height: 64, background: 'var(--green-dim)', border: '1px solid rgba(0,97,60,0.3)', borderRadius: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.4rem', overflow: 'hidden' }}>
-            <img src="/logo.png" alt="Logo" style={{ width: 44, height: 44, objectFit: 'contain', filter: 'invert(1) brightness(1.8)' }} />
-          </div>
-          <h1 style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '1.5rem', fontWeight: 800, letterSpacing: '0.12em', color: 'var(--gold)' }}>PLATAFORMA</h1>
+          <h1 style={{ fontSize: '1.8rem', color: 'var(--text-primary)', letterSpacing: '0.02em', marginBottom: '0.2rem' }}>
+            <span style={{ fontWeight: 400 }}>be</span>
+            <span style={{ fontWeight: 900 }}>COFFEE</span>
+            <span style={{ fontWeight: 400, color: 'var(--gold)' }}>.pro</span>
+          </h1>
           <p style={{ fontSize: '0.65rem', fontWeight: 600, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Acceso Tostadores</p>
         </div>
 
