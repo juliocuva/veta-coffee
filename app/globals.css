@@ -358,4 +358,48 @@ html:has(.landing-container) {
   transform: scale(1.08) rotate(4deg);
 }
 
+/* Showcase Cards UI/UX Animation */
+.showcase-card {
+  transition: all 0.4s var(--smooth);
+  position: relative;
+}
+
+.showcase-card .showcase-img-wrap {
+  transform: translateY(0);
+  transition: all 0.4s var(--smooth);
+}
+
+.showcase-card:hover .showcase-img-wrap {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 45px rgba(80, 37, 20, 0.12) !important;
+  border-color: var(--gold) !important;
+}
+
+.showcase-card img {
+  transform: scale(1);
+  transition: all 0.4s var(--smooth);
+}
+
+.showcase-card:hover img {
+  transform: scale(1.04);
+}
+
+.showcase-card .showcase-info {
+  opacity: 0;
+  transform: translateY(-15px);
+  max-height: 0;
+  overflow: hidden;
+  margin-top: 0;
+  transition: all 0.45s var(--smooth);
+  text-align: center;
+}
+
+.showcase-card:hover .showcase-info {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 160px;
+  margin-top: 1.2rem;
+}
+
+
 

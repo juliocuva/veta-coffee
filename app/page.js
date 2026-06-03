@@ -309,8 +309,8 @@ export default function LandingPage() {
             alignItems: 'start'
           }}>
             {/* Catalog Screenshot Card */}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.2rem', flex: '1 1 280px', maxWidth: 300 }}>
-              <div style={{
+            <div className="showcase-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: '1 1 280px', maxWidth: 300 }}>
+              <div className="showcase-img-wrap" style={{
                 borderRadius: '24px',
                 border: '6px solid #28211c',
                 overflow: 'hidden',
@@ -319,7 +319,7 @@ export default function LandingPage() {
               }}>
                 <img src="/screenshot-catalog.png" alt="Catálogo de Productos" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </div>
-              <div>
+              <div className="showcase-info">
                 <h4 style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>1. Tu Catálogo de Especialidad</h4>
                 <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0, maxWidth: 260 }}>
                   Tus clientes ven variedades, orígenes, moliendas y disponibilidad en tiempo real.
@@ -328,8 +328,8 @@ export default function LandingPage() {
             </div>
 
             {/* Configurator Drawer Screenshot Card */}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.2rem', flex: '1 1 280px', maxWidth: 300 }}>
-              <div style={{
+            <div className="showcase-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: '1 1 280px', maxWidth: 300 }}>
+              <div className="showcase-img-wrap" style={{
                 borderRadius: '24px',
                 border: '6px solid #28211c',
                 overflow: 'hidden',
@@ -338,7 +338,7 @@ export default function LandingPage() {
               }}>
                 <img src="/screenshot-drawer.png" alt="Selector de Moliendas y Gramaje" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </div>
-              <div>
+              <div className="showcase-info">
                 <h4 style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>2. Configuración de Pedido</h4>
                 <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0, maxWidth: 260 }}>
                   El cliente arma su orden detallando gramos, cantidad y molienda sin registros complicados.
@@ -347,8 +347,8 @@ export default function LandingPage() {
             </div>
 
             {/* WhatsApp Receipt Screenshot Card */}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.2rem', flex: '1 1 280px', maxWidth: 300 }}>
-              <div style={{
+            <div className="showcase-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: '1 1 280px', maxWidth: 300 }}>
+              <div className="showcase-img-wrap" style={{
                 borderRadius: '24px',
                 border: '6px solid #28211c',
                 overflow: 'hidden',
@@ -357,7 +357,7 @@ export default function LandingPage() {
               }}>
                 <img src="/screenshot-whatsapp.png" alt="Recepción de Pedidos por WhatsApp" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </div>
-              <div>
+              <div className="showcase-info">
                 <h4 style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>3. Pedido Directo a WhatsApp</h4>
                 <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0, maxWidth: 260 }}>
                   Recibes un desglose limpio con datos de entrega y total calculado listo para despachar.
