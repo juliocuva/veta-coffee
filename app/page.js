@@ -653,6 +653,7 @@ export default function LandingPage() {
                 height: '48px', 
                 width: 'auto', 
                 objectFit: 'contain',
+                filter: 'brightness(0) invert(1)',
                 transition: 'var(--t)'
               }} 
             />
