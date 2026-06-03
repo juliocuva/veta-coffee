@@ -1,8 +1,10 @@
 'use client'
 
+import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+
 
 export default function AdminLogin() {
   const [tab, setTab] = useState('login') // 'login' | 'register'
@@ -199,9 +201,36 @@ export default function AdminLogin() {
     setLinkCopied(true)
     setTimeout(() => setLinkCopied(false), 2000)
   }
-
   return (
     <div className="app-shell" style={{ alignItems: 'center', justifyContent: 'center', padding: '2rem 1.5rem', minHeight: '100dvh', overflowY: 'auto' }}>
+      {/* Back to Landing Page / Home Icon */}
+      <Link href="/" style={{
+        position: 'absolute',
+        top: '1.5rem',
+        left: '1.5rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'rgba(110, 207, 151, 0.05)',
+        border: '1px solid rgba(110, 207, 151, 0.3)',
+        borderRadius: '50%',
+        width: '36px',
+        height: '36px',
+        color: '#6FCF97',
+        cursor: 'pointer',
+        transition: 'var(--t)',
+        textDecoration: 'none',
+        zIndex: 10
+      }} 
+      title="Volver al Inicio"
+      onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.15)'}
+      onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.05)'}
+      >
+        <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18">
+          <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+        </svg>
+      </Link>
+
       <div style={{
         position: 'absolute', top: -80, left: '50%', transform: 'translateX(-50%)',
         width: 300, height: 300, background: 'radial-gradient(circle, rgba(0,97,60,0.15) 0%, transparent 70%)',
