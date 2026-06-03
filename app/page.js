@@ -362,23 +362,31 @@ export default function LandingPage() {
                 <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0, maxWidth: 260 }}>
                   Recibes un desglose limpio con datos de entrega y total calculado listo para despachar.
                 </p>
-              </div>
             </div>
           </div>
         </section>
 
-        {/* 2. Three Step Workflow */}
-        <section id="como-funciona" style={{ textAlign: 'center' }}>
+      </main>
 
-          <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '4rem' }}>
-            Tu tienda en línea, en <span style={{ fontStyle: 'italic' }}>3 simples pasos</span>.
+      {/* Full-width Coffee Background Section */}
+      <section id="como-funciona" style={{
+        background: 'linear-gradient(135deg, #1C120C 0%, #100A07 100%)',
+        color: '#FFFFFF',
+        padding: '6rem 1.5rem',
+        borderTop: '1px solid rgba(158, 118, 63, 0.12)',
+        borderBottom: '1px solid rgba(158, 118, 63, 0.12)'
+      }}>
+        <div style={{ maxWidth: 1080, margin: '0 auto', textAlign: 'center' }}>
+          <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 700, color: '#FFFFFF', marginBottom: '4rem' }}>
+            Tu tienda en línea, en <span style={{ fontStyle: 'italic', color: 'var(--gold)' }}>3 simples pasos</span>.
           </h2>
+          
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
             
             <div style={{
-              background: '#1C1613', border: '1px solid rgba(158, 118, 63, 0.25)',
+              background: '#231812', border: '1px solid rgba(158, 118, 63, 0.15)',
               borderRadius: 'var(--r-lg)', padding: '2.5rem 2rem', textAlign: 'left',
-              boxShadow: '0 12px 36px rgba(18, 14, 11, 0.15)',
+              boxShadow: '0 12px 36px rgba(0, 0, 0, 0.25)',
               position: 'relative'
             }} className="step-card">
               <span style={{
@@ -410,9 +418,9 @@ export default function LandingPage() {
             </div>
 
             <div style={{
-              background: '#1C1613', border: '1px solid rgba(158, 118, 63, 0.25)',
+              background: '#231812', border: '1px solid rgba(158, 118, 63, 0.15)',
               borderRadius: 'var(--r-lg)', padding: '2.5rem 2rem', textAlign: 'left',
-              boxShadow: '0 12px 36px rgba(18, 14, 11, 0.15)',
+              boxShadow: '0 12px 36px rgba(0, 0, 0, 0.25)',
               position: 'relative'
             }} className="step-card">
               <span style={{
@@ -437,9 +445,9 @@ export default function LandingPage() {
             </div>
 
             <div style={{
-              background: '#1C1613', border: '1px solid rgba(158, 118, 63, 0.25)',
+              background: '#231812', border: '1px solid rgba(158, 118, 63, 0.15)',
               borderRadius: 'var(--r-lg)', padding: '2.5rem 2rem', textAlign: 'left',
-              boxShadow: '0 12px 36px rgba(18, 14, 11, 0.15)',
+              boxShadow: '0 12px 36px rgba(0, 0, 0, 0.25)',
               position: 'relative'
             }} className="step-card">
               <span style={{
@@ -463,7 +471,19 @@ export default function LandingPage() {
             </div>
 
           </div>
-        </section>
+        </div>
+      </section>
+
+      {/* Main Container Continued for Pricing */}
+      <main style={{
+        width: '100%',
+        maxWidth: 1080,
+        margin: '0 auto',
+        padding: '5rem 1.5rem 5rem',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '6rem'
+      }}>
 
         {/* 3. Pricing: Superlative Comparison Layout */}
         <section id="precios" style={{ textAlign: 'center' }}>
