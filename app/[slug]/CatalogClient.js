@@ -136,6 +136,58 @@ export default function CatalogPage({ roaster }) {
     return `https://wa.me/${roaster.phone}?text=${msg}`
   }
 
+  const handleOrderSubmit = async () => {
+    const missingSize = cart.some(it => !it.weight)
+    if (missingSize) {
+      alert('Por favor selecciona el gramaje para cada café.')
+      return
+    }
+
+    const insufficient = cart.some(it => {
+      const p = products.find(x => x.id === it.productId)
+      return p && it.weight && p.inventoryKg < (SIZE_CONFIG[it.weight].kg * it.quantity)
+    })
+
+    if (insufficient) {
+      alert('Stock insuficiente para concretar el pedido de alguna de las variedades seleccionadas.')
+      return
+    }
+
+    // Redirigir a WhatsApp
+    const waUrl = buildWhatsAppMsg()
+    window.open(waUrl, '_blank')
+
+    // Descontar inventario en Supabase
+    for (const item of cart) {
+      const p = products.find(x => x.id === item.productId)
+      if (!p || !item.weight) continue
+      const kgToDeduct = SIZE_CONFIG[item.weight].kg * item.quantity
+      const newKg = Math.max(0, p.inventoryKg - kgToDeduct)
+
+      await supabase
+        .from('products')
+        .update({ inventory_kg: newKg })
+        .eq('id', item.productId)
+    }
+
+    // Actualizar estado local del inventario
+    setProducts(prev => prev.map(p => {
+      const itemsForProduct = cart.filter(i => i.productId === p.id)
+      if (itemsForProduct.length === 0) return p
+      const totalDeduct = itemsForProduct.reduce((sum, item) => sum + (SIZE_CONFIG[item.weight].kg * item.quantity), 0)
+      return {
+        ...p,
+        inventoryKg: Math.max(0, p.inventoryKg - totalDeduct)
+      }
+    }))
+
+    // Resetear carrito localmente
+    setCart([])
+    setPanelOpen(false)
+    setActiveId(null)
+  }
+
+
   const panelVisible = cart.length > 0 || activeId !== null
   const panelTranslate = !panelVisible ? '100%' : panelOpen ? '0%' : 'calc(100% - 68px)'
 
@@ -206,6 +258,92 @@ export default function CatalogPage({ roaster }) {
               onClick={() => handleCardClick(p.id)}
             />
           ))
+        )}
+
+        {!loading && products.length > 0 && (
+          <footer style={{
+            marginTop: '3rem',
+            borderTop: '1px solid var(--glass-border)',
+            paddingTop: '2rem',
+            paddingBottom: '1rem',
+            color: 'var(--text-muted)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1.5rem',
+            alignItems: 'center',
+            textAlign: 'center'
+          }}>
+            {/* Logos */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '1.5rem',
+              justifyContent: 'center',
+              flexWrap: 'wrap'
+            }}>
+              {/* Logo 1: MOUSELAB */}
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <svg viewBox="0 0 50 50" width="28" height="28" style={{ marginRight: '0.4rem', flexShrink: 0 }}>
+                  <path d="M12 25 C12 14, 38 14, 38 25 C38 35, 34 38, 25 38 C16 38, 12 35, 12 25 Z" stroke="var(--text-primary)" strokeWidth="3.5" fill="none" />
+                  <path d="M25 15 L25 28" stroke="var(--text-primary)" strokeWidth="3.5" strokeLinecap="round" />
+                  <circle cx="25" cy="31" r="2.5" fill="var(--text-primary)" />
+                </svg>
+                <span style={{
+                  fontFamily: 'var(--font-montserrat), sans-serif',
+                  fontSize: '0.75rem',
+                  fontWeight: 900,
+                  letterSpacing: '0.08em',
+                  color: 'var(--text-primary)'
+                }}>MOUSELAB</span>
+              </div>
+
+              {/* Logo 2: AXISONE COFFEE */}
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <svg viewBox="0 0 50 50" width="26" height="26" style={{ marginRight: '0.4rem', flexShrink: 0 }}>
+                  <path d="M25 7 C18 7 13 15 13 24 C13 32 17 37 21 37 L29 37 C33 37 37 32 37 24 C37 15 32 7 25 7 Z" stroke="var(--text-primary)" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M25 18 L32 30 L18 30 Z" fill="var(--gold)" />
+                </svg>
+                <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+                  <span style={{
+                    fontFamily: 'var(--font-montserrat), sans-serif',
+                    fontSize: '0.7rem',
+                    fontWeight: 500,
+                    letterSpacing: '0.04em',
+                    color: 'var(--text-primary)'
+                  }}>
+                    AXIS<span style={{ fontWeight: 800 }}>one</span>
+                  </span>
+                  <span style={{
+                    fontFamily: 'var(--font-montserrat), sans-serif',
+                    fontSize: '0.32rem',
+                    fontWeight: 700,
+                    letterSpacing: '0.35em',
+                    color: 'var(--text-muted)',
+                    marginTop: '0.1rem'
+                  }}>COFFEE</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Legal Notice */}
+            <div style={{
+              fontSize: '0.52rem',
+              lineHeight: 1.5,
+              maxWidth: 400,
+              padding: '0 0.5rem',
+              color: 'var(--text-muted)'
+            }}>
+              <p style={{ fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 0.3rem 0' }}>
+                Aviso de Propiedad Intelectual © 2026 Mouselab. Todos los derechos reservados.
+              </p>
+              <p style={{ margin: '0 0 0.3rem 0' }}>
+                Mouselab es la entidad titular de todos los derechos de propiedad intelectual, secretos industriales y derechos de autor sobre la arquitectura de software, algoritmos de Inteligencia Artificial y diseños visuales presentados.
+              </p>
+              <p style={{ margin: 0 }}>
+                AXISONE COFFEE es una marca comercial propiedad de Mouselab. El acceso a este material o enlaces no constituye una licencia de uso. Cualquier uso no autorizado será perseguido bajo las leyes de propiedad intelectual globales.
+              </p>
+            </div>
+          </footer>
         )}
       </main>
 
@@ -394,10 +532,10 @@ export default function CatalogPage({ roaster }) {
               <div style={{ fontSize: '1.65rem', fontWeight: 900, color: 'var(--text-primary)',
                 letterSpacing: '-0.02em', lineHeight: 1.1 }}>${total.toLocaleString()}</div>
             </div>
-            <a href={buildWhatsAppMsg()} style={{
+            <button onClick={handleOrderSubmit} style={{
               display: 'flex', alignItems: 'center', gap: '0.5rem',
               background: 'linear-gradient(135deg, #25D366, #1EB858)',
-              color: '#fff', textDecoration: 'none',
+              color: '#fff', border: 'none', cursor: 'pointer',
               padding: '0.85rem 1.2rem', borderRadius: 'var(--r-md)',
               fontWeight: 700, fontSize: '0.74rem', letterSpacing: '0.04em',
               textTransform: 'uppercase', boxShadow: '0 4px 16px rgba(37,211,102,0.25)',
@@ -405,7 +543,7 @@ export default function CatalogPage({ roaster }) {
             }}>
               <WhatsAppIcon />
               Pedir
-            </a>
+            </button>
           </div>
         </div>
       </section>

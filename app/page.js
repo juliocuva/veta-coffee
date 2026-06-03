@@ -610,21 +610,98 @@ export default function LandingPage() {
       {/* Footer */}
       <footer style={{
         borderTop: '1px solid var(--glass-border)',
-        padding: '3rem 1.5rem',
-        textAlign: 'center',
-        fontSize: '0.72rem',
+        padding: '3.5rem 1.5rem',
         color: 'var(--text-muted)',
         background: 'var(--bg-card)',
         position: 'relative',
         zIndex: 10
       }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <p style={{ fontSize: '1.05rem', color: 'var(--text-primary)', margin: 0, letterSpacing: '0.02em' }}>
-            <span style={{ fontWeight: 400 }}>be</span>
-            <span style={{ fontWeight: 900 }}>COFFEE</span>
-            <span style={{ fontWeight: 400, color: 'var(--gold)' }}>.pro</span>
-          </p>
-          <p style={{ margin: 0, fontWeight: 500 }}>© 2026 BeCoffee.pro · Diseñado para Tostadores de Café de Especialidad en América Latina</p>
+        <div className="footer-layout" style={{
+          maxWidth: 1080,
+          margin: '0 auto',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: '2.5rem',
+          flexWrap: 'wrap'
+        }}>
+          {/* Left Side: Brand Logos */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '2rem',
+            flexWrap: 'wrap'
+          }}>
+            {/* Logo 1: MOUSELAB */}
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <svg viewBox="0 0 50 50" width="38" height="38" style={{ marginRight: '0.6rem', flexShrink: 0 }}>
+                <path d="M12 25 C12 14, 38 14, 38 25 C38 35, 34 38, 25 38 C16 38, 12 35, 12 25 Z" stroke="var(--text-primary)" strokeWidth="3.5" fill="none" />
+                <path d="M25 15 L25 28" stroke="var(--text-primary)" strokeWidth="3.5" strokeLinecap="round" />
+                <circle cx="25" cy="31" r="2.5" fill="var(--text-primary)" />
+              </svg>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <span style={{
+                  fontFamily: 'var(--font-montserrat), sans-serif',
+                  fontSize: '1rem',
+                  fontWeight: 900,
+                  letterSpacing: '0.08em',
+                  color: 'var(--text-primary)',
+                  lineHeight: 1
+                }}>MOUSELAB</span>
+              </div>
+            </div>
+
+            {/* Logo 2: AXISONE COFFEE */}
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <svg viewBox="0 0 50 50" width="36" height="36" style={{ marginRight: '0.5rem', flexShrink: 0 }}>
+                <path d="M25 7 C18 7 13 15 13 24 C13 32 17 37 21 37 L29 37 C33 37 37 32 37 24 C37 15 32 7 25 7 Z" stroke="var(--text-primary)" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M25 18 L32 30 L18 30 Z" fill="var(--gold)" />
+              </svg>
+              <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+                <span style={{
+                  fontFamily: 'var(--font-montserrat), sans-serif',
+                  fontSize: '0.9rem',
+                  fontWeight: 500,
+                  letterSpacing: '0.04em',
+                  color: 'var(--text-primary)'
+                }}>
+                  AXIS<span style={{ fontWeight: 800 }}>one</span>
+                </span>
+                <span style={{
+                  fontFamily: 'var(--font-montserrat), sans-serif',
+                  fontSize: '0.42rem',
+                  fontWeight: 700,
+                  letterSpacing: '0.35em',
+                  color: 'var(--text-muted)',
+                  marginTop: '0.15rem'
+                }}>COFFEE</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Side: Intellectual Property Warning */}
+          <div style={{
+            flex: '1 1 500px',
+            fontSize: '0.64rem',
+            lineHeight: 1.6,
+            color: 'var(--text-muted)',
+            textAlign: 'right'
+          }} className="footer-legal">
+            <h5 style={{
+              fontSize: '0.72rem',
+              fontWeight: 700,
+              color: 'var(--text-primary)',
+              margin: '0 0 0.5rem 0'
+            }}>
+              Aviso de Propiedad Intelectual © 2026 Mouselab. Todos los derechos reservados.
+            </h5>
+            <p style={{ margin: '0 0 0.5rem 0' }}>
+              Mouselab es la entidad titular de todos los derechos de propiedad intelectual, secretos industriales y derechos de autor sobre la arquitectura de software, algoritmos de Inteligencia Artificial y diseños visuales presentados.
+            </p>
+            <p style={{ margin: 0 }}>
+              AXISONE COFFEE es una marca comercial propiedad de Mouselab. El acceso a este material, demostración o enlaces no constituye una licencia de uso, transferencia de derechos ni permiso para la ingeniería inversa o reproducción total o parcial. Cualquier uso no autorizado será perseguido bajo las leyes de propiedad intelectual globales y los tratados internacionales de la OMPI (WIPO).
+            </p>
+          </div>
         </div>
       </footer>
     </div>
