@@ -66,7 +66,7 @@ export default function LandingPage() {
             <Link href="#beneficios" className="landing-nav-link">Beneficios</Link>
             <Link href="#como-funciona" className="landing-nav-link">¿Cómo funciona?</Link>
             <Link href="#precios" className="landing-nav-link">Precios</Link>
-            <Link href="/sagradocorazon" className="landing-nav-link" style={{ color: 'var(--gold)', fontStyle: 'italic' }}>Ver Demo</Link>
+            <Link href="/sagradocorazon" className="landing-nav-link" style={{ color: 'var(--gold)' }}>Ver Demo</Link>
           </div>
           
           <Link href="/admin" style={{
@@ -121,7 +121,7 @@ export default function LandingPage() {
               maxWidth: 640,
               marginBottom: '1.5rem'
             }}>
-              Vende tu café de forma <span style={{ color: 'var(--gold)', fontStyle: 'italic' }}>ágil y directa</span> por WhatsApp.
+              Vende tu café de forma <span style={{ color: 'var(--gold)' }}>ágil y directa</span> por WhatsApp.
             </h1>
 
             <p style={{
@@ -242,7 +242,7 @@ export default function LandingPage() {
           <div style={{ textAlign: 'left' }}>
 
             <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.15, marginBottom: '1.5rem' }}>
-              La experiencia móvil que tus <span style={{ fontStyle: 'italic', color: 'var(--gold)' }}>clientes amarán</span>.
+              La experiencia móvil que tus <span style={{ color: 'var(--gold)' }}>clientes amarán</span>.
             </h2>
             <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.65, marginBottom: '2rem' }}>
               Diseñamos una interfaz súper fluida, libre de fricciones de registro. Tus clientes pueden navegar tu catálogo, elegir sus varietales y configurar cantidades y moliendas exactas en segundos.
@@ -286,7 +286,7 @@ export default function LandingPage() {
         <section id="capturas" style={{ textAlign: 'center' }}>
 
           <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '3.5rem' }}>
-            Así se ve tu <span style={{ fontStyle: 'italic', color: 'var(--gold)' }}>catálogo en acción</span>.
+            Así se ve tu <span style={{ color: 'var(--gold)' }}>catálogo en acción</span>.
           </h2>
           <div style={{
             display: 'flex',
@@ -366,7 +366,7 @@ export default function LandingPage() {
       }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', textAlign: 'center' }}>
           <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 700, color: '#FFFFFF', marginBottom: '4rem' }}>
-            Tu tienda en línea, en <span style={{ fontStyle: 'italic', color: 'var(--gold)' }}>3 simples pasos</span>.
+            Tu tienda en línea, en <span style={{ color: 'var(--gold)' }}>3 simples pasos</span>.
           </h2>
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
@@ -399,7 +399,7 @@ export default function LandingPage() {
                 </svg>
               </div>
 
-              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.6rem', fontStyle: 'italic' }}>Configura tus cafés</h3>
+              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.6rem' }}>Configura tus cafés</h3>
               <p style={{ fontSize: '0.8rem', color: '#D7CCC8', lineHeight: 1.55, margin: 0 }}>
                 Crea tu panel de tostador, ingresa tus variedades, notas de cata y el precio correspondiente de cada presentación y molienda.
               </p>
@@ -426,7 +426,7 @@ export default function LandingPage() {
                 </svg>
               </div>
 
-              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.6rem', fontStyle: 'italic' }}>Comparte tu link</h3>
+              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.6rem' }}>Comparte tu link</h3>
               <p style={{ fontSize: '0.8rem', color: '#D7CCC8', lineHeight: 1.55, margin: 0 }}>
                 Envía tu URL exclusiva (`becoffee.pro/tu-marca`) por chat, publícala en Instagram o agrégala mediante códigos QR en tus empaques físicos.
               </p>
@@ -452,7 +452,7 @@ export default function LandingPage() {
                 </svg>
               </div>
 
-              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.6rem', fontStyle: 'italic' }}>Despacha pedidos</h3>
+              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.6rem' }}>Despacha pedidos</h3>
               <p style={{ fontSize: '0.8rem', color: '#D7CCC8', lineHeight: 1.55, margin: 0 }}>
                 Tus compradores eligen el producto, el sistema genera la orden formateada con datos de entrega y el cliente te la envía directo a WhatsApp.
               </p>
@@ -477,7 +477,7 @@ export default function LandingPage() {
         <section id="precios" style={{ textAlign: 'center' }}>
 
           <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1.2rem' }}>
-            Planes a la <span style={{ fontStyle: 'italic', color: 'var(--gold)' }}>medida de tu negocio</span>.
+            Planes a la <span style={{ color: 'var(--gold)' }}>medida de tu negocio</span>.
           </h2>
           <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', maxWidth: 520, margin: '0 auto 4.5rem', lineHeight: 1.6 }}>
             Sin comisiones por transacciones ni costos ocultos. Elige el plan que mejor se adapte al volumen de tu tostaduría.
