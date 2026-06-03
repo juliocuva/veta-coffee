@@ -34,8 +34,31 @@ export default function CatalogPage({ roaster }) {
   const [cart, setCart]                 = useState([])
   const [activeId, setActiveId]         = useState(null)
   const [panelOpen, setPanelOpen]       = useState(false)
-  const [selectedWeight, setWeight]     = useState(null)
-  const [selectedGrind, setGrind]       = useState('Grano')
+  const [isDark, setIsDark]             = useState(false)
+
+  // Theme Sync
+  useEffect(() => {
+    const saved = localStorage.getItem('veta_theme') || 'light'
+    if (saved === 'dark') {
+      document.body.classList.add('dark-theme')
+      setIsDark(true)
+    } else {
+      document.body.classList.remove('dark-theme')
+      setIsDark(false)
+    }
+  }, [])
+
+  const toggleTheme = () => {
+    const nextDark = !isDark
+    setIsDark(nextDark)
+    if (nextDark) {
+      document.body.classList.add('dark-theme')
+      localStorage.setItem('veta_theme', 'dark')
+    } else {
+      document.body.classList.remove('dark-theme')
+      localStorage.setItem('veta_theme', 'light')
+    }
+  }
 
   // Load products
   useEffect(() => {
@@ -51,41 +74,39 @@ export default function CatalogPage({ roaster }) {
     load()
   }, [roaster.id])
 
-  // Sync panel controls when active item changes
-  useEffect(() => {
-    if (!activeId) return
-    const item = cart.find(i => i.productId === activeId)
-    if (item) {
-      setWeight(item.weight)
-      setGrind(item.grind)
-    }
-  }, [activeId])
-
   const handleCardClick = useCallback((productId) => {
-    setCart(prev => {
-      const exists = prev.find(i => i.productId === productId)
-      if (exists) return prev
-      return [...prev, { productId, weight: null, grind: 'Grano' }]
-    })
     setActiveId(productId)
     setPanelOpen(true)
   }, [])
 
-  const handleWeightChange = (w) => {
-    setWeight(w)
-    setCart(prev => prev.map(i => i.productId === activeId ? { ...i, weight: w } : i))
-  }
-
-  const handleGrindChange = (g) => {
-    setGrind(g)
-    setCart(prev => prev.map(i => i.productId === activeId ? { ...i, grind: g } : i))
-  }
-
-  const removeFromCart = (productId) => {
+  const handleQuantityChangeForWeightAndGrind = (wKey, grindOption, dir) => {
     setCart(prev => {
-      const next = prev.filter(i => i.productId !== productId)
-      if (activeId === productId) setActiveId(next.length ? next[next.length - 1].productId : null)
-      if (next.length === 0) setPanelOpen(false)
+      const existing = prev.find(i => i.productId === activeId && i.weight === wKey && i.grind === grindOption)
+      if (existing) {
+        const nextQty = existing.quantity + dir
+        if (nextQty <= 0) {
+          const next = prev.filter(i => !(i.productId === activeId && i.weight === wKey && i.grind === grindOption))
+          if (next.length === 0) {
+            setPanelOpen(false)
+            setActiveId(null)
+          }
+          return next
+        }
+        return prev.map(i => (i.productId === activeId && i.weight === wKey && i.grind === grindOption) ? { ...i, quantity: nextQty } : i)
+      } else if (dir > 0) {
+        return [...prev, { productId: activeId, weight: wKey, grind: grindOption, quantity: 1 }]
+      }
+      return prev
+    })
+  }
+
+  const removeFromCart = (productId, weight, grind) => {
+    setCart(prev => {
+      const next = prev.filter(i => !(i.productId === productId && i.weight === weight && i.grind === grind))
+      if (next.length === 0) {
+        setPanelOpen(false)
+        setActiveId(null)
+      }
       return next
     })
   }
@@ -95,7 +116,7 @@ export default function CatalogPage({ roaster }) {
     if (!p || !item.weight) return sum
     let price = p.prices[item.weight]
     if (p.isOffer) price = Math.round(price * (1 - p.offerDiscount))
-    return sum + price
+    return sum + (price * item.quantity)
   }, 0)
 
   const buildWhatsAppMsg = () => {
@@ -105,15 +126,17 @@ export default function CatalogPage({ roaster }) {
       if (!p || !item.weight) return
       let price = p.prices[item.weight]
       if (p.isOffer) price = Math.round(price * (1 - p.offerDiscount))
-      msg += `*${idx + 1}. ${p.variety}* (Caficultor: ${p.name})%0A`
+      const sub = price * item.quantity
+      msg += `*${idx + 1}. ${item.quantity}x ${p.variety}* (Caficultor: ${p.name})%0A`
       msg += `• ${SIZE_CONFIG[item.weight].label} · ${item.grind}%0A`
-      msg += `• $${price.toLocaleString()}%0A%0A`
+      msg += `• Valor unitario: $${price.toLocaleString()}%0A`
+      msg += `• Subtotal: $${sub.toLocaleString()}%0A%0A`
     })
     msg += `*TOTAL: $${total.toLocaleString()}*%0A%0A_¡Hola! Quisiera hacer este pedido._`
     return `https://wa.me/${roaster.phone}?text=${msg}`
   }
 
-  const panelVisible = cart.length > 0
+  const panelVisible = cart.length > 0 || activeId !== null
   const panelTranslate = !panelVisible ? '100%' : panelOpen ? '0%' : 'calc(100% - 68px)'
 
   return (
@@ -133,7 +156,7 @@ export default function CatalogPage({ roaster }) {
         alignItems: 'center',
       }}>
         <img src="/logo.png" alt="Logo" style={{ width: 38, height: 38, objectFit: 'contain', filter: 'invert(1) brightness(1.8)', marginBottom: '0.4rem' }} />
-        <h1 style={{ fontFamily: 'var(--font-museomoderno), sans-serif', fontSize: '1.25rem', fontWeight: 800, letterSpacing: '0.15em', color: 'var(--gold)', lineHeight: 1.2 }}>
+        <h1 style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '1.25rem', fontWeight: 800, letterSpacing: '0.15em', color: 'var(--gold)', lineHeight: 1.2 }}>
           {roaster.name}
         </h1>
         <p style={{ fontSize: '0.58rem', color: 'var(--text-muted)', marginTop: '0.25rem', letterSpacing: '0.04em' }}>
@@ -147,6 +170,20 @@ export default function CatalogPage({ roaster }) {
           color: 'var(--text-muted)', textDecoration: 'none', fontSize: '0.9rem',
           transition: 'var(--t)',
         }} title="Acceso tostador">🔑</a>
+        <button 
+          onClick={toggleTheme} 
+          style={{
+            position: 'absolute', right: '1.2rem', top: '50%', transform: 'translateY(-50%)',
+            width: 32, height: 32, borderRadius: '50%',
+            background: 'var(--glass)', border: '1px solid var(--glass-border)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            color: 'var(--text-muted)', fontSize: '0.9rem', cursor: 'pointer',
+            transition: 'var(--t)',
+          }}
+          title="Cambiar tema"
+        >
+          {isDark ? '☀️' : '🌙'}
+        </button>
       </header>
 
       {/* Product list */}
@@ -172,10 +209,19 @@ export default function CatalogPage({ roaster }) {
         )}
       </main>
 
+      {/* Backdrop Overlay */}
+      <div 
+        onClick={() => {
+          setPanelOpen(false)
+          if (cart.length === 0) setActiveId(null)
+        }}
+        className={`panel-backdrop ${panelOpen ? 'active' : ''}`}
+      />
+
       {/* Bottom sheet */}
       <section style={{
         position: 'absolute', bottom: 0, left: 0, right: 0,
-        background: 'rgba(27, 26, 32, 0.9)',
+        background: 'var(--panel-bg)',
         backdropFilter: 'blur(30px)',
         borderTop: '1px solid var(--glass-border)',
         borderTopLeftRadius: 'var(--r-xl)',
@@ -183,11 +229,18 @@ export default function CatalogPage({ roaster }) {
         transform: `translateY(${panelTranslate})`,
         transition: 'transform 0.45s var(--smooth)',
         zIndex: 100,
-        boxShadow: '0 -4px 40px rgba(0,0,0,0.5)',
+        boxShadow: '0 -4px 40px var(--shadow-color)',
       }}>
         {/* Panel header / drag bar */}
         <div
-          onClick={() => cart.length > 0 && setPanelOpen(o => !o)}
+          onClick={() => {
+            if (cart.length > 0) {
+              setPanelOpen(o => !o)
+            } else {
+              setPanelOpen(false)
+              setActiveId(null)
+            }
+          }}
           style={{
             height: 68, display: 'flex', alignItems: 'center',
             justifyContent: 'space-between', padding: '0 1.4rem',
@@ -195,7 +248,7 @@ export default function CatalogPage({ roaster }) {
           }}
         >
           <div style={{ position: 'absolute', top: 10, left: '50%', transform: 'translateX(-50%)',
-            width: 36, height: 3, background: 'rgba(255,255,255,0.12)', borderRadius: 10 }} />
+            width: 36, height: 3, background: 'var(--glass-border)', borderRadius: 10 }} />
           <div>
             <div style={{ fontSize: '0.52rem', fontWeight: 700, letterSpacing: '0.14em',
               color: 'var(--gold)', textTransform: 'uppercase' }}>Tu pedido</div>
@@ -214,33 +267,78 @@ export default function CatalogPage({ roaster }) {
           pointerEvents: panelOpen ? 'all' : 'none',
           transition: 'opacity 0.25s ease',
         }}>
-          {/* Grind */}
-          <div style={{ marginBottom: '1rem' }}>
-            <span style={{ display: 'block', fontSize: '0.52rem', fontWeight: 700,
-              letterSpacing: '0.14em', color: 'var(--text-muted)', textTransform: 'uppercase',
-              marginBottom: '0.55rem' }}>Presentación</span>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.45rem' }}>
-              {['Grano', 'Molido'].map(g => (
-                <SelectBtn key={g} active={selectedGrind === g} onClick={() => handleGrindChange(g)}>
-                  {g === 'Grano' ? '☕' : '⚙️'} {g}
-                </SelectBtn>
-              ))}
-            </div>
-          </div>
+          {/* List of Weight & Grind Options for Active Product */}
+          {(() => {
+            const activeProduct = products.find(p => p.id === activeId)
+            if (!activeProduct) return null
+            return (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', marginBottom: '1.2rem' }}>
+                <span style={{ display: 'block', fontSize: '0.52rem', fontWeight: 700,
+                  letterSpacing: '0.14em', color: 'var(--text-muted)', textTransform: 'uppercase',
+                  marginBottom: '0.2rem' }}>Opciones para {activeProduct.variety}</span>
+                
+                {Object.entries(SIZE_CONFIG).map(([wKey, cfg]) => {
+                  let unitPrice = activeProduct.prices[wKey] || 0
+                  if (activeProduct.isOffer) unitPrice = Math.round(unitPrice * (1 - activeProduct.offerDiscount))
 
-          {/* Weight */}
-          <div style={{ marginBottom: '0.8rem' }}>
-            <span style={{ display: 'block', fontSize: '0.52rem', fontWeight: 700,
-              letterSpacing: '0.14em', color: 'var(--text-muted)', textTransform: 'uppercase',
-              marginBottom: '0.55rem' }}>Gramaje</span>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.45rem' }}>
-              {Object.entries(SIZE_CONFIG).map(([key, cfg]) => (
-                <SelectBtn key={key} active={selectedWeight === key} onClick={() => handleWeightChange(key)}>
-                  {cfg.label}
-                </SelectBtn>
-              ))}
-            </div>
-          </div>
+                  return (
+                    <div key={wKey} style={{
+                      background: 'var(--glass)', border: '1px solid var(--glass-border)',
+                      borderRadius: 'var(--r-sm)', padding: '0.7rem 0.9rem',
+                      display: 'flex', flexDirection: 'column', gap: '0.6rem'
+                    }}>
+                      {/* Top: Weight Label & Unit Price */}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{ fontSize: '0.8rem', fontWeight: 750, color: 'var(--text-primary)' }}>{cfg.label}</span>
+                        <span style={{ fontSize: '0.68rem', color: 'var(--gold)', fontWeight: 700 }}>${unitPrice.toLocaleString()} c/u</span>
+                      </div>
+
+                      {/* Bottom: Inline selectors for Grano & Molido */}
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
+                        {['Grano', 'Molido'].map(g => {
+                          const cartItem = cart.find(i => i.productId === activeId && i.weight === wKey && i.grind === g)
+                          const qty = cartItem ? cartItem.quantity : 0
+                          const active = qty > 0
+
+                          return (
+                            <div key={g} style={{
+                              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                              background: active ? 'var(--gold-dim)' : 'rgba(0,0,0,0.03)',
+                              border: `1px solid ${active ? 'var(--gold)' : 'var(--glass-border)'}`,
+                              borderRadius: '6px', padding: '0.35rem 0.5rem', transition: 'var(--t)'
+                            }}>
+                              <span style={{ fontSize: '0.65rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+                                {g === 'Grano' ? '☕' : '⚙️'} {g}
+                              </span>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                                <button
+                                  type="button"
+                                  onClick={() => handleQuantityChangeForWeightAndGrind(wKey, g, -1)}
+                                  style={{ background: 'none', border: 'none', color: 'var(--text-primary)', fontSize: '0.85rem', fontWeight: 800, cursor: 'pointer', width: 18, height: 18, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                >
+                                  —
+                                </button>
+                                <span style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--text-primary)', minWidth: 10, textAlign: 'center' }}>
+                                  {qty}
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => handleQuantityChangeForWeightAndGrind(wKey, g, 1)}
+                                  style={{ background: 'none', border: 'none', color: 'var(--text-primary)', fontSize: '0.85rem', fontWeight: 800, cursor: 'pointer', width: 18, height: 18, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                >
+                                  +
+                                </button>
+                              </div>
+                            </div>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            )
+          })()}
 
           {/* Order summary */}
           <div style={{ maxHeight: 120, overflowY: 'auto', marginBottom: '0.8rem',
@@ -250,24 +348,35 @@ export default function CatalogPage({ roaster }) {
               if (!p) return null
               let price = item.weight ? p.prices[item.weight] : 0
               if (item.weight && p.isOffer) price = Math.round(price * (1 - p.offerDiscount))
+              const subtotal = price * item.quantity
+              const active = item.productId === activeId
               return (
-                <div key={item.productId} style={{
-                  display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                  background: 'var(--glass)', border: '1px solid var(--glass-border)',
-                  borderRadius: 'var(--r-sm)', padding: '0.55rem 0.8rem',
-                }}>
+                <div 
+                  key={item.productId + '-' + item.weight + '-' + item.grind}
+                  onClick={() => setActiveId(item.productId)}
+                  style={{
+                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                    background: active ? 'var(--gold-dim)' : 'var(--glass)',
+                    border: `1px solid ${active ? 'var(--gold)' : 'var(--glass-border)'}`,
+                    borderRadius: 'var(--r-sm)', padding: '0.55rem 0.8rem',
+                    cursor: 'pointer', transition: 'var(--t)',
+                    boxShadow: active ? '0 2px 8px var(--gold-glow)' : 'none',
+                  }}
+                >
                   <div>
-                    <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-primary)' }}>{p.variety}</div>
+                    <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+                      {p.variety} <span style={{ fontSize: '0.7rem', color: 'var(--gold)', fontWeight: 700 }}>(x{item.quantity})</span>
+                    </div>
                     <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>
-                      {item.weight ? SIZE_CONFIG[item.weight].label : '⚠ Selecciona gramaje'} · {item.grind}
+                      {item.weight ? SIZE_CONFIG[item.weight].label : '⚠ Selecciona gramaje'} · {item.grind} · {p.name}
                     </div>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }} onClick={(e) => e.stopPropagation()}>
                     <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--gold)' }}>
-                      ${price.toLocaleString()}
+                      ${subtotal.toLocaleString()}
                     </span>
-                    <button onClick={() => removeFromCart(item.productId)} style={{
-                      background: 'none', border: 'none', color: 'rgba(255,255,255,0.25)',
+                    <button onClick={() => removeFromCart(item.productId, item.weight, item.grind)} style={{
+                      background: 'none', border: 'none', color: 'var(--text-muted)',
                       cursor: 'pointer', fontSize: '1rem', lineHeight: 1,
                     }}>×</button>
                   </div>
@@ -348,46 +457,42 @@ function ProductCard({ product: p, isInCart, animDelay, onClick }) {
         }}>✓</div>
       )}
 
-      {/* Row 1: Region & Variety */}
-      <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '0.5rem', paddingRight: isInCart ? '2.5rem' : 0 }}>
-        <span className="tag tag-region" style={{ fontSize: '0.58rem', fontWeight: 800, padding: '0.25rem 0.6rem' }}>
-          {(p.region || '').toUpperCase()}
-        </span>
-        <span className="tag tag-default" style={{ fontSize: '0.58rem', fontWeight: 800, padding: '0.25rem 0.6rem', color: '#E8D5C4', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-          👨‍🌾 {(p.variety || '').toUpperCase()}
-        </span>
+      {/* Card Top: Variety and Grower/Lot Title Hierarchy */}
+      <div style={{ marginBottom: '0.6rem', paddingRight: isInCart ? '2.5rem' : 0 }}>
+        <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0, letterSpacing: '0.01em', lineHeight: 1.3 }}>
+          {p.variety}
+        </h3>
+        <p style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', fontWeight: 600, marginTop: '0.18rem' }}>
+          {p.name} {p.lot ? `· ${p.lot}` : ''}
+        </p>
       </div>
 
-      {/* Row 2: Lot, Process, Altitude */}
-      <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '0.5rem' }}>
-        <span className="tag tag-default" style={{ fontSize: '0.58rem', fontWeight: 800, padding: '0.25rem 0.6rem', color: '#E8D5C4' }}>
-          🏡 LOTE: {(p.lot || '').toUpperCase()}
+      {/* Row 2: Metadata tags (Region, Process, Altitude) */}
+      <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.65rem' }}>
+        <span className="tag tag-region">
+          {p.region}
         </span>
-        <span className="tag tag-default" style={{ fontSize: '0.58rem', fontWeight: 800, padding: '0.25rem 0.6rem', color: '#E8D5C4' }}>
-          {(p.process || '').toUpperCase()}
+        <span className="tag tag-default">
+          {p.process}
         </span>
-        <span className="tag tag-default" style={{ fontSize: '0.58rem', fontWeight: 800, padding: '0.25rem 0.6rem', color: '#E8D5C4' }}>
-          {(p.altitude || '').toUpperCase()}
+        <span className="tag tag-default">
+          {p.altitude}
         </span>
-      </div>
-
-      {/* Row 3: Offer (if any) */}
-      {p.isOffer && (
-        <div style={{ display: 'flex', marginBottom: '0.75rem' }}>
-          <span className="tag tag-offer" style={{ fontSize: '0.58rem', fontWeight: 800, padding: '0.25rem 0.6rem', letterSpacing: '0.04em' }}>
-            −{Math.round(p.offerDiscount * 100)}% OFERTA
+        {p.isOffer && (
+          <span className="tag tag-offer">
+            −{Math.round(p.offerDiscount * 100)}% oferta
           </span>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Tasting notes */}
       <p style={{ 
-        fontSize: '0.66rem', 
+        fontSize: '0.63rem', 
         color: 'var(--text-muted)', 
         fontStyle: 'italic', 
-        letterSpacing: '0.02em',
-        marginTop: '0.65rem',
-        marginBottom: '0.95rem'
+        letterSpacing: '0.01em',
+        marginTop: '0.4rem',
+        marginBottom: '0.85rem'
       }}>
         {p.notes}
       </p>
@@ -422,21 +527,41 @@ function ProductCard({ product: p, isInCart, animDelay, onClick }) {
 
 function SelectBtn({ active, onClick, children }) {
   return (
-    <div onClick={onClick} style={{
-      background: active ? 'linear-gradient(135deg, var(--gold), #C09A5A)' : 'var(--glass)',
-      border: `1px solid ${active ? 'var(--gold)' : 'var(--glass-border)'}`,
-      color: active ? '#1F1E24' : 'rgba(255,255,255,0.4)',
-      padding: '0.6rem 0.4rem',
-      borderRadius: 'var(--r-sm)',
-      fontSize: '0.74rem',
-      fontWeight: active ? 800 : 600,
-      fontFamily: 'Montserrat, sans-serif',
-      textAlign: 'center',
-      cursor: 'pointer',
-      transition: 'var(--t)',
-      transform: active ? 'translateY(-1px)' : 'none',
-      boxShadow: active ? '0 4px 14px var(--gold-glow)' : 'none',
-    }}>{children}</div>
+    <div 
+      onClick={onClick} 
+      className={`select-btn-item ${active ? 'active' : ''}`}
+      style={{
+        background: active ? 'var(--btn-select-active-bg)' : 'var(--btn-select-bg)',
+        border: `1px solid ${active ? 'var(--btn-select-active-border)' : 'var(--btn-select-border)'}`,
+        color: active ? 'var(--btn-select-active-text)' : 'var(--btn-select-text)',
+        padding: '0.6rem 0.4rem',
+        borderRadius: 'var(--r-sm)',
+        fontSize: '0.74rem',
+        fontWeight: active ? 800 : 600,
+        fontFamily: 'Montserrat, sans-serif',
+        textAlign: 'center',
+        cursor: 'pointer',
+        transition: 'var(--t)',
+        transform: active ? 'translateY(-1px)' : 'none',
+        boxShadow: active ? '0 4px 14px var(--gold-glow)' : 'none',
+      }}
+      onMouseEnter={(e) => {
+        if (!active) {
+          e.currentTarget.style.background = 'var(--btn-select-hover-bg)';
+          e.currentTarget.style.color = 'var(--btn-select-hover-text)';
+          e.currentTarget.style.borderColor = 'rgba(211,178,127,0.35)';
+        }
+      }}
+      onMouseLeave={(e) => {
+        if (!active) {
+          e.currentTarget.style.background = 'var(--btn-select-bg)';
+          e.currentTarget.style.color = 'var(--btn-select-text)';
+          e.currentTarget.style.borderColor = 'var(--btn-select-border)';
+        }
+      }}
+    >
+      {children}
+    </div>
   )
 }
 

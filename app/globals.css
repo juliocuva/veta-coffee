@@ -1,4 +1,83 @@
 :root {
+  /* Brand Palette - Light Mode Default */
+  --bg:          #FAF7F2;
+  --bg-card:     #FFFFFF;
+  --bg-card-2:   #F3EDE4;
+  --green:       #005C38;
+  --green-dim:   rgba(0, 92, 56, 0.08);
+  --green-glow:  rgba(0, 92, 56, 0.2);
+  --brown:       #502514;
+  --brown-dim:   rgba(80, 37, 20, 0.12);
+  --taupe:       #8A7C72;
+  --taupe-dim:   rgba(138, 124, 114, 0.08);
+  --gold:        #9E763F;
+  --gold-dim:    rgba(158, 118, 63, 0.08);
+  --gold-glow:   rgba(158, 118, 63, 0.2);
+
+  /* Text */
+  --text-primary:   #120E0B;  /* High contrast espresso black */
+  --text-secondary: #4A3E36;  /* High contrast medium-dark brown */
+  --text-muted:     #5C4F46;  /* High contrast dark taupe for small details */
+
+  /* Badges & Tags */
+  --tag-region-text:   #005C38;  /* Deep green */
+  --tag-region-bg:     rgba(0, 92, 56, 0.08);
+  --tag-default-text:  #502514;  /* Deep brown */
+  --tag-default-bg:    rgba(80, 37, 20, 0.07);
+  --tag-offer-text:    #9E763F;  /* Deep gold */
+  --tag-offer-bg:      rgba(158, 118, 63, 0.12);
+
+  /* Select Buttons (Gramaje, Molienda) */
+  --btn-select-bg:            rgba(80, 37, 20, 0.04);
+  --btn-select-border:        rgba(80, 37, 20, 0.1);
+  --btn-select-text:          #4A3E36;
+  --btn-select-hover-bg:      rgba(80, 37, 20, 0.08);
+  --btn-select-hover-text:    #9E763F;
+  --btn-select-active-bg:     linear-gradient(135deg, var(--gold), #C09A5A);
+  --btn-select-active-border: var(--gold);
+  --btn-select-active-text:   #FFFFFF;
+
+  /* Semantic */
+  --success:     #005C38;
+  --danger:      #C0392B;
+  --warning:     #9E763F;
+  --wa-green:    #25D366;
+
+  /* Glass */
+  --glass:       rgba(80, 37, 20, 0.02);
+  --glass-border:rgba(80, 37, 20, 0.09);
+
+  /* Body background & shadows - Light */
+  --body-bg:       #EFEBE4;
+  --body-radial-1: rgba(0, 92, 56, 0.04);
+  --body-radial-2: rgba(80, 37, 20, 0.06);
+  --shadow-color:  rgba(80, 37, 20, 0.12);
+  --shadow-glow:   rgba(0, 92, 56, 0.03);
+  --shadow-border: rgba(0, 0, 0, 0.05);
+
+  --panel-bg:      rgba(250, 247, 242, 0.92);
+  --login-glow:    rgba(0, 92, 56, 0.05);
+  --card-active-blend: rgba(80, 37, 20, 0.03);
+  --on-gold:       #FFFFFF;
+
+  /* Radii */
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-2xl: 40px;
+
+  /* Motion */
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --t: all 0.28s var(--smooth);
+}
+
+/* ═══════════════════════════════════════════════════════
+   DARK MODE OVERRIDES
+   ═══════════════════════════════════════════════════════ */
+body.dark-theme {
+  /* Brand Palette */
   --bg:          #1F1E24;
   --bg-card:     #27262D;
   --bg-card-2:   #2E2D35;
@@ -6,26 +85,58 @@
   --green-dim:   rgba(0, 97, 60, 0.18);
   --green-glow:  rgba(0, 97, 60, 0.35);
   --brown:       #502514;
+  --brown-dim:   rgba(80, 37, 20, 0.25);
   --taupe:       #C0B2A7;
   --taupe-dim:   rgba(192, 178, 167, 0.12);
   --gold:        #D3B27F;
   --gold-dim:    rgba(211, 178, 127, 0.15);
   --gold-glow:   rgba(211, 178, 127, 0.3);
-  --text-primary:   #F5F0EA;
-  --text-secondary: #C0B2A7;
-  --text-muted:     rgba(192, 178, 167, 0.5);
+
+  /* Text */
+  --text-primary:   #FFFFFF;  /* Maximum contrast white */
+  --text-secondary: #E3DCD5;  /* Brighter sand/beige */
+  --text-muted:     #B3A79E;  /* Brighter solid muted gray */
+
+  /* Badges & Tags */
+  --tag-region-text:   #6FCF97;  /* High contrast bright green */
+  --tag-region-bg:     rgba(111, 207, 151, 0.15);
+  --tag-default-text:  #E8D5C4;  /* Light sand beige */
+  --tag-default-bg:    rgba(255, 255, 255, 0.06);
+  --tag-offer-text:    #D3B27F;  /* Warm gold */
+  --tag-offer-bg:      rgba(211, 178, 127, 0.15);
+
+  /* Select Buttons (Gramaje, Molienda) */
+  --btn-select-bg:            rgba(255, 255, 255, 0.05);
+  --btn-select-border:        rgba(255, 255, 255, 0.1);
+  --btn-select-text:          #C0B2A7;
+  --btn-select-hover-bg:      rgba(255, 255, 255, 0.1);
+  --btn-select-hover-text:    #D3B27F;
+  --btn-select-active-bg:     linear-gradient(135deg, var(--gold), #D3B27F);
+  --btn-select-active-border: var(--gold);
+  --btn-select-active-text:   #1F1E24;
+
+  /* Semantic */
+  --success:     #00613C;
   --danger:      #C0392B;
+  --warning:     #D3B27F;
   --wa-green:    #25D366;
+
+  /* Glass */
   --glass:       rgba(255, 255, 255, 0.04);
   --glass-border:rgba(255, 255, 255, 0.07);
-  --r-sm: 8px;
-  --r-md: 14px;
-  --r-lg: 20px;
-  --r-xl: 28px;
-  --r-2xl: 40px;
-  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  --smooth: cubic-bezier(0.4, 0, 0.2, 1);
-  --t: all 0.28s var(--smooth);
+
+  /* Body background & shadows - Dark */
+  --body-bg:       #131217;
+  --body-radial-1: rgba(0, 97, 60, 0.07);
+  --body-radial-2: rgba(80, 37, 20, 0.12);
+  --shadow-color:  rgba(0, 0, 0, 0.8);
+  --shadow-glow:   rgba(0, 97, 60, 0.05);
+  --shadow-border: rgba(255, 255, 255, 0.05);
+
+  --panel-bg:      rgba(27, 26, 32, 0.88);
+  --login-glow:    rgba(0, 97, 60, 0.15);
+  --card-active-blend: rgba(80, 37, 20, 0.35);
+  --on-gold:       #1F1E24;
 }
 
 *, *::before, *::after {
@@ -42,10 +153,10 @@ html, body {
 
 body {
   font-family: var(--font-montserrat), 'Montserrat', sans-serif;
-  background: #131217;
+  background: var(--body-bg);
   background-image:
-    radial-gradient(ellipse at 20% 50%, rgba(0,97,60,0.07) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 20%, rgba(80,37,20,0.12) 0%, transparent 50%);
+    radial-gradient(ellipse at 20% 50%, var(--body-radial-1) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 20%, var(--body-radial-2) 0%, transparent 50%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -72,9 +183,9 @@ body {
     height: calc(100dvh - 3rem);
     border-radius: var(--r-2xl);
     box-shadow:
-      0 0 0 1px rgba(255,255,255,0.05),
-      0 40px 100px rgba(0,0,0,0.8),
-      0 0 80px rgba(0,97,60,0.05);
+      0 0 0 1px var(--shadow-border),
+      0 40px 100px var(--shadow-color),
+      0 0 80px var(--shadow-glow);
   }
 }
 
@@ -110,8 +221,12 @@ body {
   box-shadow: 0 4px 20px var(--green-glow);
 }
 
-.btn-primary:hover  { transform: translateY(-2px); box-shadow: 0 8px 28px var(--green-glow); }
-.btn-primary:active { transform: scale(0.98); }
+.btn-primary:hover  { 
+  background: linear-gradient(135deg, #00804E, var(--green));
+  transform: translateY(-2px); 
+  box-shadow: 0 8px 28px var(--green-glow); 
+}
+.btn-primary:active { transform: scale(0.97); }
 .btn-primary:disabled { opacity: 0.6; pointer-events: none; }
 
 /* Form elements */
@@ -172,11 +287,11 @@ body {
   border: 1px solid transparent;
 }
 
-.tag-region { background: var(--green-dim); color: #6FCF97; border-color: rgba(0,97,60,0.3); }
-.tag-default { background: var(--taupe-dim); color: var(--taupe); border-color: rgba(192,178,167,0.1); }
+.tag-region { background: var(--tag-region-bg); color: var(--tag-region-text); border-color: rgba(0,97,60,0.3); }
+.tag-default { background: var(--tag-default-bg); color: var(--tag-default-text); border-color: rgba(192,178,167,0.1); }
 .tag-offer {
-  background: rgba(211,178,127,0.12);
-  color: var(--gold);
+  background: var(--tag-offer-bg);
+  color: var(--tag-offer-text);
   border-color: rgba(211,178,127,0.3);
   animation: pulseBadge 2.5s ease-in-out infinite;
 }

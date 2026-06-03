@@ -202,7 +202,7 @@ export default function AdminLogin() {
           <div style={{ width: 64, height: 64, background: 'var(--green-dim)', border: '1px solid rgba(0,97,60,0.3)', borderRadius: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.4rem', overflow: 'hidden' }}>
             <img src="/logo.png" alt="Logo" style={{ width: 44, height: 44, objectFit: 'contain', filter: 'invert(1) brightness(1.8)' }} />
           </div>
-          <h1 style={{ fontFamily: 'var(--font-museomoderno), sans-serif', fontSize: '1.5rem', fontWeight: 800, letterSpacing: '0.12em', color: 'var(--gold)' }}>PLATAFORMA</h1>
+          <h1 style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '1.5rem', fontWeight: 800, letterSpacing: '0.12em', color: 'var(--gold)' }}>PLATAFORMA</h1>
           <p style={{ fontSize: '0.65rem', fontWeight: 600, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Acceso Tostadores</p>
         </div>
 
@@ -224,7 +224,7 @@ export default function AdminLogin() {
               border: 'none',
               borderRadius: 'var(--r-sm)',
               padding: '0.6rem',
-              color: '#fff',
+              color: tab === 'login' ? '#fff' : 'var(--text-secondary)',
               fontSize: '0.75rem',
               fontWeight: 700,
               cursor: 'pointer',
@@ -242,7 +242,7 @@ export default function AdminLogin() {
               border: 'none',
               borderRadius: 'var(--r-sm)',
               padding: '0.6rem',
-              color: '#fff',
+              color: tab === 'register' ? '#fff' : 'var(--text-secondary)',
               fontSize: '0.75rem',
               fontWeight: 700,
               cursor: 'pointer',
