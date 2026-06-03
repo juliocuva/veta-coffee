@@ -277,8 +277,8 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
       {/* Header */}
       <header style={{
         padding: '1.1rem 1.2rem 0.95rem', 
-        background: 'var(--green-dim)',
-        borderBottom: '1px solid rgba(0,97,60,0.25)', 
+        background: '#092e1c',
+        borderBottom: '1px solid rgba(110, 207, 151, 0.15)', 
         flexShrink: 0,
         display: 'flex', 
         flexDirection: 'column', 
@@ -302,6 +302,7 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
           flexWrap: 'wrap',
           gap: '0.5rem' 
         }}>
+          {/* Left Side: Catalog and Store Link */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
             <a 
               href={`/${roaster.slug}`} 
@@ -348,6 +349,10 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
             >
               {copied ? '¡Copiado! ✅' : '🔗 Copiar Link'}
             </button>
+          </div>
+
+          {/* Right Side: Edit User and Logout */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
             <button 
               onClick={() => {
                 setProfileName(roaster.name)
@@ -376,26 +381,29 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
             >
               👤 Editar
             </button>
+            <button 
+              onClick={handleLogout} 
+              style={{
+                background: 'rgba(110, 207, 151, 0.05)', 
+                border: '1px solid rgba(110, 207, 151, 0.3)', 
+                borderRadius: 6,
+                fontSize: '0.55rem', 
+                fontWeight: 700, 
+                color: '#6FCF97', 
+                padding: '0.25rem 0.6rem',
+                cursor: 'pointer', 
+                textTransform: 'uppercase',
+                height: '24px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                transition: 'var(--t)'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.15)'}
+              onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.05)'}
+            >
+              Salir
+            </button>
           </div>
-          <button 
-            onClick={handleLogout} 
-            style={{
-              background: 'none', 
-              border: '1px solid rgba(0,97,60,0.4)', 
-              borderRadius: 6,
-              fontSize: '0.55rem', 
-              fontWeight: 700, 
-              color: '#6FCF97', 
-              padding: '0.25rem 0.6rem',
-              cursor: 'pointer', 
-              textTransform: 'uppercase',
-              height: '24px',
-              display: 'inline-flex',
-              alignItems: 'center'
-            }}
-          >
-            Salir
-          </button>
         </div>
       </header>
 
