@@ -103,114 +103,144 @@ export default function LandingPage() {
         {/* Hero Body */}
         <div style={{
           width: '100%',
-          maxWidth: 960,
+          maxWidth: 1080,
           margin: '0 auto',
-          padding: '4rem 1.5rem 2rem',
-          textAlign: 'center',
+          padding: '4rem 1.5rem 3rem',
           display: 'flex',
-          flexDirection: 'column',
+          flexDirection: 'row',
           alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '3.5rem',
+          flexWrap: 'wrap',
           position: 'relative',
           zIndex: 10
         }}>
-          <span style={{
-            background: 'rgba(158, 118, 63, 0.15)',
-            color: 'var(--gold)',
-            border: '1px solid rgba(158, 118, 63, 0.3)',
-            padding: '0.5rem 1.2rem',
-            borderRadius: 30,
-            fontSize: '0.62rem',
-            fontWeight: 600,
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            marginBottom: '2rem',
-            boxShadow: 'inset 0 1px 4px rgba(255, 255, 255, 0.05)'
-          }}>
-            ☕ E-commerce para Café de Especialidad
-          </span>
-
-          <h1 style={{
-            fontSize: 'clamp(2.2rem, 7vw, 4rem)',
-            fontWeight: 700,
-            lineHeight: 1.1,
-            color: '#FFFFFF',
-            letterSpacing: '-0.01em',
-            maxWidth: 820,
-            marginBottom: '1.5rem'
-          }}>
-            Vende tu café de forma <span style={{ color: 'var(--gold)', fontStyle: 'italic' }}>ágil y directa</span> por WhatsApp.
-          </h1>
-
-          <p style={{
-            fontSize: 'clamp(0.95rem, 3vw, 1.15rem)',
-            color: '#E0EDE6',
-            lineHeight: 1.6,
-            maxWidth: 640,
-            marginBottom: '2.5rem',
-            fontWeight: 400
-          }}>
-            Digitaliza tus varietales y procesos en 5 minutos. Comparte tu link personalizado y recibe pedidos perfectamente estructurados directo a tu chat.
-          </p>
-
+          {/* Left Column: Text & CTAs */}
           <div style={{
+            flex: '1 1 500px',
+            textAlign: 'left',
             display: 'flex',
-            gap: '1rem',
-            width: '100%',
-            maxWidth: 480,
-            justifyContent: 'center',
-            flexWrap: 'wrap'
+            flexDirection: 'column',
+            alignItems: 'flex-start'
           }}>
-            <Link href="/admin" style={{
-              background: '#FFFFFF',
-              color: '#004d2e',
-              padding: '1.1rem 2.2rem',
-              borderRadius: 'var(--r-md)',
+            <span style={{
+              background: 'rgba(158, 118, 63, 0.15)',
+              color: 'var(--gold)',
+              border: '1px solid rgba(158, 118, 63, 0.3)',
+              padding: '0.5rem 1.2rem',
+              borderRadius: 30,
+              fontSize: '0.62rem',
               fontWeight: 600,
-              fontSize: '0.82rem',
-              textDecoration: 'none',
+              letterSpacing: '0.15em',
               textTransform: 'uppercase',
-              letterSpacing: '0.08em',
-              boxShadow: '0 6px 20px rgba(255, 255, 255, 0.15)',
-              textAlign: 'center',
-              flex: '1 1 auto',
-              minWidth: 210,
+              marginBottom: '1.5rem',
+              boxShadow: 'inset 0 1px 4px rgba(255, 255, 255, 0.05)'
+            }}>
+              ☕ E-commerce para Café de Especialidad
+            </span>
+
+            <h1 style={{
+              fontSize: 'clamp(2.2rem, 5vw, 3.4rem)',
+              fontWeight: 700,
+              lineHeight: 1.15,
+              color: '#FFFFFF',
+              letterSpacing: '-0.01em',
+              maxWidth: 640,
+              marginBottom: '1.5rem'
+            }}>
+              Vende tu café de forma <span style={{ color: 'var(--gold)', fontStyle: 'italic' }}>ágil y directa</span> por WhatsApp.
+            </h1>
+
+            <p style={{
+              fontSize: 'clamp(0.95rem, 2.5vw, 1.1rem)',
+              color: '#E0EDE6',
+              lineHeight: 1.6,
+              maxWidth: 540,
+              marginBottom: '2.5rem',
+              fontWeight: 400
+            }}>
+              Digitaliza tus varietales y procesos en 5 minutos. Comparte tu link personalizado y recibe pedidos perfectamente estructurados directo a tu chat.
+            </p>
+
+            <div style={{
+              display: 'flex',
+              gap: '1rem',
+              width: '100%',
+              maxWidth: 480,
+              justifyContent: 'flex-start',
+              flexWrap: 'wrap',
+              marginBottom: '1.8rem'
+            }}>
+              <Link href="/admin" style={{
+                background: '#FFFFFF',
+                color: '#004d2e',
+                padding: '1.1rem 2.2rem',
+                borderRadius: 'var(--r-md)',
+                fontWeight: 600,
+                fontSize: '0.82rem',
+                textDecoration: 'none',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                boxShadow: '0 6px 20px rgba(255, 255, 255, 0.15)',
+                textAlign: 'center',
+                flex: '1 1 auto',
+                minWidth: 210,
+                transition: 'var(--t)'
+              }}>
+                Crear mi Catálogo
+              </Link>
+              <Link href="/sagradocorazon" style={{
+                background: 'rgba(255,255,255,0.06)',
+                border: '1px solid rgba(255,255,255,0.18)',
+                color: '#FFFFFF',
+                padding: '1.1rem 2.2rem',
+                borderRadius: 'var(--r-md)',
+                fontWeight: 600,
+                fontSize: '0.82rem',
+                textDecoration: 'none',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                textAlign: 'center',
+                flex: '1 1 auto',
+                minWidth: 210,
+                transition: 'var(--t)',
+                backdropFilter: 'blur(8px)'
+              }}>
+                Ver Tienda Demo
+              </Link>
+            </div>
+            
+            <Link href="/admin" style={{
+              color: '#DCECE5',
+              fontSize: '0.78rem',
+              textDecoration: 'underline',
+              textUnderlineOffset: '4px',
+              fontWeight: 500,
+              letterSpacing: '0.02em',
               transition: 'var(--t)'
             }}>
-              Crear mi Catálogo
-            </Link>
-            <Link href="/sagradocorazon" style={{
-              background: 'rgba(255,255,255,0.06)',
-              border: '1px solid rgba(255,255,255,0.18)',
-              color: '#FFFFFF',
-              padding: '1.1rem 2.2rem',
-              borderRadius: 'var(--r-md)',
-              fontWeight: 600,
-              fontSize: '0.82rem',
-              textDecoration: 'none',
-              textTransform: 'uppercase',
-              letterSpacing: '0.08em',
-              textAlign: 'center',
-              flex: '1 1 auto',
-              minWidth: 210,
-              transition: 'var(--t)',
-              backdropFilter: 'blur(8px)'
-            }}>
-              Ver Tienda Demo
+              ¿Ya tienes cuenta? Inicia sesión aquí
             </Link>
           </div>
-          
-          <Link href="/admin" style={{
-            color: '#DCECE5',
-            fontSize: '0.78rem',
-            textDecoration: 'underline',
-            textUnderlineOffset: '4px',
-            marginTop: '1.8rem',
-            fontWeight: 500,
-            letterSpacing: '0.02em',
-            transition: 'var(--t)'
+
+          {/* Right Column: Hero coffee image */}
+          <div style={{
+            flex: '1 1 360px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
           }}>
-            ¿Ya tienes cuenta? Inicia sesión aquí
-          </Link>
+            <div style={{
+              width: '100%',
+              maxWidth: 420,
+              borderRadius: 'var(--r-xl)',
+              overflow: 'hidden',
+              boxShadow: '0 20px 45px rgba(0,0,0,0.4)',
+              border: '2px solid rgba(255, 255, 255, 0.1)'
+            }}>
+              <img src="/hero-coffee.jpg" alt="Tostado de Café Especial" style={{ width: '100%', height: 'auto', display: 'block' }} />
+            </div>
+          </div>
         </div>
       </section>
 
