@@ -495,7 +495,7 @@ export default function LandingPage() {
             {/* Monthly Card */}
             <div style={{
               background: 'var(--bg-card)',
-              border: '1px solid var(--glass-border)',
+              border: '1px solid rgba(80, 37, 20, 0.08)',
               borderRadius: 'var(--r-xl)',
               padding: '3rem 2.5rem',
               flex: '1 1 290px',

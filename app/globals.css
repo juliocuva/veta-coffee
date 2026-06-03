@@ -414,6 +414,7 @@ html:has(.landing-container) {
 .pricing-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 20px 45px rgba(80, 37, 20, 0.08) !important;
+  border-color: rgba(80, 37, 20, 0.2) !important;
 }
 .pricing-card.popular:hover {
   box-shadow: 0 20px 45px rgba(158, 118, 63, 0.22) !important;
