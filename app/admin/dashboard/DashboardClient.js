@@ -379,7 +379,7 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
               onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.05)'}
               title="Editar Perfil / Datos"
             >
-              Editar
+              Editar Usuario
             </button>
             <button 
               onClick={handleLogout} 
