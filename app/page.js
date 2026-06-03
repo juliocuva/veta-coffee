@@ -255,7 +255,7 @@ export default function LandingPage() {
           <div style={{ textAlign: 'left' }}>
 
             <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.15, marginBottom: '1.5rem' }}>
-              La experiencia móvil que tus <span style={{ fontStyle: 'italic' }}>clientes amarán</span>.
+              La experiencia móvil que tus <span style={{ fontStyle: 'italic', color: 'var(--gold)' }}>clientes amarán</span>.
             </h2>
             <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.65, marginBottom: '2rem' }}>
               Diseñamos una interfaz súper fluida, libre de fricciones de registro. Tus clientes pueden navegar tu catálogo, elegir sus varietales y configurar cantidades y moliendas exactas en segundos.
@@ -299,7 +299,7 @@ export default function LandingPage() {
         <section id="capturas" style={{ textAlign: 'center' }}>
 
           <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '3.5rem' }}>
-            Así se ve tu <span style={{ fontStyle: 'italic' }}>catálogo en acción</span>.
+            Así se ve tu <span style={{ fontStyle: 'italic', color: 'var(--gold)' }}>catálogo en acción</span>.
           </h2>
           <div style={{
             display: 'flex',
@@ -362,6 +362,7 @@ export default function LandingPage() {
                 <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0, maxWidth: 260 }}>
                   Recibes un desglose limpio con datos de entrega y total calculado listo para despachar.
                 </p>
+              </div>
             </div>
           </div>
         </section>
@@ -489,7 +490,7 @@ export default function LandingPage() {
         <section id="precios" style={{ textAlign: 'center' }}>
 
           <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1.2rem' }}>
-            Planes a la <span style={{ fontStyle: 'italic' }}>medida de tu negocio</span>.
+            Planes a la <span style={{ fontStyle: 'italic', color: 'var(--gold)' }}>medida de tu negocio</span>.
           </h2>
           <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', maxWidth: 520, margin: '0 auto 4.5rem', lineHeight: 1.6 }}>
             Sin comisiones por transacciones ni costos ocultos. Elige el plan que mejor se adapte al volumen de tu tostaduría.
