@@ -407,5 +407,30 @@ html:has(.landing-container) {
   margin-top: 1.2rem;
 }
 
+/* Pricing Cards Hover Animations */
+.pricing-card {
+  transition: all 0.4s var(--smooth) !important;
+}
+.pricing-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 45px rgba(80, 37, 20, 0.08) !important;
+}
+.pricing-card.popular:hover {
+  box-shadow: 0 20px 45px rgba(158, 118, 63, 0.22) !important;
+  border-color: var(--gold) !important;
+}
+.pricing-card a {
+  transition: all 0.3s var(--smooth) !important;
+}
+.pricing-card:hover a {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+.pricing-card.popular:hover a {
+  box-shadow: 0 8px 24px rgba(0, 92, 56, 0.35);
+  transform: scale(1.02) translateY(-2px);
+}
+
+
 
 

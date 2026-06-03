@@ -114,7 +114,7 @@ export default function LandingPage() {
 
             <h1 style={{
               fontSize: 'clamp(2.2rem, 5vw, 3.4rem)',
-              fontWeight: 500,
+              fontWeight: 400,
               lineHeight: 1.15,
               color: '#FFFFFF',
               letterSpacing: '-0.01em',
@@ -241,7 +241,7 @@ export default function LandingPage() {
           {/* Left Description */}
           <div style={{ textAlign: 'left' }}>
 
-            <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 500, color: 'var(--text-primary)', lineHeight: 1.15, marginBottom: '1.5rem' }}>
+            <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 400, color: 'var(--text-primary)', lineHeight: 1.15, marginBottom: '1.5rem' }}>
               La experiencia móvil que tus <span style={{ color: 'var(--gold)', fontWeight: 700 }}>clientes amarán</span>.
             </h2>
             <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.65, marginBottom: '2rem' }}>
@@ -285,7 +285,7 @@ export default function LandingPage() {
         {/* Real App Showcase */}
         <section id="capturas" style={{ textAlign: 'center' }}>
 
-          <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 500, color: 'var(--text-primary)', marginBottom: '3.5rem' }}>
+          <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 400, color: 'var(--text-primary)', marginBottom: '3.5rem' }}>
             Así se ve tu <span style={{ color: 'var(--gold)', fontWeight: 700 }}>catálogo en acción</span>.
           </h2>
           <div style={{
@@ -365,7 +365,7 @@ export default function LandingPage() {
         borderBottom: '1px solid rgba(158, 118, 63, 0.12)'
       }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 500, color: '#FFFFFF', marginBottom: '4rem' }}>
+          <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 400, color: '#FFFFFF', marginBottom: '4rem' }}>
             Tu tienda en línea, en <span style={{ color: 'var(--gold)', fontWeight: 700 }}>3 simples pasos</span>.
           </h2>
           
@@ -476,7 +476,7 @@ export default function LandingPage() {
         {/* 3. Pricing: Superlative Comparison Layout */}
         <section id="precios" style={{ textAlign: 'center' }}>
 
-          <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 500, color: 'var(--text-primary)', marginBottom: '1.2rem' }}>
+          <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 400, color: 'var(--text-primary)', marginBottom: '1.2rem' }}>
             Planes a la <span style={{ color: 'var(--gold)', fontWeight: 700 }}>medida de tu negocio</span>.
           </h2>
           <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', maxWidth: 520, margin: '0 auto 4.5rem', lineHeight: 1.6 }}>
@@ -609,10 +609,10 @@ export default function LandingPage() {
 
       {/* Footer */}
       <footer style={{
-        borderTop: '1px solid var(--glass-border)',
+        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
         padding: '3.5rem 1.5rem',
-        color: 'var(--text-muted)',
-        background: 'var(--bg-card)',
+        color: '#E0EDE6',
+        background: 'linear-gradient(135deg, #092e1c 0%, #1e110a 50%, #004d2e 100%)',
         position: 'relative',
         zIndex: 10
       }}>
@@ -640,7 +640,7 @@ export default function LandingPage() {
                 height: '32px', 
                 width: 'auto', 
                 objectFit: 'contain',
-                filter: 'var(--logo-filter)',
+                filter: 'brightness(0) invert(1)',
                 transition: 'var(--t)'
               }} 
             />
@@ -675,13 +675,13 @@ export default function LandingPage() {
             flex: '1 1 500px',
             fontSize: '0.64rem',
             lineHeight: 1.6,
-            color: 'var(--text-muted)',
+            color: '#E0EDE6',
             textAlign: 'right'
           }} className="footer-legal">
             <h5 style={{
               fontSize: '0.72rem',
               fontWeight: 700,
-              color: 'var(--text-primary)',
+              color: '#FFFFFF',
               margin: '0 0 0.5rem 0'
             }}>
               Aviso de Propiedad Intelectual © 2026 Mouselab. Todos los derechos reservados.
