@@ -159,7 +159,7 @@ export default function LandingPage() {
               marginBottom: '2.5rem',
               fontWeight: 400
             }}>
-              Digitaliza tus varietales y procesos en 5 minutos. Comparte tu link personalizado y recibe pedidos perfectamente estructurados directo a tu chat.
+              Crea tu catálogo en 5 minutos. Comparte un link y recibe pedidos con todos los detalles — varietal, gramaje, molienda — directo en tu WhatsApp. Sin apps raras, sin comisiones
             </p>
 
             <div style={{
