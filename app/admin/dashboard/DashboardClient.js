@@ -552,7 +552,7 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
                 <div className="field">
                   <label>Variedad</label>
                   <select value={addVariety} onChange={e => setAddVariety(e.target.value)} required>
-                    <option value="" disabled>Selecciona variedad</option>
+                    <option value="" disabled>Selecciona</option>
                     {VARIETIES.map(v => <option key={v} value={v}>{v}</option>)}
                     <option value="Otro">Otro...</option>
                   </select>
@@ -571,7 +571,7 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
                 <div className="field">
                   <label>Proceso</label>
                   <select value={addProcess} onChange={e => setAddProcess(e.target.value)} required>
-                    <option value="" disabled>Selecciona proceso</option>
+                    <option value="" disabled>Selecciona</option>
                     {PROCESSES.map(p => <option key={p} value={p}>{p}</option>)}
                     <option value="Otro">Otro...</option>
                   </select>
@@ -652,7 +652,7 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
                 <div className="field">
                   <label>Variedad</label>
                   <select value={editVariety} onChange={e => setEditVariety(e.target.value)} required>
-                    <option value="" disabled>Selecciona variedad</option>
+                    <option value="" disabled>Selecciona</option>
                     {VARIETIES.map(v => <option key={v} value={v}>{v}</option>)}
                     <option value="Otro">Otro...</option>
                   </select>
@@ -671,7 +671,7 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
                 <div className="field">
                   <label>Proceso</label>
                   <select value={editProcess} onChange={e => setEditProcess(e.target.value)} required>
-                    <option value="" disabled>Selecciona proceso</option>
+                    <option value="" disabled>Selecciona</option>
                     {PROCESSES.map(p => <option key={p} value={p}>{p}</option>)}
                     <option value="Otro">Otro...</option>
                   </select>

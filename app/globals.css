@@ -269,13 +269,18 @@ html:has(.landing-container) {
   border: 1px solid var(--glass-border);
   border-radius: var(--r-sm);
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.86rem;
+  font-size: 0.78rem;
   font-weight: 500;
   color: var(--text-primary);
   transition: var(--t);
 }
 
-.field input::placeholder { color: rgba(192,178,167,0.3); }
+.field input::placeholder { color: rgba(192,178,167,0.4); }
+
+.field select option[value=""], .field select:invalid {
+  color: var(--text-muted);
+  opacity: 0.75;
+}
 
 .field input:focus, .field select:focus {
   outline: none;
