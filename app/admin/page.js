@@ -334,16 +334,20 @@ export default function AdminLogin() {
             <div className="field">
               <label>Nombre de la Empresa (Tostador)</label>
               <div className="field-icon-wrap">
-                <span style={{ position: 'absolute', left: '0.9rem', top: '50%', transform: 'translateY(-50%)', fontSize: '0.9rem' }}>🏢</span>
-                <input style={{ paddingLeft: '2.6rem' }} type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Ej: Sagrado Corazón" required />
+                <svg className="field-icon" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clipRule="evenodd" />
+                </svg>
+                <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Ej: Sagrado Corazón" required />
               </div>
             </div>
 
             <div className="field">
               <label>Número de WhatsApp (Celular)</label>
               <div className="field-icon-wrap">
-                <span style={{ position: 'absolute', left: '0.9rem', top: '50%', transform: 'translateY(-50%)', fontSize: '0.9rem' }}>💬</span>
-                <input style={{ paddingLeft: '2.6rem' }} type="tel" value={phone} onChange={e => setPhone(e.target.value)} placeholder="Ej: 573123456789" required />
+                <svg className="field-icon" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
+                </svg>
+                <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} placeholder="Ej: 573123456789" required />
               </div>
             </div>
 
@@ -407,7 +411,16 @@ export default function AdminLogin() {
                 e.currentTarget.style.boxShadow = '0 4px 20px rgba(211, 178, 127, 0.12)';
               }}
             >
-              {linkCopied ? '¡Enlace Copiado! ✅' : '🔗 Copiar Link de mi Tienda'}
+              {linkCopied ? (
+                <span>¡Enlace Copiado! ✅</span>
+              ) : (
+                <>
+                  <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+                    <path fillRule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 005.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clipRule="evenodd" />
+                  </svg>
+                  <span>Copiar Link de mi Tienda</span>
+                </>
+              )}
             </button>
           </div>
         )}
