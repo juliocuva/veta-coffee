@@ -60,6 +60,19 @@ export default function CatalogPage({ roaster }) {
     }
   }
 
+  // Close panel on Escape keypress
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        setPanelOpen(false)
+        if (cart.length === 0) setActiveId(null)
+      }
+    }
+    window.addEventListener('keydown', handleEscape)
+    return () => window.removeEventListener('keydown', handleEscape)
+  }, [cart.length])
+
+
   // Load products
   useEffect(() => {
     async function load() {
@@ -80,7 +93,22 @@ export default function CatalogPage({ roaster }) {
   }, [])
 
   const handleQuantityChangeForWeightAndGrind = (wKey, grindOption, dir) => {
+    const p = products.find(x => x.id === activeId)
+    if (!p) return
+
     setCart(prev => {
+      const cartItemsForProduct = prev.filter(item => item.productId === activeId)
+      const currentCartWeight = cartItemsForProduct.reduce((sum, item) => sum + (SIZE_CONFIG[item.weight].kg * item.quantity), 0)
+      const currentRemaining = Math.max(0, p.inventoryKg - currentCartWeight)
+
+      if (dir > 0) {
+        const itemWeight = SIZE_CONFIG[wKey].kg
+        if (currentRemaining < itemWeight) {
+          alert(`No hay suficiente stock disponible. Restante: ${currentRemaining.toFixed(2).replace(/\.00$/, '')} kg`)
+          return prev
+        }
+      }
+
       const existing = prev.find(i => i.productId === activeId && i.weight === wKey && i.grind === grindOption)
       if (existing) {
         const nextQty = existing.quantity + dir
@@ -188,7 +216,7 @@ export default function CatalogPage({ roaster }) {
   }
 
 
-  const panelVisible = cart.length > 0 || activeId !== null
+  const panelVisible = cart.length > 0 || panelOpen
   const panelTranslate = !panelVisible ? '100%' : panelOpen ? '0%' : 'calc(100% - 68px)'
 
   return (
@@ -196,9 +224,9 @@ export default function CatalogPage({ roaster }) {
 
       {/* Header */}
       <header style={{
-        padding: '1.1rem 1.2rem 0.9rem',
-        background: 'var(--bg)',
-        borderBottom: '1px solid var(--glass-border)',
+        padding: '1.2rem 1.2rem 1.0rem',
+        background: 'linear-gradient(180deg, #092617 0%, #0d311e 100%)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
         textAlign: 'center',
         flexShrink: 0,
         position: 'relative',
@@ -207,34 +235,45 @@ export default function CatalogPage({ roaster }) {
         flexDirection: 'column',
         alignItems: 'center',
       }}>
-        <img src="/logo.png" alt="Logo" style={{ width: 38, height: 38, objectFit: 'contain', filter: 'invert(1) brightness(1.8)', marginBottom: '0.4rem' }} />
-        <h1 style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '1.25rem', fontWeight: 800, letterSpacing: '0.15em', color: 'var(--gold)', lineHeight: 1.2 }}>
+        <h1 style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '1.25rem', fontWeight: 800, letterSpacing: '0.15em', color: '#ffffff', lineHeight: 1.2 }}>
           {roaster.name}
         </h1>
-        <p style={{ fontSize: '0.58rem', color: 'var(--text-muted)', marginTop: '0.25rem', letterSpacing: '0.04em' }}>
+        <p style={{ fontSize: '0.58rem', color: 'rgba(255, 255, 255, 0.65)', marginTop: '0.35rem', letterSpacing: '0.04em' }}>
           Café de especialidad · Pedido directo
         </p>
         <a href="/admin" style={{
           position: 'absolute', left: '1.2rem', top: '50%', transform: 'translateY(-50%)',
           width: 32, height: 32, borderRadius: '50%',
-          background: 'var(--glass)', border: '1px solid var(--glass-border)',
+          background: 'rgba(255, 255, 255, 0.15)', border: '1px solid rgba(255, 255, 255, 0.08)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          color: 'var(--text-muted)', textDecoration: 'none', fontSize: '0.9rem',
+          color: '#ffffff', textDecoration: 'none',
           transition: 'var(--t)',
-        }} title="Acceso tostador">🔑</a>
+        }} title="Acceso tostador">
+          <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15">
+            <path fillRule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14H8v2H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 1 1 0 000-2z" clipRule="evenodd" />
+          </svg>
+        </a>
         <button 
           onClick={toggleTheme} 
           style={{
             position: 'absolute', right: '1.2rem', top: '50%', transform: 'translateY(-50%)',
             width: 32, height: 32, borderRadius: '50%',
-            background: 'var(--glass)', border: '1px solid var(--glass-border)',
+            background: 'rgba(255, 255, 255, 0.15)', border: '1px solid rgba(255, 255, 255, 0.08)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: 'var(--text-muted)', fontSize: '0.9rem', cursor: 'pointer',
+            color: '#ffffff', cursor: 'pointer',
             transition: 'var(--t)',
           }}
           title="Cambiar tema"
         >
-          {isDark ? '☀️' : '🌙'}
+          {isDark ? (
+            <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15">
+              <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 2.293a1 1 0 010 1.414L13.293 6.7a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 9a1 1 0 000 2h1a1 1 0 100-2h-1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm-4-2.293a1 1 0 010-1.414l.707-.707a1 1 0 111.414 1.414l-.707.707a1 1 0 01-1.414 0zM4 10a1 1 0 00-2 0v1a1 1 0 100 2h1a1 1 0 100-2H4zm.293-4.293a1 1 0 00-1.414 0L2.172 6.42a1 1 0 001.414 1.414l.707-.707a1 1 0 000-1.414zM10 5a5 5 0 100 10 5 5 0 000-10z" clipRule="evenodd" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+            </svg>
+          )}
         </button>
       </header>
 
@@ -249,15 +288,26 @@ export default function CatalogPage({ roaster }) {
         ) : products.length === 0 ? (
           <EmptyState />
         ) : (
-          products.map((p, i) => (
-            <ProductCard
-              key={p.id}
-              product={p}
-              isInCart={cart.some(c => c.productId === p.id)}
-              animDelay={i * 0.06 + 0.04}
-              onClick={() => handleCardClick(p.id)}
-            />
-          ))
+          products.map((p, i) => {
+            const cartItemsForProduct = cart.filter(c => c.productId === p.id)
+            const cartWeight = cartItemsForProduct.reduce((sum, item) => sum + (SIZE_CONFIG[item.weight].kg * item.quantity), 0)
+            const remainingStock = Math.max(0, p.inventoryKg - cartWeight)
+
+            return (
+              <ProductCard
+                key={p.id}
+                product={p}
+                remainingStock={remainingStock}
+                isInCart={cart.some(c => c.productId === p.id)}
+                isDark={isDark}
+                animDelay={i * 0.06 + 0.04}
+                onClick={() => {
+                  setActiveId(p.id)
+                  setPanelOpen(true)
+                }}
+              />
+            )
+          })
         )}
 
         {!loading && products.length > 0 && (
@@ -345,201 +395,358 @@ export default function CatalogPage({ roaster }) {
       <div 
         onClick={() => {
           setPanelOpen(false)
-          if (cart.length === 0) setActiveId(null)
+          setActiveId(null)
         }}
         className={`panel-backdrop ${panelOpen ? 'active' : ''}`}
       />
 
       {/* Bottom sheet */}
-      <section style={{
-        position: 'absolute', bottom: 0, left: 0, right: 0,
-        background: 'var(--panel-bg)',
-        backdropFilter: 'blur(30px)',
-        borderTop: '1px solid var(--glass-border)',
-        borderTopLeftRadius: 'var(--r-xl)',
-        borderTopRightRadius: 'var(--r-xl)',
-        transform: `translateY(${panelTranslate})`,
-        transition: 'transform 0.45s var(--smooth)',
-        zIndex: 100,
-        boxShadow: '0 -4px 40px var(--shadow-color)',
-      }}>
-        {/* Panel header / drag bar */}
-        <div
-          onClick={() => {
-            if (cart.length > 0) {
-              setPanelOpen(o => !o)
-            } else {
-              setPanelOpen(false)
-              setActiveId(null)
-            }
-          }}
-          style={{
-            height: 68, display: 'flex', alignItems: 'center',
-            justifyContent: 'space-between', padding: '0 1.4rem',
-            cursor: 'pointer', userSelect: 'none', position: 'relative',
-          }}
-        >
-          <div style={{ position: 'absolute', top: 10, left: '50%', transform: 'translateX(-50%)',
-            width: 36, height: 3, background: 'var(--glass-border)', borderRadius: 10 }} />
-          <div>
-            <div style={{ fontSize: '0.52rem', fontWeight: 700, letterSpacing: '0.14em',
-              color: 'var(--gold)', textTransform: 'uppercase' }}>Tu pedido</div>
-            <div style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--text-primary)' }}>
-              ${total.toLocaleString()}
-            </div>
-          </div>
-          <span style={{ color: 'var(--text-muted)', transition: 'transform 0.3s',
-            transform: panelOpen ? 'rotate(180deg)' : 'none' }}>▲</span>
-        </div>
+      <section 
+        className="drawer-bottom-sheet"
+        style={{
+          position: 'absolute', bottom: 0, left: 0, right: 0,
+          background: activeId ? 'var(--bg-card)' : 'var(--panel-bg)',
+          backdropFilter: activeId ? 'none' : 'blur(30px)',
+          borderTop: activeId ? 'none' : '1px solid var(--glass-border)',
+          borderTopLeftRadius: activeId ? '0' : 'var(--r-xl)',
+          borderTopRightRadius: activeId ? '0' : 'var(--r-xl)',
+          transform: `translateY(${panelTranslate})`,
+          transition: 'transform 0.45s var(--smooth)',
+          zIndex: 100,
+          boxShadow: activeId ? 'none' : '0 -4px 40px var(--shadow-color)',
+          maxHeight: '100dvh',
+          display: 'flex',
+          flexDirection: 'column',
+          overflowY: 'auto',
+        }}
+      >
+        {activeId ? (() => {
+          const activeProduct = products.find(p => p.id === activeId)
+          if (!activeProduct) return null
 
-        {/* Panel body */}
-        <div style={{
-          padding: '0 1.3rem 1.4rem',
-          opacity: panelOpen ? 1 : 0,
-          pointerEvents: panelOpen ? 'all' : 'none',
-          transition: 'opacity 0.25s ease',
-        }}>
-          {/* List of Weight & Grind Options for Active Product */}
-          {(() => {
-            const activeProduct = products.find(p => p.id === activeId)
-            if (!activeProduct) return null
-            return (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', marginBottom: '1.2rem' }}>
-                <span style={{ display: 'block', fontSize: '0.52rem', fontWeight: 700,
-                  letterSpacing: '0.14em', color: 'var(--text-muted)', textTransform: 'uppercase',
-                  marginBottom: '0.2rem' }}>Opciones para {activeProduct.variety}</span>
-                
-                {Object.entries(SIZE_CONFIG).map(([wKey, cfg]) => {
-                  let unitPrice = activeProduct.prices[wKey] || 0
-                  if (activeProduct.isOffer) unitPrice = Math.round(unitPrice * (1 - activeProduct.offerDiscount))
+          const cartItemsForProduct = cart.filter(c => c.productId === activeProduct.id)
+          const cartWeight = cartItemsForProduct.reduce((sum, item) => sum + (SIZE_CONFIG[item.weight].kg * item.quantity), 0)
+          const remainingStock = Math.max(0, activeProduct.inventoryKg - cartWeight)
 
-                  return (
-                    <div key={wKey} style={{
-                      background: 'var(--glass)', border: '1px solid var(--glass-border)',
-                      borderRadius: 'var(--r-sm)', padding: '0.7rem 0.9rem',
-                      display: 'flex', flexDirection: 'column', gap: '0.6rem'
-                    }}>
-                      {/* Top: Weight Label & Unit Price */}
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ fontSize: '0.8rem', fontWeight: 750, color: 'var(--text-primary)' }}>{cfg.label}</span>
-                        <span style={{ fontSize: '0.68rem', color: 'var(--gold)', fontWeight: 700 }}>${unitPrice.toLocaleString()} c/u</span>
-                      </div>
+          let bagImg = '/bag-lavado.png'
+          const proc = (activeProduct.process || '').toLowerCase()
+          if (proc.includes('honey')) bagImg = '/bag-honey.png'
+          else if (proc.includes('natural')) bagImg = '/bag-natural.png'
 
-                      {/* Bottom: Inline selectors for Grano & Molido */}
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
-                        {['Grano', 'Molido'].map(g => {
-                          const cartItem = cart.find(i => i.productId === activeId && i.weight === wKey && i.grind === g)
-                          const qty = cartItem ? cartItem.quantity : 0
-                          const active = qty > 0
+          return (
+            <div style={{ display: 'flex', flexDirection: 'column', background: 'var(--bg)', minHeight: '100%' }}>
+              {/* Header verde premium */}
+              <div className="drawer-green-header">
+                <img src={bagImg} className="drawer-bag-image" alt="Coffee package" />
+              </div>
 
-                          return (
-                            <div key={g} style={{
-                              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                              background: active ? 'var(--gold-dim)' : 'rgba(0,0,0,0.03)',
-                              border: `1px solid ${active ? 'var(--gold)' : 'var(--glass-border)'}`,
-                              borderRadius: '6px', padding: '0.35rem 0.5rem', transition: 'var(--t)'
-                            }}>
-                              <span style={{ fontSize: '0.65rem', fontWeight: 700, color: 'var(--text-primary)' }}>
-                                {g === 'Grano' ? '☕' : '⚙️'} {g}
-                              </span>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
-                                <button
-                                  type="button"
-                                  onClick={() => handleQuantityChangeForWeightAndGrind(wKey, g, -1)}
-                                  style={{ background: 'none', border: 'none', color: 'var(--text-primary)', fontSize: '0.85rem', fontWeight: 800, cursor: 'pointer', width: 18, height: 18, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                                >
-                                  —
-                                </button>
-                                <span style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--text-primary)', minWidth: 10, textAlign: 'center' }}>
-                                  {qty}
+              {/* Tarjeta de detalles blanca superpuesta */}
+              <div className="drawer-details-card">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.5rem' }}>
+                  <div>
+                    <h2 className="drawer-title">{activeProduct.variety}</h2>
+                    <div style={{ display: 'flex', gap: '0.35rem', marginTop: '0.4rem', flexWrap: 'wrap' }}>
+                      <span className="tag tag-region">{activeProduct.region}</span>
+                      <span className="tag tag-default">{activeProduct.process}</span>
+                      <span className="tag tag-default">{activeProduct.altitude}</span>
+                      <span className="tag" style={{
+                        background: remainingStock <= 2 ? 'rgba(219, 68, 85, 0.1)' : remainingStock <= 8 ? 'rgba(240, 173, 78, 0.1)' : 'rgba(0, 92, 56, 0.08)',
+                        color: remainingStock <= 2 ? '#db4455' : remainingStock <= 8 ? '#f0ad4e' : 'var(--tag-region-text)',
+                        borderColor: remainingStock <= 2 ? 'rgba(219, 68, 85, 0.2)' : remainingStock <= 8 ? 'rgba(240, 173, 78, 0.2)' : 'rgba(0, 92, 56, 0.15)',
+                      }}>
+                        {remainingStock <= 2 ? 'Agotado' : `${remainingStock.toFixed(2).replace(/\.00$/, '')} kg disponible`}
+                      </span>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => {
+                      setPanelOpen(false)
+                      setActiveId(null)
+                    }}
+                    style={{
+                      background: 'var(--bg-card-2)',
+                      border: 'none',
+                      borderRadius: '50%',
+                      width: '32px',
+                      height: '32px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      color: 'var(--text-primary)',
+                      flexShrink: 0,
+                      marginTop: '0.2rem',
+                      transition: 'var(--t)'
+                    }}
+                    title="Volver al catálogo"
+                  >
+                    <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18">
+                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
+
+                <p className="drawer-subtitle">
+                  Caficultor: {activeProduct.name} {activeProduct.lot ? `· Finca: ${activeProduct.lot}` : ''}
+                </p>
+                {activeProduct.notes && (
+                  <p className="drawer-notes">
+                    Notas de cata: "{activeProduct.notes}"
+                  </p>
+                )}
+
+                <hr className="drawer-divider" />
+
+                {/* Opciones de compra */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem', marginBottom: '0.85rem' }}>
+                  <span style={{ display: 'block', fontSize: '0.55rem', fontWeight: 600,
+                    letterSpacing: '0.14em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+                    Configura tu pedido
+                  </span>
+                  
+                  {Object.entries(SIZE_CONFIG).map(([wKey, cfg]) => {
+                    let unitPrice = activeProduct.prices[wKey] || 0
+                    if (activeProduct.isOffer) unitPrice = Math.round(unitPrice * (1 - activeProduct.offerDiscount))
+
+                    return (
+                      <div key={wKey} style={{
+                        background: isDark ? '#2E2D35' : '#FAF6EE',
+                        border: `1px solid ${isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(80, 37, 20, 0.12)'}`,
+                        boxShadow: isDark ? 'none' : '0 2px 8px rgba(80, 37, 20, 0.03)',
+                        borderRadius: 'var(--r-sm)', padding: '0.6rem 0.8rem',
+                        display: 'flex', flexDirection: 'column', gap: '0.45rem'
+                      }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: 500, color: 'var(--text-muted)' }}>{cfg.label}</span>
+                          <span style={{ fontSize: '0.88rem', color: 'var(--gold)', fontWeight: 800 }}>${unitPrice.toLocaleString()} c/u</span>
+                        </div>
+
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
+                          {['Grano', 'Molido'].map(g => {
+                            const cartItem = cart.find(i => i.productId === activeId && i.weight === wKey && i.grind === g)
+                            const qty = cartItem ? cartItem.quantity : 0
+                            const active = qty > 0
+
+                            return (
+                              <div key={g} style={{
+                                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                                background: active ? 'var(--gold-dim)' : 'rgba(0,0,0,0.02)',
+                                border: `1px solid ${active ? 'var(--gold)' : 'var(--glass-border)'}`,
+                                borderRadius: '8px', padding: '0.35rem 0.5rem', transition: 'var(--t)'
+                              }}>
+                                <span style={{ fontSize: '0.66rem', fontWeight: 600, color: 'var(--text-primary)', display: 'flex', alignItems: 'center' }}>
+                                  {g}
                                 </span>
-                                <button
-                                  type="button"
-                                  onClick={() => handleQuantityChangeForWeightAndGrind(wKey, g, 1)}
-                                  style={{ background: 'none', border: 'none', color: 'var(--text-primary)', fontSize: '0.85rem', fontWeight: 800, cursor: 'pointer', width: 18, height: 18, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                                >
-                                  +
-                                </button>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleQuantityChangeForWeightAndGrind(wKey, g, -1)}
+                                    style={{ background: 'none', border: 'none', color: 'var(--text-primary)', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', width: 18, height: 18, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                  >
+                                    —
+                                  </button>
+                                  <span style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--text-primary)', minWidth: 10, textAlign: 'center' }}>
+                                    {qty}
+                                  </span>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleQuantityChangeForWeightAndGrind(wKey, g, 1)}
+                                    style={{ background: 'none', border: 'none', color: 'var(--text-primary)', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', width: 18, height: 18, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                  >
+                                    +
+                                  </button>
+                                </div>
+                              </div>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+
+                {/* Resumen del pedido si hay otros ítems */}
+                {cart.length > 0 && (
+                  <>
+                    <hr className="drawer-divider" />
+                    <span style={{ display: 'block', fontSize: '0.55rem', fontWeight: 600,
+                      letterSpacing: '0.14em', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.6rem' }}>
+                      Resumen de tu pedido
+                    </span>
+                    <div style={{ marginBottom: '1rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                      {cart.map(item => {
+                        const cp = products.find(x => x.id === item.productId)
+                        if (!cp) return null
+                        let price = item.weight ? cp.prices[item.weight] : 0
+                        if (item.weight && cp.isOffer) price = Math.round(price * (1 - cp.offerDiscount))
+                        const subtotal = price * item.quantity
+                        return (
+                          <div 
+                            key={item.productId + '-' + item.weight + '-' + item.grind}
+                            style={{
+                              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                              background: 'var(--glass)',
+                              border: '1px solid var(--glass-border)',
+                              borderRadius: 'var(--r-sm)', padding: '0.55rem 0.8rem',
+                            }}
+                          >
+                            <div>
+                              <div style={{ fontSize: '0.76rem', fontWeight: 600, color: 'var(--text-primary)' }}>
+                                {cp.variety} <span style={{ fontSize: '0.68rem', color: 'var(--gold)', fontWeight: 600 }}>(x{item.quantity})</span>
+                              </div>
+                              <div style={{ fontSize: '0.58rem', color: 'var(--text-muted)' }}>
+                                {item.weight ? SIZE_CONFIG[item.weight].label : '⚠'} · {item.grind}
                               </div>
                             </div>
-                          )
-                        })}
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                              <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--gold)' }}>
+                                ${subtotal.toLocaleString()}
+                              </span>
+                              <button onClick={() => removeFromCart(item.productId, item.weight, item.grind)} style={{
+                                background: 'none', border: 'none', color: 'var(--text-muted)',
+                                cursor: 'pointer', fontSize: '1.1rem', lineHeight: 1,
+                              }}>×</button>
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </>
+                )}
+
+                <hr className="drawer-divider" />
+
+                {/* Fila de acción final */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '1rem' }}>
+                  <div>
+                    <div style={{ fontSize: '0.52rem', fontWeight: 600, letterSpacing: '0.1em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Total pedido</div>
+                    <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
+                      ${total.toLocaleString()}
+                    </div>
+                  </div>
+                  <button onClick={handleOrderSubmit} style={{
+                    display: 'flex', alignItems: 'center', gap: '0.5rem',
+                    background: 'linear-gradient(135deg, #25D366, #1EB858)',
+                    color: '#fff', border: 'none', cursor: 'pointer',
+                    padding: '0.85rem 1.4rem', borderRadius: 'var(--r-md)',
+                    fontWeight: 700, fontSize: '0.76rem', letterSpacing: '0.04em',
+                    textTransform: 'uppercase', boxShadow: '0 4px 16px rgba(37,211,102,0.25)',
+                    transition: 'var(--t)',
+                  }}>
+                    <WhatsAppIcon />
+                    Confirmar
+                  </button>
+                </div>
+              </div>
+            </div>
+          )
+        })() : (
+          <>
+            {/* Panel header / drag bar */}
+            <div
+              onClick={() => {
+                if (cart.length > 0) {
+                  setPanelOpen(o => !o)
+                } else {
+                  setPanelOpen(false)
+                  setActiveId(null)
+                }
+              }}
+              style={{
+                height: 68, display: 'flex', alignItems: 'center',
+                justifyContent: 'space-between', padding: '0 1.4rem',
+                cursor: 'pointer', userSelect: 'none', position: 'relative',
+              }}
+            >
+              <div style={{ position: 'absolute', top: 10, left: '50%', transform: 'translateX(-50%)',
+                width: 36, height: 3, background: 'var(--glass-border)', borderRadius: 10 }} />
+              <div>
+                <div style={{ fontSize: '0.52rem', fontWeight: 700, letterSpacing: '0.14em',
+                  color: 'var(--gold)', textTransform: 'uppercase' }}>Tu pedido</div>
+                <div style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--text-primary)' }}>
+                  ${total.toLocaleString()}
+                </div>
+              </div>
+              <span style={{ color: 'var(--text-muted)', transition: 'transform 0.3s',
+                transform: panelOpen ? 'rotate(180deg)' : 'none' }}>▲</span>
+            </div>
+
+            {/* Panel body (default / cart summary view) */}
+            <div style={{
+              padding: '0 1.3rem 1.4rem',
+              opacity: panelOpen ? 1 : 0,
+              pointerEvents: panelOpen ? 'all' : 'none',
+              transition: 'opacity 0.25s ease',
+            }}>
+              <div style={{ maxHeight: 220, overflowY: 'auto', marginBottom: '0.8rem',
+                display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                {cart.map(item => {
+                  const p = products.find(x => x.id === item.productId)
+                  if (!p) return null
+                  let price = item.weight ? p.prices[item.weight] : 0
+                  if (item.weight && p.isOffer) price = Math.round(price * (1 - p.offerDiscount))
+                  const subtotal = price * item.quantity
+                  const active = item.productId === activeId
+                  return (
+                    <div 
+                      key={item.productId + '-' + item.weight + '-' + item.grind}
+                      onClick={() => setActiveId(item.productId)}
+                      style={{
+                        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                        background: active ? 'var(--gold-dim)' : 'var(--glass)',
+                        border: `1px solid ${active ? 'var(--gold)' : 'var(--glass-border)'}`,
+                        borderRadius: 'var(--r-sm)', padding: '0.55rem 0.8rem',
+                        cursor: 'pointer', transition: 'var(--t)',
+                        boxShadow: active ? '0 2px 8px var(--gold-glow)' : 'none',
+                      }}
+                    >
+                      <div>
+                        <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+                          {p.variety} <span style={{ fontSize: '0.7rem', color: 'var(--gold)', fontWeight: 700 }}>(x{item.quantity})</span>
+                        </div>
+                        <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>
+                          {item.weight ? SIZE_CONFIG[item.weight].label : '⚠ Selecciona gramaje'} · {item.grind} · {p.name}
+                        </div>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }} onClick={(e) => e.stopPropagation()}>
+                        <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--gold)' }}>
+                          ${subtotal.toLocaleString()}
+                        </span>
+                        <button onClick={() => removeFromCart(item.productId, item.weight, item.grind)} style={{
+                          background: 'none', border: 'none', color: 'var(--text-muted)',
+                          cursor: 'pointer', fontSize: '1rem', lineHeight: 1,
+                        }}>×</button>
                       </div>
                     </div>
                   )
                 })}
               </div>
-            )
-          })()}
 
-          {/* Order summary */}
-          <div style={{ maxHeight: 120, overflowY: 'auto', marginBottom: '0.8rem',
-            display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-            {cart.map(item => {
-              const p = products.find(x => x.id === item.productId)
-              if (!p) return null
-              let price = item.weight ? p.prices[item.weight] : 0
-              if (item.weight && p.isOffer) price = Math.round(price * (1 - p.offerDiscount))
-              const subtotal = price * item.quantity
-              const active = item.productId === activeId
-              return (
-                <div 
-                  key={item.productId + '-' + item.weight + '-' + item.grind}
-                  onClick={() => setActiveId(item.productId)}
-                  style={{
-                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                    background: active ? 'var(--gold-dim)' : 'var(--glass)',
-                    border: `1px solid ${active ? 'var(--gold)' : 'var(--glass-border)'}`,
-                    borderRadius: 'var(--r-sm)', padding: '0.55rem 0.8rem',
-                    cursor: 'pointer', transition: 'var(--t)',
-                    boxShadow: active ? '0 2px 8px var(--gold-glow)' : 'none',
-                  }}
-                >
-                  <div>
-                    <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-primary)' }}>
-                      {p.variety} <span style={{ fontSize: '0.7rem', color: 'var(--gold)', fontWeight: 700 }}>(x{item.quantity})</span>
-                    </div>
-                    <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>
-                      {item.weight ? SIZE_CONFIG[item.weight].label : '⚠ Selecciona gramaje'} · {item.grind} · {p.name}
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }} onClick={(e) => e.stopPropagation()}>
-                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--gold)' }}>
-                      ${subtotal.toLocaleString()}
-                    </span>
-                    <button onClick={() => removeFromCart(item.productId, item.weight, item.grind)} style={{
-                      background: 'none', border: 'none', color: 'var(--text-muted)',
-                      cursor: 'pointer', fontSize: '1rem', lineHeight: 1,
-                    }}>×</button>
-                  </div>
+              {/* Action row */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                paddingTop: '0.9rem', borderTop: '1px solid var(--glass-border)' }}>
+                <div>
+                  <div style={{ fontSize: '0.52rem', fontWeight: 700, letterSpacing: '0.1em',
+                    color: 'var(--text-muted)', textTransform: 'uppercase' }}>Total final</div>
+                  <div style={{ fontSize: '1.65rem', fontWeight: 900, color: 'var(--text-primary)',
+                    letterSpacing: '-0.02em', lineHeight: 1.1 }}>${total.toLocaleString()}</div>
                 </div>
-              )
-            })}
-          </div>
-
-          {/* Action row */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            paddingTop: '0.9rem', borderTop: '1px solid var(--glass-border)' }}>
-            <div>
-              <div style={{ fontSize: '0.52rem', fontWeight: 700, letterSpacing: '0.1em',
-                color: 'var(--text-muted)', textTransform: 'uppercase' }}>Total final</div>
-              <div style={{ fontSize: '1.65rem', fontWeight: 900, color: 'var(--text-primary)',
-                letterSpacing: '-0.02em', lineHeight: 1.1 }}>${total.toLocaleString()}</div>
+                <button onClick={handleOrderSubmit} style={{
+                  display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  background: 'linear-gradient(135deg, #25D366, #1EB858)',
+                  color: '#fff', border: 'none', cursor: 'pointer',
+                  padding: '0.85rem 1.2rem', borderRadius: 'var(--r-md)',
+                  fontWeight: 700, fontSize: '0.74rem', letterSpacing: '0.04em',
+                  textTransform: 'uppercase', boxShadow: '0 4px 16px rgba(37,211,102,0.25)',
+                  transition: 'var(--t)',
+                }}>
+                  <WhatsAppIcon />
+                  Pedir
+                </button>
+              </div>
             </div>
-            <button onClick={handleOrderSubmit} style={{
-              display: 'flex', alignItems: 'center', gap: '0.5rem',
-              background: 'linear-gradient(135deg, #25D366, #1EB858)',
-              color: '#fff', border: 'none', cursor: 'pointer',
-              padding: '0.85rem 1.2rem', borderRadius: 'var(--r-md)',
-              fontWeight: 700, fontSize: '0.74rem', letterSpacing: '0.04em',
-              textTransform: 'uppercase', boxShadow: '0 4px 16px rgba(37,211,102,0.25)',
-              transition: 'var(--t)',
-            }}>
-              <WhatsAppIcon />
-              Pedir
-            </button>
-          </div>
-        </div>
+          </>
+        )}
       </section>
     </div>
   )
@@ -547,35 +754,50 @@ export default function CatalogPage({ roaster }) {
 
 // — Sub-components —
 
-function ProductCard({ product: p, isInCart, animDelay, onClick }) {
+function ProductCard({ product: p, remainingStock, isInCart, isDark, animDelay, onClick }) {
   const base = p.prices['250gr']
   const displayPrice = p.isOffer ? Math.round(base * (1 - p.offerDiscount)) : base
-  const stockClass = p.inventoryKg <= 2 ? 'out' : p.inventoryKg <= 8 ? 'low' : ''
-  const stockLabel = p.inventoryKg <= 2 
+  const stockClass = remainingStock <= 2 ? 'out' : remainingStock <= 8 ? 'low' : ''
+  const stockLabel = remainingStock <= 2 
     ? 'AGOTADO' 
-    : p.inventoryKg <= 8 
-      ? `SOLO ${p.inventoryKg}KG` 
-      : `${p.inventoryKg}KG DISPONIBLE`
+    : remainingStock <= 8 
+      ? `SOLO ${remainingStock.toFixed(2).replace(/\.00$/, '')}KG` 
+      : `${remainingStock.toFixed(2).replace(/\.00$/, '')}KG DISPONIBLE`
 
   const formatPrice = (val) => '$' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+
+  // Dynamic colors for differentiation based on process (unified to green-tinted Bourbon tone)
+  let cardBg = 'var(--bg-card)'
+  let cardBorder = 'var(--glass-border)'
+  const cardShadow = isDark
+    ? '0 4px 16px rgba(0, 0, 0, 0.35)'
+    : '0 4px 14px rgba(80, 37, 20, 0.05)'
+  
+  if (!isInCart) {
+    cardBg = isDark 
+      ? 'linear-gradient(145deg, #1A2D23 0%, #111E17 100%)' 
+      : 'linear-gradient(145deg, #F5FAF6 0%, #E5F1EB 100%)'
+    cardBorder = isDark ? 'rgba(111, 207, 151, 0.25)' : 'rgba(0, 92, 56, 0.2)'
+  } else {
+    cardBg = 'linear-gradient(145deg, var(--bg-card) 0%, rgba(80,37,20,0.35) 100%)'
+    cardBorder = 'var(--gold)'
+  }
 
   return (
     <div
       onClick={onClick}
       style={{
         position: 'relative',
-        background: isInCart
-          ? 'linear-gradient(145deg, var(--bg-card) 0%, rgba(80,37,20,0.35) 100%)'
-          : 'var(--bg-card)',
-        border: `1px solid ${isInCart ? 'var(--gold)' : 'var(--glass-border)'}`,
+        background: cardBg,
+        border: `1px solid ${cardBorder}`,
         borderRadius: 'var(--r-lg)',
-        padding: '1.2rem',
-        marginBottom: '0.8rem',
+        padding: '0.8rem 1.0rem',
+        marginBottom: '0.5rem',
         cursor: 'pointer',
         transition: 'var(--t)',
         overflow: 'hidden',
         animation: `cardIn 0.4s var(--smooth) ${animDelay}s backwards`,
-        boxShadow: isInCart ? '0 0 0 1px rgba(211,178,127,0.2), 0 8px 24px rgba(0,0,0,0.4)' : 'none',
+        boxShadow: isInCart ? '0 0 0 1px rgba(211,178,127,0.2), 0 8px 24px rgba(0,0,0,0.4)' : cardShadow,
       }}
     >
       {isInCart && (
@@ -586,29 +808,24 @@ function ProductCard({ product: p, isInCart, animDelay, onClick }) {
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontSize: '0.7rem', fontWeight: 900,
           animation: 'popIn 0.35s var(--spring)',
+          zIndex: 5,
         }}>✓</div>
       )}
 
-      {/* Card Top: Variety and Grower/Lot Title Hierarchy */}
-      <div style={{ marginBottom: '0.6rem', paddingRight: isInCart ? '2.5rem' : 0 }}>
+      {/* Card Top: Variety */}
+      <div style={{ marginBottom: '0.3rem', paddingRight: isInCart ? '2.5rem' : 0 }}>
         <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0, letterSpacing: '0.01em', lineHeight: 1.3 }}>
           {p.variety}
         </h3>
-        <p style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', fontWeight: 600, marginTop: '0.18rem' }}>
-          {p.name} {p.lot ? `· ${p.lot}` : ''}
-        </p>
       </div>
 
-      {/* Row 2: Metadata tags (Region, Process, Altitude) */}
-      <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.65rem' }}>
+      {/* Row 2: Metadata tags (Region, Process) */}
+      <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.35rem' }}>
         <span className="tag tag-region">
           {p.region}
         </span>
         <span className="tag tag-default">
           {p.process}
-        </span>
-        <span className="tag tag-default">
-          {p.altitude}
         </span>
         {p.isOffer && (
           <span className="tag tag-offer">
@@ -617,22 +834,10 @@ function ProductCard({ product: p, isInCart, animDelay, onClick }) {
         )}
       </div>
 
-      {/* Tasting notes */}
-      <p style={{ 
-        fontSize: '0.63rem', 
-        color: 'var(--text-muted)', 
-        fontStyle: 'italic', 
-        letterSpacing: '0.01em',
-        marginTop: '0.4rem',
-        marginBottom: '0.85rem'
-      }}>
-        {p.notes}
-      </p>
-
-      {/* Divider and bottom section */}
+      {/* Divider and bottom section (always visible) */}
       <div style={{
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        paddingTop: '0.85rem',
+        paddingTop: '0.6rem',
         borderTop: '1px solid var(--glass-border)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem',
@@ -646,8 +851,6 @@ function ProductCard({ product: p, isInCart, animDelay, onClick }) {
         </div>
         
         <div style={{ textAlign: 'right' }}>
-          <div style={{ fontSize: '0.5rem', fontWeight: 700, letterSpacing: '0.08em',
-            color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.1rem' }}>Desde</div>
           <div style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--gold)', letterSpacing: '-0.02em' }}>
             {formatPrice(displayPrice)}
           </div>

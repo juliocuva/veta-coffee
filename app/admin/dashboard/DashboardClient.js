@@ -41,9 +41,34 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
   const [savingProfile, setSavingProfile] = useState(false)
 
   const [copied, setCopied] = useState(false)
+  const [isDark, setIsDark] = useState(false)
 
   const router = useRouter()
   const supabase = createClient()
+
+  // Theme Sync
+  useEffect(() => {
+    const saved = localStorage.getItem('veta_theme') || 'light'
+    if (saved === 'dark') {
+      document.body.classList.add('dark-theme')
+      setIsDark(true)
+    } else {
+      document.body.classList.remove('dark-theme')
+      setIsDark(false)
+    }
+  }, [])
+
+  const toggleTheme = () => {
+    const nextDark = !isDark
+    setIsDark(nextDark)
+    if (nextDark) {
+      document.body.classList.add('dark-theme')
+      localStorage.setItem('veta_theme', 'dark')
+    } else {
+      document.body.classList.remove('dark-theme')
+      localStorage.setItem('veta_theme', 'light')
+    }
+  }
 
   useEffect(() => {
     const loadEmail = async () => {
@@ -54,6 +79,33 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
     }
     loadEmail()
   }, [])
+
+  useEffect(() => {
+    const channel = supabase
+      .channel('products-realtime')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'products',
+        },
+        (payload) => {
+          if (payload.eventType === 'UPDATE') {
+            setProducts(prev => prev.map(p => p.id === payload.new.id ? payload.new : p))
+          } else if (payload.eventType === 'INSERT') {
+            setProducts(prev => [...prev, payload.new])
+          } else if (payload.eventType === 'DELETE') {
+            setProducts(prev => prev.filter(p => p.id !== payload.old.id))
+          }
+        }
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [supabase])
 
   useEffect(() => {
     if (roaster?.slug) {
@@ -284,16 +336,39 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
         flexDirection: 'column', 
         gap: '0.65rem'
       }}>
-        <h1 style={{ 
-          fontFamily: 'var(--font-montserrat), sans-serif', 
-          fontSize: '1rem', 
-          fontWeight: 800, 
-          color: '#6FCF97', 
-          letterSpacing: '0.04em',
-          margin: 0
-        }}>
-          Panel de {roaster.name}
-        </h1>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+          <h1 style={{ 
+            fontFamily: 'var(--font-montserrat), sans-serif', 
+            fontSize: '1rem', 
+            fontWeight: 800, 
+            color: '#6FCF97', 
+            letterSpacing: '0.04em',
+            margin: 0
+          }}>
+            Panel de {roaster.name}
+          </h1>
+          <button 
+            onClick={toggleTheme} 
+            style={{
+              width: 28, height: 28, borderRadius: '50%',
+              background: 'rgba(255, 255, 255, 0.15)', border: '1px solid rgba(255, 255, 255, 0.08)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              color: '#ffffff', cursor: 'pointer',
+              transition: 'var(--t)',
+            }}
+            title="Cambiar tema"
+          >
+            {isDark ? (
+              <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13">
+                <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 2.293a1 1 0 010 1.414L13.293 6.7a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 9a1 1 0 000 2h1a1 1 0 100-2h-1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm-4-2.293a1 1 0 010-1.414l.707-.707a1 1 0 111.414 1.414l-.707.707a1 1 0 01-1.414 0zM4 10a1 1 0 00-2 0v1a1 1 0 100 2h1a1 1 0 100-2H4zm.293-4.293a1 1 0 00-1.414 0L2.172 6.42a1 1 0 001.414 1.414l.707-.707a1 1 0 000-1.414zM10 5a5 5 0 100 10 5 5 0 000-10z" clipRule="evenodd" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13">
+                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+              </svg>
+            )}
+          </button>
+        </div>
         <div style={{ 
           display: 'flex', 
           alignItems: 'center', 
@@ -431,39 +506,44 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
 
               return (
                 <div key={p.id} style={{
-                  background: 'var(--bg-card)', 
+                  background: 'var(--bg-card-2)', 
                   border: '1px solid var(--glass-border)',
                   borderRadius: 'var(--r-lg)', 
-                  padding: '1.2rem', 
+                  padding: '0.65rem 0.85rem', 
                   position: 'relative',
-                  overflow: 'hidden'
+                  overflow: 'hidden',
+                  boxShadow: '0 2px 8px rgba(80, 37, 20, 0.02)'
                 }}>
                   {/* Admin edit/delete buttons top right */}
-                  <div style={{ position: 'absolute', top: '0.8rem', right: '0.8rem', display: 'flex', gap: '0.4rem', zIndex: 10 }}>
+                  <div style={{ position: 'absolute', top: '0.6rem', right: '0.6rem', display: 'flex', gap: '0.4rem', zIndex: 10 }}>
                     <button onClick={() => handleStartEdit(p)} style={{
                       background: 'rgba(211,178,127,0.15)', border: '1px solid rgba(211,178,127,0.3)',
-                      color: 'var(--gold)', width: 26, height: 26, borderRadius: '50%',
-                      cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem'
-                    }}>✏️</button>
+                      color: 'var(--gold)', width: 24, height: 24, borderRadius: '50%',
+                      cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                    }} title="Editar">
+                      <svg viewBox="0 0 20 20" fill="currentColor" width="11" height="11">
+                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.829z" />
+                      </svg>
+                    </button>
                     <button onClick={() => handleDelete(p.id)} style={{
                       background: 'rgba(192,57,43,0.15)', border: '1px solid rgba(192,57,43,0.3)',
-                      color: '#E74C3C', width: 26, height: 26, borderRadius: '50%',
-                      cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                      color: '#E74C3C', width: 24, height: 24, borderRadius: '50%',
+                      cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.85rem'
                     }}>×</button>
                   </div>
-
+ 
                   {/* Card Top: Variety and Grower/Lot Title Hierarchy */}
-                  <div style={{ marginBottom: '0.6rem', paddingRight: '4rem' }}>
-                    <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0, letterSpacing: '0.01em', lineHeight: 1.3 }}>
+                  <div style={{ marginBottom: '0.1rem', paddingRight: '3.8rem' }}>
+                    <h3 style={{ fontSize: '0.98rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0, letterSpacing: '0.01em', lineHeight: 1.25 }}>
                       {p.variety}
                     </h3>
-                    <p style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', fontWeight: 600, marginTop: '0.18rem' }}>
+                    <p style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', fontWeight: 600, margin: '0.05rem 0 0.25rem 0' }}>
                       {p.name} {p.lot ? `· ${p.lot}` : ''}
                     </p>
                   </div>
-
+ 
                   {/* Row 2: Metadata tags (Region, Process, Altitude) */}
-                  <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.65rem' }}>
+                  <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.3rem' }}>
                     <span className="tag tag-region">
                       {p.region}
                     </span>
@@ -479,41 +559,37 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
                       </span>
                     )}
                   </div>
-
+ 
                   {/* Tasting notes */}
                   <p style={{ 
-                    fontSize: '0.63rem', 
+                    fontSize: '0.61rem', 
                     color: 'var(--text-muted)', 
-                    fontStyle: 'italic', 
                     letterSpacing: '0.01em',
-                    marginTop: '0.4rem',
-                    marginBottom: '0.85rem'
+                    margin: '0.15rem 0 0.4rem 0'
                   }}>
                     {p.notes}
                   </p>
-
+ 
                   {/* Divider and bottom section */}
                   <div style={{
                     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                    paddingTop: '0.85rem',
+                    paddingTop: '0.45rem',
                     borderTop: '1px solid var(--glass-border)',
                   }}>
                     <div style={{ 
                       display: 'flex', alignItems: 'center', gap: '0.35rem',
-                      fontSize: '0.58rem', fontWeight: 800, textTransform: 'uppercase',
-                      letterSpacing: '0.07em', color: 'var(--text-muted)' 
+                      fontSize: '0.55rem', fontWeight: 800, textTransform: 'uppercase',
+                      letterSpacing: '0.06em', color: 'var(--text-muted)' 
                     }}>
                       <span style={{
-                        width: 6, height: 6, borderRadius: '50%', flexShrink: 0,
+                        width: 5, height: 5, borderRadius: '50%', flexShrink: 0,
                         background: p.inventory_kg <= 2 ? 'var(--danger)' : p.inventory_kg <= 8 ? 'var(--gold)' : 'var(--green)',
                       }} />
                       {p.inventory_kg <= 2 ? 'AGOTADO' : p.inventory_kg <= 8 ? `SOLO ${p.inventory_kg}KG` : `${p.inventory_kg}KG DISPONIBLE`}
                     </div>
                     
                     <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '0.5rem', fontWeight: 700, letterSpacing: '0.08em',
-                        color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.1rem' }}>Desde</div>
-                      <div style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--gold)', letterSpacing: '-0.02em' }}>
+                      <div style={{ fontSize: '1.18rem', fontWeight: 900, color: 'var(--gold)', letterSpacing: '-0.02em' }}>
                         {formatPrice(displayPrice)}
                       </div>
                     </div>

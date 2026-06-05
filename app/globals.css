@@ -437,6 +437,206 @@ html:has(.landing-container) {
   transform: scale(1.02) translateY(-2px);
 }
 
+/* Card Expansion Styles */
+.expanded-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s var(--smooth), opacity 0.3s ease, margin-top 0.3s ease;
+  margin-top: 0;
+}
+
+.expanded-content.active {
+  max-height: 600px;
+  opacity: 1;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--glass-border);
+}
+
+.bag-image-container {
+  position: relative;
+  background: linear-gradient(135deg, #023c22, #005C38);
+  border-radius: var(--r-md);
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 240px;
+  margin-top: 0.8rem;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.bag-image {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+  transition: transform 0.5s var(--spring);
+}
+
+.bag-image-container:hover .bag-image {
+  transform: scale(1.06) rotate(1deg);
+}
+
+/* Option select button inside card */
+.btn-select-options {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--btn-select-active-bg);
+  border: 1px solid var(--btn-select-active-border);
+  border-radius: var(--r-sm);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 770;
+  letter-spacing: 0.05em;
+  color: var(--btn-select-active-text);
+  cursor: pointer;
+  margin-top: 0.9rem;
+  text-transform: uppercase;
+  transition: var(--t);
+  box-shadow: 0 4px 12px var(--gold-glow);
+}
+
+.btn-select-options:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 16px var(--gold-glow);
+}
+
+/* Starbucks Premium Drawer Styles */
+.drawer-green-header {
+  position: relative;
+  background: linear-gradient(180deg, #092617 0%, #0d311e 100%);
+  height: 38dvh;
+  min-height: 220px;
+  max-height: 380px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2.5rem 1rem 3.5rem;
+  overflow: hidden;
+}
+
+.drawer-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1.1rem;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: var(--t);
+}
+
+.drawer-close-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+.drawer-bag-image {
+  height: 45dvh;
+  min-height: 240px;
+  max-height: 450px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.5));
+  animation: floatImage 4s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes floatImage {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(1deg);
+  }
+}
+
+.drawer-details-card {
+  position: relative;
+  background: var(--bg-card);
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  margin-top: -30px;
+  padding: 1.3rem 1.2rem 1.0rem;
+  z-index: 2;
+  box-shadow: 0 -12px 36px rgba(0,0,0,0.18);
+  border-top: 1px solid var(--glass-border);
+  min-height: 250px;
+}
+
+.drawer-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.drawer-subtitle {
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.drawer-notes {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+  line-height: 1.4;
+}
+
+.drawer-divider {
+  border: 0;
+  border-bottom: 1px solid var(--glass-border);
+  margin: 0.75rem 0;
+}
+
+.panel-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 99;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.panel-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.drawer-bottom-sheet::-webkit-scrollbar {
+  display: none;
+}
+
+.drawer-bottom-sheet {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+
 
 
 
