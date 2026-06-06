@@ -9,11 +9,20 @@ const SIZE_CONFIG = {
   '2.5kg': { label: 'Cuarterón (2.5kg)', kg: 2.5  },
 }
 
+const formatRoastDate = (dateStr) => {
+  if (!dateStr) return ''
+  const match = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+  if (!match) return dateStr
+  const monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+  return `${match[3]} ${monthNames[parseInt(match[2], 10) - 1]} ${match[1]}`
+}
+
 function mapRow(row) {
   return {
     id:            row.id,
     name:          row.name,
     lot:           row.lot,
+    roastDate:     row.roast_date,
     variety:       row.variety,
     process:       row.process,
     region:        row.region,
@@ -456,6 +465,15 @@ export default function CatalogPage({ roaster }) {
                       }}>
                         {remainingStock <= 2 ? 'Agotado' : `${remainingStock.toFixed(2).replace(/\.00$/, '')} kg disponible`}
                       </span>
+                      {activeProduct.roastDate && (
+                        <span className="tag" style={{
+                          background: 'rgba(158, 118, 63, 0.08)',
+                          color: 'var(--gold)',
+                          borderColor: 'rgba(158, 118, 63, 0.2)',
+                        }}>
+                          Tostado: {formatRoastDate(activeProduct.roastDate)}
+                        </span>
+                      )}
                     </div>
                   </div>
                   <button 
@@ -513,8 +531,8 @@ export default function CatalogPage({ roaster }) {
                         background: isDark ? '#2E2D35' : '#FAF6EE',
                         border: `1px solid ${isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(80, 37, 20, 0.12)'}`,
                         boxShadow: isDark ? 'none' : '0 2px 8px rgba(80, 37, 20, 0.03)',
-                        borderRadius: 'var(--r-sm)', padding: '0.6rem 0.8rem',
-                        display: 'flex', flexDirection: 'column', gap: '0.45rem'
+                        borderRadius: 'var(--r-sm)', padding: '0.4rem 0.7rem',
+                        display: 'flex', flexDirection: 'column', gap: '0.3rem'
                       }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                           <span style={{ fontSize: '0.72rem', fontWeight: 500, color: 'var(--text-muted)' }}>{cfg.label}</span>
@@ -532,7 +550,7 @@ export default function CatalogPage({ roaster }) {
                                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                                 background: active ? 'var(--gold-dim)' : 'rgba(0,0,0,0.02)',
                                 border: `1px solid ${active ? 'var(--gold)' : 'var(--glass-border)'}`,
-                                borderRadius: '8px', padding: '0.35rem 0.5rem', transition: 'var(--t)'
+                                borderRadius: '8px', padding: '0.22rem 0.45rem', transition: 'var(--t)'
                               }}>
                                 <span style={{ fontSize: '0.66rem', fontWeight: 600, color: 'var(--text-primary)', display: 'flex', alignItems: 'center' }}>
                                   {g}
@@ -850,8 +868,9 @@ function ProductCard({ product: p, remainingStock, isInCart, isDark, animDelay, 
           {stockLabel}
         </div>
         
-        <div style={{ textAlign: 'right' }}>
-          <div style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--gold)', letterSpacing: '-0.02em' }}>
+        <div style={{ textAlign: 'right', display: 'flex', alignItems: 'baseline', gap: '0.2rem', justifyContent: 'flex-end' }}>
+          <span style={{ fontSize: '0.52rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>desde</span>
+          <div style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--gold)', letterSpacing: '-0.02em', lineHeight: 1 }}>
             {formatPrice(displayPrice)}
           </div>
         </div>

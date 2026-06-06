@@ -7,6 +7,27 @@ import { createClient } from '@/lib/supabase/client'
 const VARIETIES = ['Castillo', 'Caturra', 'Colombia', 'Bourbon', 'Tabi', 'Geisha', 'Bourbon Rosado', 'Pacamara', 'Typica', 'Sidra']
 const PROCESSES = ['Lavado', 'Honey', 'Natural']
 
+const handlePriceInputChange = (e) => {
+  const input = e.target
+  let value = input.value
+  const clean = value.replace(/\D/g, '')
+  const formatted = clean.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+  input.value = formatted
+}
+
+const parseFormattedPrice = (val) => {
+  if (!val) return 0
+  return parseInt(val.toString().replace(/\D/g, '')) || 0
+}
+
+const formatRoastDate = (dateStr) => {
+  if (!dateStr) return ''
+  const match = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+  if (!match) return dateStr
+  const monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+  return `${match[3]} ${monthNames[parseInt(match[2], 10) - 1]} ${match[1]}`
+}
+
 export default function DashboardClient({ initialRoaster, initialProducts }) {
   const [products, setProducts] = useState(initialProducts)
   const [modalOpen, setModalOpen] = useState(false)
@@ -241,14 +262,15 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
       roaster_id: roaster.id,
       name: fd.get('name'),
       lot: fd.get('lot'),
+      roast_date: fd.get('roastDate') || null,
       variety: varValue,
       process: prValue,
       region: fd.get('region'),
       altitude: fd.get('altitude') + ' msnm',
       notes: fd.get('notes') || 'Notas por definir',
-      price_250: parseInt(fd.get('price250')),
-      price_500: parseInt(fd.get('price500')),
-      price_2500: parseInt(fd.get('price2500')),
+      price_250: parseFormattedPrice(fd.get('price250')),
+      price_500: parseFormattedPrice(fd.get('price500')),
+      price_2500: parseFormattedPrice(fd.get('price2500')),
       inventory_kg: parseFloat(fd.get('inventoryKg') || 20),
       is_offer: isOffer,
       offer_discount: isOffer ? parseInt(fd.get('discount') || 0) / 100 : 0
@@ -297,14 +319,15 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
     const updatedProduct = {
       name: fd.get('name'),
       lot: fd.get('lot'),
+      roast_date: fd.get('roastDate') || null,
       variety: varValue,
       process: prValue,
       region: fd.get('region'),
       altitude: cleanAltitude + ' msnm',
       notes: fd.get('notes') || 'Notas por definir',
-      price_250: parseInt(fd.get('price250')),
-      price_500: parseInt(fd.get('price500')),
-      price_2500: parseInt(fd.get('price2500')),
+      price_250: parseFormattedPrice(fd.get('price250')),
+      price_500: parseFormattedPrice(fd.get('price500')),
+      price_2500: parseFormattedPrice(fd.get('price2500')),
       inventory_kg: parseFloat(fd.get('inventoryKg') || 0),
       is_offer: editIsOffer,
       offer_discount: editIsOffer ? parseInt(fd.get('discount') || 0) / 100 : 0
@@ -538,7 +561,7 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
                       {p.variety}
                     </h3>
                     <p style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', fontWeight: 600, margin: '0.05rem 0 0.25rem 0' }}>
-                      {p.name} {p.lot ? `· ${p.lot}` : ''}
+                      {p.name} {p.lot ? `· ${p.lot}` : ''} {p.roast_date ? `· Tostión: ${formatRoastDate(p.roast_date)}` : ''}
                     </p>
                   </div>
  
@@ -588,8 +611,9 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
                       {p.inventory_kg <= 2 ? 'AGOTADO' : p.inventory_kg <= 8 ? `SOLO ${p.inventory_kg}KG` : `${p.inventory_kg}KG DISPONIBLE`}
                     </div>
                     
-                    <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '1.18rem', fontWeight: 900, color: 'var(--gold)', letterSpacing: '-0.02em' }}>
+                    <div style={{ textAlign: 'right', display: 'flex', alignItems: 'baseline', gap: '0.15rem', justifyContent: 'flex-end' }}>
+                      <span style={{ fontSize: '0.48rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>desde</span>
+                      <div style={{ fontSize: '1.18rem', fontWeight: 900, color: 'var(--gold)', letterSpacing: '-0.02em', lineHeight: 1 }}>
                         {formatPrice(displayPrice)}
                       </div>
                     </div>
@@ -604,16 +628,16 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
       {/* Modal Add */}
       {modalOpen && (
         <div style={{
-          position: 'absolute', inset: 0, zIndex: 200, background: 'rgba(0,0,0,0.75)',
-          backdropFilter: 'blur(12px)', padding: '1rem', overflowY: 'auto', display: 'flex', alignItems: 'flex-end'
+          position: 'absolute', inset: 0, zIndex: 200, background: isDark ? 'rgba(0,0,0,0.65)' : 'rgba(0,0,0,0.25)',
+          backdropFilter: 'blur(8px)', padding: '0.6rem', overflowY: 'auto', display: 'flex', alignItems: 'flex-end'
         }}>
           <div style={{
             background: 'linear-gradient(145deg, var(--bg-card), var(--bg-card-2))',
             border: '1px solid var(--glass-border)', borderRadius: 'var(--r-xl)',
-            padding: '1.6rem', width: '100%', margin: 'auto', maxWidth: 420,
+            padding: '1.1rem', width: '100%', margin: 'auto', maxWidth: 420,
             animation: 'slideUp 0.3s var(--spring)'
           }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.4rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.8rem' }}>
               <h2 style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '1.1rem', color: 'var(--gold)', fontWeight: 800, letterSpacing: '0.04em' }}>Nueva Variedad</h2>
               <button onClick={() => setModalOpen(false)} style={{
                 background: 'var(--glass)', border: '1px solid var(--glass-border)', color: 'var(--text-muted)',
@@ -621,9 +645,12 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
               }}>×</button>
             </div>
             
-            <form onSubmit={handleAdd} style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
+            <form onSubmit={handleAdd} style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
               <div className="field"><label>Caficultor</label><input name="name" required placeholder="Ej: Julio Cuva" /></div>
-              <div className="field"><label>Finca/Lote</label><input name="lot" required placeholder="Ej: La Esperanza" /></div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem' }}>
+                <div className="field"><label>Finca/Lote</label><input name="lot" required placeholder="Ej: La Esperanza" /></div>
+                <div className="field"><label>Fecha de Tostión</label><input name="roastDate" type="date" /></div>
+              </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem' }}>
                 <div className="field">
                   <label>Variedad</label>
@@ -669,14 +696,14 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
                 <div className="field"><label>Altura (msnm)</label><input name="altitude" type="number" required /></div>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem' }}>
-                <div className="field"><label>Precio 250g</label><input name="price250" type="number" required /></div>
-                <div className="field"><label>Precio 500g</label><input name="price500" type="number" required /></div>
+                <div className="field"><label>Precio 250g</label><input name="price250" type="text" inputMode="numeric" onChange={handlePriceInputChange} required /></div>
+                <div className="field"><label>Precio 500g</label><input name="price500" type="text" inputMode="numeric" onChange={handlePriceInputChange} required /></div>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem' }}>
-                <div className="field"><label>Precio 2.5kg</label><input name="price2500" type="number" required /></div>
+                <div className="field"><label>Precio 2.5kg</label><input name="price2500" type="text" inputMode="numeric" onChange={handlePriceInputChange} required /></div>
                 <div className="field"><label>Cantidad Disponible (kg)</label><input name="inventoryKg" type="number" step="0.1" required placeholder="Ej: 25" /></div>
               </div>
-              <div className="field"><label>Notas de cata</label><input name="notes" placeholder="Durazno, Panela..." /></div>
+              <div className="field"><label>Notas de cata</label><textarea name="notes" rows={3} placeholder="Durazno, Panela..." /></div>
               
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginTop: '0.5rem' }}>
                 <input type="checkbox" checked={isOffer} onChange={e => setIsOffer(e.target.checked)} style={{ width: 18, height: 18, accentColor: 'var(--green)' }} />
@@ -698,16 +725,16 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
       {/* Modal Edit */}
       {editingProduct && (
         <div style={{
-          position: 'absolute', inset: 0, zIndex: 200, background: 'rgba(0,0,0,0.75)',
-          backdropFilter: 'blur(12px)', padding: '1rem', overflowY: 'auto', display: 'flex', alignItems: 'flex-end'
+          position: 'absolute', inset: 0, zIndex: 200, background: isDark ? 'rgba(0,0,0,0.65)' : 'rgba(0,0,0,0.25)',
+          backdropFilter: 'blur(8px)', padding: '0.6rem', overflowY: 'auto', display: 'flex', alignItems: 'flex-end'
         }}>
           <div style={{
             background: 'linear-gradient(145deg, var(--bg-card), var(--bg-card-2))',
             border: '1px solid var(--glass-border)', borderRadius: 'var(--r-xl)',
-            padding: '1.6rem', width: '100%', margin: 'auto', maxWidth: 420,
+            padding: '1.1rem', width: '100%', margin: 'auto', maxWidth: 420,
             animation: 'slideUp 0.3s var(--spring)'
           }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.4rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.8rem' }}>
               <h2 style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '1.1rem', color: 'var(--gold)', fontWeight: 800, letterSpacing: '0.04em' }}>Editar Variedad</h2>
               <button onClick={() => setEditingProduct(null)} style={{
                 background: 'var(--glass)', border: '1px solid var(--glass-border)', color: 'var(--text-muted)',
@@ -715,14 +742,20 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
               }}>×</button>
             </div>
             
-            <form onSubmit={handleEditSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
+            <form onSubmit={handleEditSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
               <div className="field">
                 <label>Caficultor</label>
                 <input name="name" required defaultValue={editingProduct.name} />
               </div>
-              <div className="field">
-                <label>Finca/Lote</label>
-                <input name="lot" required defaultValue={editingProduct.lot} />
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem' }}>
+                <div className="field">
+                  <label>Finca/Lote</label>
+                  <input name="lot" required defaultValue={editingProduct.lot} />
+                </div>
+                <div className="field">
+                  <label>Fecha de Tostión</label>
+                  <input name="roastDate" type="date" defaultValue={editingProduct.roast_date || ''} />
+                </div>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem' }}>
                 <div className="field">
@@ -777,17 +810,17 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem' }}>
                 <div className="field">
                   <label>Precio 250g</label>
-                  <input name="price250" type="number" required defaultValue={editingProduct.price_250} />
+                  <input name="price250" type="text" inputMode="numeric" onChange={handlePriceInputChange} required defaultValue={editingProduct.price_250 ? editingProduct.price_250.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') : ''} />
                 </div>
                 <div className="field">
                   <label>Precio 500g</label>
-                  <input name="price500" type="number" required defaultValue={editingProduct.price_500} />
+                  <input name="price500" type="text" inputMode="numeric" onChange={handlePriceInputChange} required defaultValue={editingProduct.price_500 ? editingProduct.price_500.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') : ''} />
                 </div>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem' }}>
                 <div className="field">
                   <label>Precio 2.5kg</label>
-                  <input name="price2500" type="number" required defaultValue={editingProduct.price_2500} />
+                  <input name="price2500" type="text" inputMode="numeric" onChange={handlePriceInputChange} required defaultValue={editingProduct.price_2500 ? editingProduct.price_2500.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') : ''} />
                 </div>
                 <div className="field">
                   <label>Cantidad Disponible (kg)</label>
@@ -796,7 +829,7 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
               </div>
               <div className="field">
                 <label>Notas de cata</label>
-                <input name="notes" defaultValue={editingProduct.notes} />
+                <textarea name="notes" rows={3} defaultValue={editingProduct.notes} />
               </div>
               
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginTop: '0.5rem' }}>
@@ -822,16 +855,16 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
       {/* Modal Profile Edit */}
       {profileModalOpen && (
         <div style={{
-          position: 'absolute', inset: 0, zIndex: 200, background: 'rgba(0,0,0,0.75)',
-          backdropFilter: 'blur(12px)', padding: '1rem', overflowY: 'auto', display: 'flex', alignItems: 'flex-end'
+          position: 'absolute', inset: 0, zIndex: 200, background: isDark ? 'rgba(0,0,0,0.65)' : 'rgba(0,0,0,0.25)',
+          backdropFilter: 'blur(8px)', padding: '0.6rem', overflowY: 'auto', display: 'flex', alignItems: 'flex-end'
         }}>
           <div style={{
             background: 'linear-gradient(145deg, var(--bg-card), var(--bg-card-2))',
             border: '1px solid var(--glass-border)', borderRadius: 'var(--r-xl)',
-            padding: '1.6rem', width: '100%', margin: 'auto', maxWidth: 420,
+            padding: '1.1rem', width: '100%', margin: 'auto', maxWidth: 420,
             animation: 'slideUp 0.3s var(--spring)'
           }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.4rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.8rem' }}>
               <h2 style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '1.1rem', color: 'var(--gold)', fontWeight: 800, letterSpacing: '0.04em' }}>Editar Registro</h2>
               <button onClick={() => setProfileModalOpen(false)} style={{
                 background: 'var(--glass)', border: '1px solid var(--glass-border)', color: 'var(--text-muted)',
@@ -839,7 +872,7 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
               }}>×</button>
             </div>
             
-            <form onSubmit={handleUpdateProfile} style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
+            <form onSubmit={handleUpdateProfile} style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
               <div className="field">
                 <label>Nombre de la Empresa (Tostador)</label>
                 <input 
