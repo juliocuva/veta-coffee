@@ -396,6 +396,28 @@ export default function CatalogPage({ roaster }) {
                 AXISONE COFFEE es una marca comercial propiedad de Mouselab. El acceso a este material o enlaces no constituye una licencia de uso. Cualquier uso no autorizado será perseguido bajo las leyes de propiedad intelectual globales.
               </p>
             </div>
+
+            {/* Powered by AxisONE Coffee */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.35rem',
+              fontSize: '0.56rem',
+              fontWeight: 700,
+              color: 'var(--text-muted)',
+              letterSpacing: '0.04em',
+              textTransform: 'uppercase',
+              marginTop: '0.8rem',
+              opacity: 0.8
+            }}>
+              <span>Powered by AxisONE Coffee</span>
+              <img 
+                src="/logo-axisone.png" 
+                alt="AxisONE Coffee" 
+                style={{ height: '14px', width: 'auto', objectFit: 'contain' }} 
+              />
+            </div>
           </footer>
         )}
       </main>
