@@ -296,15 +296,15 @@ export default function LandingPage() {
             alignItems: 'start'
           }}>
             {/* Catalog Screenshot Card */}
-            <div className="showcase-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: '1 1 280px', maxWidth: 300 }}>
+            <div className="showcase-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: '1 1 280px', maxWidth: 320 }}>
               <div className="showcase-img-wrap" style={{
                 borderRadius: '24px',
                 border: '6px solid #28211c',
                 overflow: 'hidden',
                 boxShadow: '0 16px 36px rgba(80, 37, 20, 0.08)',
                 background: '#FAF7F2',
-                width: '260px',
-                height: '520px'
+                width: '285px',
+                height: '570px'
               }}>
                 <img src="/screenshot-catalog.png" alt="Catálogo de Productos" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} />
               </div>
@@ -317,15 +317,15 @@ export default function LandingPage() {
             </div>
 
             {/* Configurator Drawer Screenshot Card */}
-            <div className="showcase-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: '1 1 280px', maxWidth: 300 }}>
+            <div className="showcase-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: '1 1 280px', maxWidth: 320 }}>
               <div className="showcase-img-wrap" style={{
                 borderRadius: '24px',
                 border: '6px solid #28211c',
                 overflow: 'hidden',
                 boxShadow: '0 16px 36px rgba(80, 37, 20, 0.08)',
                 background: '#FAF7F2',
-                width: '260px',
-                height: '520px'
+                width: '285px',
+                height: '570px'
               }}>
                 <img src="/screenshot-drawer.png" alt="Selector de Moliendas y Gramaje" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} />
               </div>
@@ -338,15 +338,15 @@ export default function LandingPage() {
             </div>
 
             {/* WhatsApp Receipt Screenshot Card */}
-            <div className="showcase-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: '1 1 280px', maxWidth: 300 }}>
+            <div className="showcase-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: '1 1 280px', maxWidth: 320 }}>
               <div className="showcase-img-wrap" style={{
                 borderRadius: '24px',
                 border: '6px solid #28211c',
                 overflow: 'hidden',
                 boxShadow: '0 16px 36px rgba(80, 37, 20, 0.08)',
                 background: '#FAF7F2',
-                width: '260px',
-                height: '520px'
+                width: '285px',
+                height: '570px'
               }}>
                 <img src="/screenshot-whatsapp.png" alt="Recepción de Pedidos por WhatsApp" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} />
               </div>
