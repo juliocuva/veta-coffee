@@ -220,6 +220,70 @@ export default function LandingPage() {
       {/* ════════════════════════════════════════════════════
            MAIN BODY: Cream/Latte Layout & Premium Aesthetics
          ════════════════════════════════════════════════════ */}
+      <main style={{
+        flex: 1,
+        width: '100%',
+        maxWidth: 1080,
+        margin: '0 auto',
+        padding: '6rem 1.5rem 5rem',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '6rem'
+      }}>
+
+        {/* 1. Interactive App Showcase (Starbucks Mockup Concept) */}
+        <section id="beneficios" style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          alignItems: 'center',
+          gap: '4rem'
+        }}>
+          {/* Left Description */}
+          <div style={{ textAlign: 'left' }}>
+
+            <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 400, color: 'var(--text-primary)', lineHeight: 1.15, marginBottom: '1.5rem' }}>
+              La experiencia móvil que tus <span style={{ color: 'var(--gold)', fontWeight: 700 }}>clientes amarán</span>.
+            </h2>
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.65, marginBottom: '2rem' }}>
+              Diseñamos una interfaz súper fluida, libre de fricciones de registro. Tus clientes pueden navegar tu catálogo, elegir sus varietales y configurar cantidades y moliendas exactas en segundos.
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+                <div style={{ background: 'var(--green-dim)', borderRadius: '50%', width: 22, height: 22, display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', color: 'var(--green)', fontSize: '0.7rem', fontWeight: 700 }}>✓</div>
+                <p style={{ fontSize: '0.82rem', fontWeight: 500, margin: 0, color: 'var(--text-primary)' }}>250g o 500g, grano o molido: tu cliente elige sin llamarte.</p>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+                <div style={{ background: 'var(--green-dim)', borderRadius: '50%', width: 22, height: 22, display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', color: 'var(--green)', fontSize: '0.7rem', fontWeight: 700 }}>✓</div>
+                <p style={{ fontSize: '0.82rem', fontWeight: 500, margin: 0, color: 'var(--text-primary)' }}>Un solo pedido puede tener varias presentaciones mezcladas. Sin confusión.</p>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+                <div style={{ background: 'var(--green-dim)', borderRadius: '50%', width: 22, height: 22, display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', color: 'var(--green)', fontSize: '0.7rem', fontWeight: 700 }}>✓</div>
+                <p style={{ fontSize: '0.82rem', fontWeight: 500, margin: 0, color: 'var(--text-primary)' }}>Funciona perfecto desde el celular de tu cliente, aunque tenga mala señal.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Hands holding phone mockup photo */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            position: 'relative'
+          }}>
+            <div style={{
+              width: '100%',
+              maxWidth: 420,
+              borderRadius: 'var(--r-xl)',
+              overflow: 'hidden',
+              boxShadow: '0 20px 45px rgba(80, 37, 20, 0.08)',
+              border: '1px solid var(--glass-border)'
+            }}>
+              <img src="/hands-mockup.jpg" alt="Celular mostrando el catálogo de café" style={{ width: '100%', height: 'auto', display: 'block' }} />
+            </div>
+          </div>
+        </section>
+
+      </main>
+
       {/* Full-width Coffee Background Section */}
       <section id="como-funciona" style={{
         background: 'linear-gradient(135deg, #1C120C 0%, #100A07 100%)',
@@ -326,9 +390,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ════════════════════════════════════════════════════
-           MAIN BODY: Cream/Latte Layout & Premium Aesthetics
-         ════════════════════════════════════════════════════ */}
       <main style={{
         flex: 1,
         width: '100%',
@@ -339,57 +400,6 @@ export default function LandingPage() {
         flexDirection: 'column',
         gap: '6rem'
       }}>
-
-        {/* 1. Interactive App Showcase (Starbucks Mockup Concept) */}
-        <section id="beneficios" style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          alignItems: 'center',
-          gap: '4rem'
-        }}>
-          {/* Left Description */}
-          <div style={{ textAlign: 'left' }}>
-
-            <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 400, color: 'var(--text-primary)', lineHeight: 1.15, marginBottom: '1.5rem' }}>
-              La experiencia móvil que tus <span style={{ color: 'var(--gold)', fontWeight: 700 }}>clientes amarán</span>.
-            </h2>
-            <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.65, marginBottom: '2rem' }}>
-              Diseñamos una interfaz súper fluida, libre de fricciones de registro. Tus clientes pueden navegar tu catálogo, elegir sus varietales y configurar cantidades y moliendas exactas en segundos.
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
-                <div style={{ background: 'var(--green-dim)', borderRadius: '50%', width: 22, height: 22, display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', color: 'var(--green)', fontSize: '0.7rem', fontWeight: 700 }}>✓</div>
-                <p style={{ fontSize: '0.82rem', fontWeight: 500, margin: 0, color: 'var(--text-primary)' }}>250g o 500g, grano o molido: tu cliente elige sin llamarte.</p>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
-                <div style={{ background: 'var(--green-dim)', borderRadius: '50%', width: 22, height: 22, display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', color: 'var(--green)', fontSize: '0.7rem', fontWeight: 700 }}>✓</div>
-                <p style={{ fontSize: '0.82rem', fontWeight: 500, margin: 0, color: 'var(--text-primary)' }}>Un solo pedido puede tener varias presentaciones mezcladas. Sin confusión.</p>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
-                <div style={{ background: 'var(--green-dim)', borderRadius: '50%', width: 22, height: 22, display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', color: 'var(--green)', fontSize: '0.7rem', fontWeight: 700 }}>✓</div>
-                <p style={{ fontSize: '0.82rem', fontWeight: 500, margin: 0, color: 'var(--text-primary)' }}>Funciona perfecto desde el celular de tu cliente, aunque tenga mala señal.</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: Hands holding phone mockup photo */}
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            position: 'relative'
-          }}>
-            <div style={{
-              width: '100%',
-              maxWidth: 420,
-              borderRadius: 'var(--r-xl)',
-              overflow: 'hidden',
-              boxShadow: '0 20px 45px rgba(80, 37, 20, 0.08)',
-              border: '1px solid var(--glass-border)'
-            }}>
-              <img src="/hands-mockup.jpg" alt="Celular mostrando el catálogo de café" style={{ width: '100%', height: 'auto', display: 'block' }} />
-            </div>
-          </div>
-        </section>
 
         {/* Real App Showcase */}
         <section id="capturas" style={{ textAlign: 'center' }}>
