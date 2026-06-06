@@ -44,6 +44,16 @@ export default function CatalogPage({ roaster }) {
   const [activeId, setActiveId]         = useState(null)
   const [panelOpen, setPanelOpen]       = useState(false)
   const [isDark, setIsDark]             = useState(false)
+  const [user, setUser]                 = useState(null)
+
+  // Check user authentication
+  useEffect(() => {
+    async function checkUser() {
+      const { data: { user: authUser } } = await supabase.auth.getUser()
+      setUser(authUser)
+    }
+    checkUser()
+  }, [supabase])
 
   // Theme Sync
   useEffect(() => {
@@ -250,18 +260,40 @@ export default function CatalogPage({ roaster }) {
         <p style={{ fontSize: '0.58rem', color: 'rgba(255, 255, 255, 0.65)', marginTop: '0.35rem', letterSpacing: '0.04em' }}>
           Café de especialidad · Pedido directo
         </p>
-        <a href="/admin" style={{
-          position: 'absolute', left: '1.2rem', top: '50%', transform: 'translateY(-50%)',
-          width: 32, height: 32, borderRadius: '50%',
-          background: 'rgba(255, 255, 255, 0.15)', border: '1px solid rgba(255, 255, 255, 0.08)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          color: '#ffffff', textDecoration: 'none',
-          transition: 'var(--t)',
-        }} title="Acceso tostador">
-          <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15">
-            <path fillRule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14H8v2H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 1 1 0 000-2z" clipRule="evenodd" />
-          </svg>
-        </a>
+        {user ? (
+          <a href="/admin/dashboard" style={{
+            position: 'absolute', left: '1.2rem', top: '50%', transform: 'translateY(-50%)',
+            background: 'rgba(110, 207, 151, 0.2)', border: '1px solid rgba(110, 207, 151, 0.4)',
+            borderRadius: '16px',
+            padding: '0.3rem 0.7rem',
+            fontSize: '0.62rem',
+            fontWeight: 700,
+            color: '#6FCF97',
+            textDecoration: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.25rem',
+            transition: 'var(--t)',
+          }} title="Volver al panel de variedades">
+            <svg viewBox="0 0 20 20" fill="currentColor" width="12" height="12">
+              <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+            </svg>
+            <span>Volver</span>
+          </a>
+        ) : (
+          <a href="/admin" style={{
+            position: 'absolute', left: '1.2rem', top: '50%', transform: 'translateY(-50%)',
+            width: 32, height: 32, borderRadius: '50%',
+            background: 'rgba(255, 255, 255, 0.15)', border: '1px solid rgba(255, 255, 255, 0.08)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            color: '#ffffff', textDecoration: 'none',
+            transition: 'var(--t)',
+          }} title="Acceso tostador">
+            <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15">
+              <path fillRule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14H8v2H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 1 1 0 000-2z" clipRule="evenodd" />
+            </svg>
+          </a>
+        )}
         <button 
           onClick={toggleTheme} 
           style={{

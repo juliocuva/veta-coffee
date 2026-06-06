@@ -404,7 +404,6 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
             <a 
               href={`/${roaster.slug}`} 
-              target="_blank" 
               style={{ 
                 fontSize: '0.55rem', 
                 fontWeight: 700,
@@ -423,7 +422,7 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
               onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.15)'}
               onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.05)'}
             >
-              Ver Catálogo ↗
+              Ver Catálogo
             </a>
             <button 
               onClick={handleCopyLink} 

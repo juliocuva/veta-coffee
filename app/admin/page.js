@@ -26,6 +26,15 @@ export default function AdminLogin() {
   const supabase = createClient()
 
   useEffect(() => {
+    // Check if user is already logged in
+    const checkSession = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        router.push('/admin/dashboard')
+      }
+    }
+    checkSession()
+
     // 1. Try to read credentials from URL query parameters
     const params = new URLSearchParams(window.location.search)
     const urlEmail = params.get('email')
