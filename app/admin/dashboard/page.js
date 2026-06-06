@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import DashboardClient from './DashboardClient'
 
-export const metadata = { title: 'Dashboard — Veta Platform' }
+export const metadata = { title: 'Dashboard — beCOFFEE.pro' }
 
 export default async function DashboardPage() {
   const supabase = await createClient()

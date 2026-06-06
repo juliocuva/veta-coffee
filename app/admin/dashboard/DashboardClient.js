@@ -891,7 +891,7 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
                   required 
                 />
                 <span style={{ fontSize: '0.55rem', color: 'var(--text-muted)', marginTop: '0.1rem' }}>
-                  Su link cambiará a: vetacoffee.vercel.app/<strong>{profileSlug.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "")}</strong>
+                  Su link cambiará a: becoffee.pro/<strong>{profileSlug.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "")}</strong>
                 </span>
               </div>
 

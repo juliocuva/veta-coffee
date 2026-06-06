@@ -9,7 +9,7 @@ const montserrat = Montserrat({
 })
 
 export const metadata = {
-  title: 'Veta Platform — Café de especialidad',
+  title: 'beCOFFEE.pro — Café de especialidad',
   description: 'Plataforma de pedidos directos para tostadores de café de especialidad.',
 }
 
