@@ -513,13 +513,13 @@ html:has(.landing-container) {
 .drawer-green-header {
   position: relative;
   background: linear-gradient(180deg, #092617 0%, #0d311e 100%);
-  height: 22dvh;
-  min-height: 140px;
-  max-height: 200px;
+  height: 28dvh;
+  min-height: 180px;
+  max-height: 260px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 1.2rem 1rem 2.0rem;
+  padding: 1.5rem 1rem 2.5rem;
   overflow: hidden;
 }
 
@@ -549,9 +549,9 @@ html:has(.landing-container) {
 }
 
 .drawer-bag-image {
-  height: 26dvh;
-  min-height: 160px;
-  max-height: 240px;
+  height: 33dvh;
+  min-height: 200px;
+  max-height: 310px;
   width: auto;
   object-fit: contain;
   filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.5));
