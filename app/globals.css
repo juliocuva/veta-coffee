@@ -518,8 +518,7 @@ html:has(.landing-container) {
   max-height: 260px;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding: 1.5rem 1rem 2.5rem;
+  align-items: center;
   overflow: hidden;
 }
 
@@ -530,8 +529,8 @@ html:has(.landing-container) {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   color: #ffffff;
   font-size: 1rem;
   font-weight: bold;
@@ -541,19 +540,18 @@ html:has(.landing-container) {
   cursor: pointer;
   z-index: 10;
   transition: var(--t);
+  backdrop-filter: blur(4px);
 }
 
 .drawer-close-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.5);
   transform: scale(1.05);
 }
 
 .drawer-bag-image {
-  height: 33dvh;
-  min-height: 200px;
-  max-height: 310px;
-  width: auto;
-  object-fit: contain;
+  width: 100%;
+  height: 115%;
+  object-fit: cover;
   filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.5));
   animation: floatImage 4s ease-in-out infinite;
   z-index: 1;
