@@ -353,19 +353,7 @@ export default function CatalogPage({ roaster }) {
                 }} 
               />
 
-              {/* Logo 2: AXISONE COFFEE */}
-              <img 
-                src="/logo-axisone.png" 
-                alt="AXISONE COFFEE" 
-                style={{ 
-                  height: '32px', 
-                  width: 'auto', 
-                  objectFit: 'contain',
-                  transition: 'var(--t)'
-                }} 
-              />
-
-              {/* Logo 3: SAGRADO CORAZÓN */}
+              {/* Logo 2: SAGRADO CORAZÓN */}
               <img 
                 src="/logo-sagrado.png" 
                 alt="SAGRADO CORAZÓN" 
@@ -415,7 +403,12 @@ export default function CatalogPage({ roaster }) {
               <img 
                 src="/logo-axisone.png" 
                 alt="AxisONE Coffee" 
-                style={{ height: '14px', width: 'auto', objectFit: 'contain' }} 
+                style={{ 
+                  height: '14px', 
+                  width: 'auto', 
+                  objectFit: 'contain',
+                  filter: isDark ? 'brightness(0) invert(1)' : 'brightness(0) opacity(0.5)'
+                }} 
               />
             </div>
           </footer>
