@@ -302,9 +302,11 @@ export default function LandingPage() {
                 border: '6px solid #28211c',
                 overflow: 'hidden',
                 boxShadow: '0 16px 36px rgba(80, 37, 20, 0.08)',
-                background: '#FAF7F2'
+                background: '#FAF7F2',
+                width: '260px',
+                height: '520px'
               }}>
-                <img src="/screenshot-catalog.png" alt="Catálogo de Productos" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src="/screenshot-catalog.png" alt="Catálogo de Productos" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} />
               </div>
               <div className="showcase-info">
                 <h4 style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>1. Tu Catálogo de Especialidad</h4>
@@ -321,9 +323,11 @@ export default function LandingPage() {
                 border: '6px solid #28211c',
                 overflow: 'hidden',
                 boxShadow: '0 16px 36px rgba(80, 37, 20, 0.08)',
-                background: '#FAF7F2'
+                background: '#FAF7F2',
+                width: '260px',
+                height: '520px'
               }}>
-                <img src="/screenshot-drawer.png" alt="Selector de Moliendas y Gramaje" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src="/screenshot-drawer.png" alt="Selector de Moliendas y Gramaje" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} />
               </div>
               <div className="showcase-info">
                 <h4 style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>2. Configuración de Pedido</h4>
@@ -340,9 +344,11 @@ export default function LandingPage() {
                 border: '6px solid #28211c',
                 overflow: 'hidden',
                 boxShadow: '0 16px 36px rgba(80, 37, 20, 0.08)',
-                background: '#FAF7F2'
+                background: '#FAF7F2',
+                width: '260px',
+                height: '520px'
               }}>
-                <img src="/screenshot-whatsapp.png" alt="Recepción de Pedidos por WhatsApp" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src="/screenshot-whatsapp.png" alt="Recepción de Pedidos por WhatsApp" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} />
               </div>
               <div className="showcase-info">
                 <h4 style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>3. Pedido Directo a WhatsApp</h4>
