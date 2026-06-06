@@ -220,6 +220,115 @@ export default function LandingPage() {
       {/* ════════════════════════════════════════════════════
            MAIN BODY: Cream/Latte Layout & Premium Aesthetics
          ════════════════════════════════════════════════════ */}
+      {/* Full-width Coffee Background Section */}
+      <section id="como-funciona" style={{
+        background: 'linear-gradient(135deg, #1C120C 0%, #100A07 100%)',
+        color: '#FFFFFF',
+        padding: '6rem 1.5rem',
+        borderTop: '1px solid rgba(158, 118, 63, 0.12)',
+        borderBottom: '1px solid rgba(158, 118, 63, 0.12)'
+      }}>
+        <div style={{ maxWidth: 1080, margin: '0 auto', textAlign: 'center' }}>
+          <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 400, color: '#FFFFFF', marginBottom: '4rem' }}>
+            Tu tienda en línea, en <span style={{ color: 'var(--gold)', fontWeight: 700 }}>3 simples pasos</span>.
+          </h2>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
+            
+            <div style={{
+              background: '#231812', border: '1px solid rgba(158, 118, 63, 0.15)',
+              borderRadius: 'var(--r-lg)', padding: '2.5rem 2rem', textAlign: 'left',
+              boxShadow: '0 12px 36px rgba(0, 0, 0, 0.25)',
+              position: 'relative'
+            }} className="step-card">
+              <span style={{
+                position: 'absolute', top: '1.5rem', right: '2rem',
+                fontSize: '3rem', fontWeight: 800, color: 'rgba(255, 255, 255, 0.04)'
+              }}>01</span>
+              
+              <div className="step-icon-wrap" style={{
+                width: 52, height: 52, background: 'rgba(0, 92, 56, 0.25)', borderRadius: 14,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem'
+              }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 24, height: 24 }}>
+                  <line x1="4" y1="21" x2="4" y2="14" />
+                  <line x1="4" y1="10" x2="4" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="12" />
+                  <line x1="12" y1="8" x2="12" y2="3" />
+                  <line x1="20" y1="21" x2="20" y2="16" />
+                  <line x1="20" y1="12" x2="20" y2="3" />
+                  <line x1="1" y1="14" x2="7" y2="14" />
+                  <line x1="9" y1="8" x2="15" y2="8" />
+                  <line x1="17" y1="16" x2="23" y2="16" />
+                </svg>
+              </div>
+
+              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.6rem' }}>Configura tus cafés</h3>
+              <p style={{ fontSize: '0.8rem', color: '#D7CCC8', lineHeight: 1.55, margin: 0 }}>
+                Crea tu panel de tostador, ingresa tus variedades, notas de cata y el precio correspondiente de cada presentación y molienda.
+              </p>
+            </div>
+
+            <div style={{
+              background: '#231812', border: '1px solid rgba(158, 118, 63, 0.15)',
+              borderRadius: 'var(--r-lg)', padding: '2.5rem 2rem', textAlign: 'left',
+              boxShadow: '0 12px 36px rgba(0, 0, 0, 0.25)',
+              position: 'relative'
+            }} className="step-card">
+              <span style={{
+                position: 'absolute', top: '1.5rem', right: '2rem',
+                fontSize: '3rem', fontWeight: 800, color: 'rgba(255, 255, 255, 0.04)'
+              }}>02</span>
+
+              <div className="step-icon-wrap" style={{
+                width: 52, height: 52, background: 'var(--gold-dim)', borderRadius: 14,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem'
+              }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 24, height: 24 }}>
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                </svg>
+              </div>
+
+              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.6rem' }}>Comparte tu link</h3>
+              <p style={{ fontSize: '0.8rem', color: '#D7CCC8', lineHeight: 1.55, margin: 0 }}>
+                Envía tu URL exclusiva (`becoffee.pro/tu-marca`) por chat, publícala en Instagram o agrégala mediante códigos QR en tus empaques físicos.
+              </p>
+            </div>
+
+            <div style={{
+              background: '#231812', border: '1px solid rgba(158, 118, 63, 0.15)',
+              borderRadius: 'var(--r-lg)', padding: '2.5rem 2rem', textAlign: 'left',
+              boxShadow: '0 12px 36px rgba(0, 0, 0, 0.25)',
+              position: 'relative'
+            }} className="step-card">
+              <span style={{
+                position: 'absolute', top: '1.5rem', right: '2rem',
+                fontSize: '3rem', fontWeight: 800, color: 'rgba(255, 255, 255, 0.04)'
+              }}>03</span>
+
+              <div className="step-icon-wrap" style={{
+                width: 52, height: 52, background: 'rgba(80, 37, 20, 0.35)', borderRadius: 14,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem'
+              }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--brown)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 24, height: 24 }}>
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+              </div>
+
+              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.6rem' }}>Despacha pedidos</h3>
+              <p style={{ fontSize: '0.8rem', color: '#D7CCC8', lineHeight: 1.55, margin: 0 }}>
+                Tus compradores eligen el producto, el sistema genera la orden formateada con datos de entrega y el cliente te la envía directo a WhatsApp.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════
+           MAIN BODY: Cream/Latte Layout & Premium Aesthetics
+         ════════════════════════════════════════════════════ */}
       <main style={{
         flex: 1,
         width: '100%',
@@ -359,125 +468,6 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
-
-      </main>
-
-      {/* Full-width Coffee Background Section */}
-      <section id="como-funciona" style={{
-        background: 'linear-gradient(135deg, #1C120C 0%, #100A07 100%)',
-        color: '#FFFFFF',
-        padding: '6rem 1.5rem',
-        borderTop: '1px solid rgba(158, 118, 63, 0.12)',
-        borderBottom: '1px solid rgba(158, 118, 63, 0.12)'
-      }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 400, color: '#FFFFFF', marginBottom: '4rem' }}>
-            Tu tienda en línea, en <span style={{ color: 'var(--gold)', fontWeight: 700 }}>3 simples pasos</span>.
-          </h2>
-          
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
-            
-            <div style={{
-              background: '#231812', border: '1px solid rgba(158, 118, 63, 0.15)',
-              borderRadius: 'var(--r-lg)', padding: '2.5rem 2rem', textAlign: 'left',
-              boxShadow: '0 12px 36px rgba(0, 0, 0, 0.25)',
-              position: 'relative'
-            }} className="step-card">
-              <span style={{
-                position: 'absolute', top: '1.5rem', right: '2rem',
-                fontSize: '3rem', fontWeight: 800, color: 'rgba(255, 255, 255, 0.04)'
-              }}>01</span>
-              
-              <div className="step-icon-wrap" style={{
-                width: 52, height: 52, background: 'rgba(0, 92, 56, 0.25)', borderRadius: 14,
-                display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem'
-              }}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 24, height: 24 }}>
-                  <line x1="4" y1="21" x2="4" y2="14" />
-                  <line x1="4" y1="10" x2="4" y2="3" />
-                  <line x1="12" y1="21" x2="12" y2="12" />
-                  <line x1="12" y1="8" x2="12" y2="3" />
-                  <line x1="20" y1="21" x2="20" y2="16" />
-                  <line x1="20" y1="12" x2="20" y2="3" />
-                  <line x1="1" y1="14" x2="7" y2="14" />
-                  <line x1="9" y1="8" x2="15" y2="8" />
-                  <line x1="17" y1="16" x2="23" y2="16" />
-                </svg>
-              </div>
-
-              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.6rem' }}>Configura tus cafés</h3>
-              <p style={{ fontSize: '0.8rem', color: '#D7CCC8', lineHeight: 1.55, margin: 0 }}>
-                Crea tu panel de tostador, ingresa tus variedades, notas de cata y el precio correspondiente de cada presentación y molienda.
-              </p>
-            </div>
-
-            <div style={{
-              background: '#231812', border: '1px solid rgba(158, 118, 63, 0.15)',
-              borderRadius: 'var(--r-lg)', padding: '2.5rem 2rem', textAlign: 'left',
-              boxShadow: '0 12px 36px rgba(0, 0, 0, 0.25)',
-              position: 'relative'
-            }} className="step-card">
-              <span style={{
-                position: 'absolute', top: '1.5rem', right: '2rem',
-                fontSize: '3rem', fontWeight: 800, color: 'rgba(255, 255, 255, 0.04)'
-              }}>02</span>
-
-              <div className="step-icon-wrap" style={{
-                width: 52, height: 52, background: 'var(--gold-dim)', borderRadius: 14,
-                display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem'
-              }}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 24, height: 24 }}>
-                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-                </svg>
-              </div>
-
-              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.6rem' }}>Comparte tu link</h3>
-              <p style={{ fontSize: '0.8rem', color: '#D7CCC8', lineHeight: 1.55, margin: 0 }}>
-                Envía tu URL exclusiva (`becoffee.pro/tu-marca`) por chat, publícala en Instagram o agrégala mediante códigos QR en tus empaques físicos.
-              </p>
-            </div>
-
-            <div style={{
-              background: '#231812', border: '1px solid rgba(158, 118, 63, 0.15)',
-              borderRadius: 'var(--r-lg)', padding: '2.5rem 2rem', textAlign: 'left',
-              boxShadow: '0 12px 36px rgba(0, 0, 0, 0.25)',
-              position: 'relative'
-            }} className="step-card">
-              <span style={{
-                position: 'absolute', top: '1.5rem', right: '2rem',
-                fontSize: '3rem', fontWeight: 800, color: 'rgba(255, 255, 255, 0.04)'
-              }}>03</span>
-
-              <div className="step-icon-wrap" style={{
-                width: 52, height: 52, background: 'rgba(80, 37, 20, 0.35)', borderRadius: 14,
-                display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem'
-              }}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="var(--brown)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 24, height: 24 }}>
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                </svg>
-              </div>
-
-              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.6rem' }}>Despacha pedidos</h3>
-              <p style={{ fontSize: '0.8rem', color: '#D7CCC8', lineHeight: 1.55, margin: 0 }}>
-                Tus compradores eligen el producto, el sistema genera la orden formateada con datos de entrega y el cliente te la envía directo a WhatsApp.
-              </p>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* Main Container Continued for Pricing */}
-      <main style={{
-        width: '100%',
-        maxWidth: 1080,
-        margin: '0 auto',
-        padding: '5rem 1.5rem 5rem',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '6rem'
-      }}>
 
         {/* 3. Pricing: Superlative Comparison Layout */}
         <section id="precios" style={{ textAlign: 'center' }}>
