@@ -34,6 +34,12 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
   const [saving, setSaving] = useState(false)
   const [isOffer, setIsOffer] = useState(false)
   
+  // Image upload states
+  const [imagePreview, setImagePreview] = useState(null)
+  const [imageFile, setImageFile] = useState(null)
+  const [editImagePreview, setEditImagePreview] = useState(null)
+  const [editImageFile, setEditImageFile] = useState(null)
+  
   // Custom dropdown states for ADD Modal
   const [addVariety, setAddVariety] = useState('')
   const [addVarietyCustom, setAddVarietyCustom] = useState('')
@@ -157,6 +163,8 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
   const handleStartEdit = (product) => {
     setEditingProduct(product)
     setEditIsOffer(product.is_offer || false)
+    setEditImagePreview(product.image_url || null)
+    setEditImageFile(null)
 
     if (VARIETIES.includes(product.variety)) {
       setEditVariety(product.variety)
@@ -258,6 +266,27 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
 
     setSaving(true)
     const fd = new FormData(e.target)
+
+    let imageUrl = null
+    if (imageFile) {
+      const fileExt = imageFile.name.split('.').pop()
+      const fileName = `${Math.random().toString(36).substring(2, 15)}.${fileExt}`
+      const filePath = `products/${fileName}`
+
+      const { error: uploadError } = await supabase.storage
+        .from('product-images')
+        .upload(filePath, imageFile)
+
+      if (!uploadError) {
+        const { data: { publicUrl } } = supabase.storage
+          .from('product-images')
+          .getPublicUrl(filePath)
+        imageUrl = publicUrl
+      } else {
+        console.error('Error uploading image:', uploadError)
+      }
+    }
+
     const newProduct = {
       roaster_id: roaster.id,
       name: fd.get('name'),
@@ -273,7 +302,8 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
       price_2500: parseFormattedPrice(fd.get('price2500')),
       inventory_kg: parseFloat(fd.get('inventoryKg') || 20),
       is_offer: isOffer,
-      offer_discount: isOffer ? parseInt(fd.get('discount') || 0) / 100 : 0
+      offer_discount: isOffer ? parseInt(fd.get('discount') || 0) / 100 : 0,
+      image_url: imageUrl
     }
 
     const { data, error } = await supabase
@@ -291,6 +321,8 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
       setAddVarietyCustom('')
       setAddProcess('')
       setAddProcessCustom('')
+      setImageFile(null)
+      setImagePreview(null)
     }
     setSaving(false)
   }
@@ -313,6 +345,26 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
     setSaving(true)
     const fd = new FormData(e.target)
     
+    let imageUrl = editingProduct.image_url
+    if (editImageFile) {
+      const fileExt = editImageFile.name.split('.').pop()
+      const fileName = `${Math.random().toString(36).substring(2, 15)}.${fileExt}`
+      const filePath = `products/${fileName}`
+
+      const { error: uploadError } = await supabase.storage
+        .from('product-images')
+        .upload(filePath, editImageFile)
+
+      if (!uploadError) {
+        const { data: { publicUrl } } = supabase.storage
+          .from('product-images')
+          .getPublicUrl(filePath)
+        imageUrl = publicUrl
+      } else {
+        console.error('Error uploading image:', uploadError)
+      }
+    }
+
     // Extract numbers safely
     const cleanAltitude = fd.get('altitude').replace(' msnm', '')
 
@@ -330,7 +382,8 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
       price_2500: parseFormattedPrice(fd.get('price2500')),
       inventory_kg: parseFloat(fd.get('inventoryKg') || 0),
       is_offer: editIsOffer,
-      offer_discount: editIsOffer ? parseInt(fd.get('discount') || 0) / 100 : 0
+      offer_discount: editIsOffer ? parseInt(fd.get('discount') || 0) / 100 : 0,
+      image_url: imageUrl
     }
 
     const { data, error } = await supabase
@@ -343,6 +396,8 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
     if (!error && data) {
       setProducts(prev => prev.map(p => p.id === editingProduct.id ? data : p))
       setEditingProduct(null)
+      setEditImageFile(null)
+      setEditImagePreview(null)
     }
     setSaving(false)
   }
@@ -645,6 +700,81 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
             </div>
             
             <form onSubmit={handleAdd} style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
+              
+              {/* Image Upload Box */}
+              <div className="field" style={{ alignItems: 'center', marginBottom: '0.4rem' }}>
+                <div style={{
+                  width: '200px',
+                  height: '200px',
+                  border: '2px dashed var(--glass-border)',
+                  borderRadius: 'var(--r-md)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  background: 'var(--glass)',
+                  transition: 'var(--t)',
+                }}
+                onClick={() => document.getElementById('image-upload-input-add').click()}
+                onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--gold)'}
+                onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--glass-border)'}
+                >
+                  {imagePreview ? (
+                    <>
+                      <img src={imagePreview} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <button 
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setImagePreview(null);
+                          setImageFile(null);
+                        }}
+                        style={{
+                          position: 'absolute',
+                          top: '0.5rem',
+                          right: '0.5rem',
+                          background: 'rgba(0,0,0,0.6)',
+                          border: 'none',
+                          color: '#fff',
+                          borderRadius: '50%',
+                          width: '24px',
+                          height: '24px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontSize: '0.8rem'
+                        }}
+                      >
+                        ×
+                      </button>
+                    </>
+                  ) : (
+                    <div style={{ textAlign: 'center', padding: '1rem', color: 'var(--text-muted)' }}>
+                      <span style={{ fontSize: '1.8rem', display: 'block', marginBottom: '0.4rem' }}>📷</span>
+                      <span style={{ fontSize: '0.7rem', fontWeight: 700, display: 'block' }}>Cargar Imagen</span>
+                      <span style={{ fontSize: '0.55rem', display: 'block', opacity: 0.6, marginTop: '0.2rem' }}>Recomendado: 200x200 px</span>
+                    </div>
+                  )}
+                  <input 
+                    type="file" 
+                    id="image-upload-input-add" 
+                    accept="image/*" 
+                    style={{ display: 'none' }} 
+                    onChange={(e) => {
+                      const file = e.target.files[0]
+                      if (file) {
+                        setImageFile(file)
+                        setImagePreview(URL.createObjectURL(file))
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+
               <div className="field"><label>Caficultor</label><input name="name" required placeholder="Ej: Julio Cuva" /></div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem' }}>
                 <div className="field"><label>Finca/Lote</label><input name="lot" required placeholder="Ej: La Esperanza" /></div>
@@ -742,6 +872,82 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
             </div>
             
             <form onSubmit={handleEditSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
+              
+              {/* Image Upload Box */}
+              <div className="field" style={{ alignItems: 'center', marginBottom: '0.4rem' }}>
+                <div style={{
+                  width: '200px',
+                  height: '200px',
+                  border: '2px dashed var(--glass-border)',
+                  borderRadius: 'var(--r-md)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  background: 'var(--glass)',
+                  transition: 'var(--t)',
+                }}
+                onClick={() => document.getElementById('image-upload-input-edit').click()}
+                onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--gold)'}
+                onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--glass-border)'}
+                >
+                  {(editImagePreview || editingProduct.image_url) ? (
+                    <>
+                      <img src={editImagePreview || editingProduct.image_url} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <button 
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setEditImagePreview(null);
+                          setEditImageFile(null);
+                          editingProduct.image_url = null;
+                        }}
+                        style={{
+                          position: 'absolute',
+                          top: '0.5rem',
+                          right: '0.5rem',
+                          background: 'rgba(0,0,0,0.6)',
+                          border: 'none',
+                          color: '#fff',
+                          borderRadius: '50%',
+                          width: '24px',
+                          height: '24px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontSize: '0.8rem'
+                        }}
+                      >
+                        ×
+                      </button>
+                    </>
+                  ) : (
+                    <div style={{ textAlign: 'center', padding: '1rem', color: 'var(--text-muted)' }}>
+                      <span style={{ fontSize: '1.8rem', display: 'block', marginBottom: '0.4rem' }}>📷</span>
+                      <span style={{ fontSize: '0.7rem', fontWeight: 700, display: 'block' }}>Cargar Imagen</span>
+                      <span style={{ fontSize: '0.55rem', display: 'block', opacity: 0.6, marginTop: '0.2rem' }}>Recomendado: 200x200 px</span>
+                    </div>
+                  )}
+                  <input 
+                    type="file" 
+                    id="image-upload-input-edit" 
+                    accept="image/*" 
+                    style={{ display: 'none' }} 
+                    onChange={(e) => {
+                      const file = e.target.files[0]
+                      if (file) {
+                        setEditImageFile(file)
+                        setEditImagePreview(URL.createObjectURL(file))
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+
               <div className="field">
                 <label>Caficultor</label>
                 <input name="name" required defaultValue={editingProduct.name} />

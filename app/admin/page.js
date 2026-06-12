@@ -211,7 +211,7 @@ export default function AdminLogin() {
     setTimeout(() => setLinkCopied(false), 2000)
   }
   return (
-    <div className="app-shell" style={{ alignItems: 'center', justifyContent: 'center', padding: '2rem 1.5rem', minHeight: '100dvh', overflowY: 'auto' }}>
+    <div className="app-shell" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', padding: '8.5rem 1.5rem 2rem', height: '100dvh', overflow: 'hidden', position: 'relative' }}>
       {/* Back to Landing Page / Home Icon */}
       <Link href="/" style={{
         position: 'absolute',
@@ -220,25 +220,40 @@ export default function AdminLogin() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'rgba(110, 207, 151, 0.05)',
-        border: '1px solid rgba(110, 207, 151, 0.3)',
+        background: 'var(--green-dim)',
+        border: '1px solid rgba(0, 92, 56, 0.2)',
         borderRadius: '50%',
         width: '36px',
         height: '36px',
-        color: '#6FCF97',
+        color: 'var(--green)',
         cursor: 'pointer',
         transition: 'var(--t)',
         textDecoration: 'none',
         zIndex: 10
       }} 
       title="Volver al Inicio"
-      onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.15)'}
-      onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.05)'}
+      onMouseEnter={(e) => e.currentTarget.style.background = 'var(--green-glow)'}
+      onMouseLeave={(e) => e.currentTarget.style.background = 'var(--green-dim)'}
       >
         <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18">
           <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
         </svg>
       </Link>
+
+      {/* Centered beCOFFEE.pro Logo */}
+      <div style={{
+        position: 'absolute',
+        top: '1.8rem',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 10
+      }}>
+        <h1 style={{ fontSize: '1.25rem', color: 'var(--text-primary)', letterSpacing: '0.02em', margin: 0 }}>
+          <span style={{ fontWeight: 400 }}>be</span>
+          <span style={{ fontWeight: 900 }}>COFFEE</span>
+          <span style={{ fontWeight: 400, color: 'var(--gold)' }}>.pro</span>
+        </h1>
+      </div>
 
       <div style={{
         position: 'absolute', top: -80, left: '50%', transform: 'translateX(-50%)',
@@ -249,13 +264,8 @@ export default function AdminLogin() {
       <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: 340, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
         
         {/* Header */}
-        <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem' }}>
-          <h1 style={{ fontSize: '1.8rem', color: 'var(--text-primary)', letterSpacing: '0.02em', marginBottom: '0.2rem' }}>
-            <span style={{ fontWeight: 400 }}>be</span>
-            <span style={{ fontWeight: 900 }}>COFFEE</span>
-            <span style={{ fontWeight: 400, color: 'var(--gold)' }}>.pro</span>
-          </h1>
-          <p style={{ fontSize: '0.65rem', fontWeight: 600, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Acceso Tostadores</p>
+        <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem', marginBottom: '3.5rem' }}>
+          <img src="/logo-sagrado.png" alt="Sagrado Corazón" style={{ height: '70px', width: 'auto', objectFit: 'contain', marginBottom: '0.5rem' }} />
         </div>
 
         {/* Tab triggers */}
@@ -433,6 +443,35 @@ export default function AdminLogin() {
             </button>
           </div>
         )}
+      </div>
+
+      {/* Powered by AxisONE Coffee */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '0.35rem',
+        fontSize: '0.56rem',
+        fontWeight: 700,
+        color: 'var(--text-muted)',
+        letterSpacing: '0.04em',
+        textTransform: 'uppercase',
+        marginTop: 'auto',
+        opacity: 0.8,
+        position: 'relative',
+        zIndex: 1
+      }}>
+        <span>Powered by AxisONE Coffee</span>
+        <img 
+          src="/logo-axisone.png" 
+          alt="AxisONE Coffee" 
+          style={{ 
+            height: '42px', 
+            width: 'auto', 
+            objectFit: 'contain',
+            filter: 'brightness(0) opacity(0.5)'
+          }} 
+        />
       </div>
     </div>
   )
