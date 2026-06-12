@@ -284,16 +284,16 @@ export default function AdminLogin() {
       {/* Centered beCOFFEE.pro Logo */}
       <div style={{
         position: 'absolute',
-        top: '1.8rem',
+        top: '1rem',
         left: '50%',
         transform: 'translateX(-50%)',
         zIndex: 10
       }}>
-        <h1 style={{ fontSize: '1.25rem', color: 'var(--text-primary)', letterSpacing: '0.02em', margin: 0 }}>
-          <span style={{ fontWeight: 400 }}>be</span>
-          <span style={{ fontWeight: 900 }}>COFFEE</span>
-          <span style={{ fontWeight: 400, color: 'var(--gold)' }}>.pro</span>
-        </h1>
+        <img
+          src="/becoffee-logo.svg"
+          alt="beCOFFEE.pro"
+          style={{ height: '52px', width: 'auto', objectFit: 'contain' }}
+        />
       </div>
 
       {/* ── PWA Install Banner ──────────────────────────────── */}
@@ -399,7 +399,7 @@ export default function AdminLogin() {
 
       <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: 340, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
         
-        {/* Header */}
+        {/* Header — logo del tostador */}
         <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem', marginBottom: '3.5rem' }}>
           <img src="/logo-sagrado.png" alt="Sagrado Corazón" style={{ height: '70px', width: 'auto', objectFit: 'contain', marginBottom: '0.5rem' }} />
         </div>
