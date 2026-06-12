@@ -11,7 +11,17 @@ const montserrat = Montserrat({
 export const metadata = {
   title: 'beCOFFEE.pro — Café de especialidad',
   description: 'Plataforma de pedidos directos para tostadores de café de especialidad.',
+  applicationName: 'beCOFFEE',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'beCOFFEE',
+  },
+  formatDetection: {
+    telephone: false,
+  },
 }
+
 
 export default function RootLayout({ children }) {
   return (

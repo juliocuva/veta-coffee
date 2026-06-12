@@ -21,11 +21,40 @@ export default function AdminLogin() {
   const [loading, setLoading] = useState(false)
   const [savedSlug, setSavedSlug] = useState('')
   const [linkCopied, setLinkCopied] = useState(false)
+
+  // PWA Install
+  const [installPrompt, setInstallPrompt] = useState(null)
+  const [isIOS, setIsIOS] = useState(false)
+  const [isStandalone, setIsStandalone] = useState(false)
+  const [showIOSHint, setShowIOSHint] = useState(false)
   
   const router = useRouter()
   const supabase = createClient()
 
   useEffect(() => {
+    // ── PWA Setup ──────────────────────────────────────────
+    // Registrar Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js', { scope: '/', updateViaCache: 'none' })
+        .catch((err) => console.warn('SW registration failed:', err))
+    }
+
+    // Detectar si ya está instalada como app
+    const standalone = window.matchMedia('(display-mode: standalone)').matches
+    setIsStandalone(standalone)
+
+    // Detectar iOS
+    const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
+    setIsIOS(ios)
+
+    // Capturar el evento de instalación (Chrome/Android/Edge)
+    const handleInstallPrompt = (e) => {
+      e.preventDefault()
+      setInstallPrompt(e)
+    }
+    window.addEventListener('beforeinstallprompt', handleInstallPrompt)
+
+    // ── Auth Check ─────────────────────────────────────────
     // Check if user is already logged in
     const checkSession = async () => {
       const { data: { user } } = await supabase.auth.getUser()
@@ -34,6 +63,10 @@ export default function AdminLogin() {
       }
     }
     checkSession()
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleInstallPrompt)
+    }
 
     // 1. Try to read credentials from URL query parameters
     const params = new URLSearchParams(window.location.search)
@@ -210,6 +243,14 @@ export default function AdminLogin() {
     setLinkCopied(true)
     setTimeout(() => setLinkCopied(false), 2000)
   }
+  const handleInstallClick = async () => {
+    if (installPrompt) {
+      await installPrompt.prompt()
+      const { outcome } = await installPrompt.userChoice
+      if (outcome === 'accepted') setInstallPrompt(null)
+    }
+  }
+
   return (
     <div className="app-shell" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', padding: '8.5rem 1.5rem 2rem', height: '100dvh', overflow: 'hidden', position: 'relative' }}>
       {/* Back to Landing Page / Home Icon */}
@@ -254,6 +295,101 @@ export default function AdminLogin() {
           <span style={{ fontWeight: 400, color: 'var(--gold)' }}>.pro</span>
         </h1>
       </div>
+
+      {/* ── PWA Install Banner ──────────────────────────────── */}
+      {!isStandalone && (installPrompt || isIOS) && (
+        <div style={{
+          position: 'absolute',
+          top: '4.2rem',
+          left: '1rem',
+          right: '1rem',
+          background: 'linear-gradient(135deg, rgba(0,92,56,0.95), rgba(0,77,46,0.95))',
+          backdropFilter: 'blur(12px)',
+          border: '1px solid rgba(255,255,255,0.15)',
+          borderRadius: '14px',
+          padding: '0.75rem 1rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.75rem',
+          zIndex: 20,
+          boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+        }}>
+          {/* Ícono */}
+          <div style={{
+            width: 40, height: 40, borderRadius: 10,
+            background: 'rgba(255,255,255,0.15)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            flexShrink: 0,
+          }}>
+            <svg viewBox="0 0 24 24" fill="white" width="22" height="22">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+              <path d="M5 3H3v18h2V3zm16 0h-2v18h2V3z" style={{display:'none'}}/>
+            </svg>
+            <svg viewBox="0 0 24 24" fill="white" width="22" height="22" style={{position:'absolute'}}>
+              <path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/>
+            </svg>
+          </div>
+
+          {/* Texto + acción */}
+          <div style={{ flex: 1 }}>
+            {installPrompt ? (
+              <>
+                <p style={{ margin: 0, color: 'white', fontWeight: 700, fontSize: '0.8rem' }}>Instalar beCOFFEE en tu móvil</p>
+                <p style={{ margin: '0.1rem 0 0', color: 'rgba(255,255,255,0.75)', fontSize: '0.68rem' }}>Accede al panel sin abrir el navegador</p>
+              </>
+            ) : (
+              <>
+                <p style={{ margin: 0, color: 'white', fontWeight: 700, fontSize: '0.8rem' }}>Instalar en iPhone</p>
+                {!showIOSHint
+                  ? <p style={{ margin: '0.1rem 0 0', color: 'rgba(255,255,255,0.75)', fontSize: '0.68rem' }}>Toca para ver cómo</p>
+                  : <p style={{ margin: '0.1rem 0 0', color: 'rgba(255,255,255,0.9)', fontSize: '0.68rem', lineHeight: 1.4 }}>Toca <strong>⬆️ Compartir</strong> → <strong>Añadir a inicio</strong></p>
+                }
+              </>
+            )}
+          </div>
+
+          {/* Botón de acción */}
+          {installPrompt ? (
+            <button
+              id="pwa-install-btn"
+              onClick={handleInstallClick}
+              style={{
+                background: 'white',
+                color: '#005C38',
+                border: 'none',
+                borderRadius: '8px',
+                padding: '0.4rem 0.85rem',
+                fontWeight: 700,
+                fontSize: '0.75rem',
+                cursor: 'pointer',
+                flexShrink: 0,
+                fontFamily: 'inherit',
+              }}
+            >
+              Instalar
+            </button>
+          ) : (
+            <button
+              id="pwa-ios-hint-btn"
+              onClick={() => setShowIOSHint(h => !h)}
+              style={{
+                background: 'rgba(255,255,255,0.2)',
+                color: 'white',
+                border: '1px solid rgba(255,255,255,0.3)',
+                borderRadius: '8px',
+                padding: '0.4rem 0.75rem',
+                fontWeight: 600,
+                fontSize: '0.75rem',
+                cursor: 'pointer',
+                flexShrink: 0,
+                fontFamily: 'inherit',
+              }}
+            >
+              {showIOSHint ? '✓ Ok' : 'Cómo'}
+            </button>
+          )}
+        </div>
+      )}
 
       <div style={{
         position: 'absolute', top: -80, left: '50%', transform: 'translateX(-50%)',
