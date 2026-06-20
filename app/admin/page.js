@@ -153,6 +153,30 @@ export default function AdminLogin() {
     }
   }
 
+  const handleForgotPassword = async (e) => {
+    e.preventDefault()
+    setError('')
+    setSuccessMsg('')
+    setLoading(true)
+
+    if (!email.trim()) {
+      setError('❌ Ingresa tu correo electrónico para recuperar la contraseña')
+      setLoading(false)
+      return
+    }
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/admin/update-password`,
+    })
+
+    if (error) {
+      setError(`❌ Error: ${error.message}`)
+    } else {
+      setSuccessMsg('✅ Revisa tu correo electrónico para restablecer tu contraseña.')
+    }
+    setLoading(false)
+  }
+
   const handleRegister = async (e) => {
     e.preventDefault()
     setError('')
@@ -376,6 +400,37 @@ export default function AdminLogin() {
             <button type="submit" className="btn-primary" disabled={loading} style={{ marginTop: '0.4rem' }}>
               {loading ? 'Verificando...' : 'Ingresar al Panel'}
             </button>
+            
+            <div style={{ textAlign: 'center', marginTop: '0.2rem' }}>
+              <button type="button" onClick={() => { setTab('forgot_password'); setError(''); setSuccessMsg(''); }} style={{ background: 'none', border: 'none', color: 'var(--green)', fontSize: '0.8rem', cursor: 'pointer', textDecoration: 'underline' }}>
+                ¿Olvidaste tu contraseña?
+              </button>
+            </div>
+          </form>
+        ) : tab === 'forgot_password' ? (
+          /* Forgot Password Form */
+          <form onSubmit={handleForgotPassword} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textAlign: 'center', marginBottom: '0.5rem' }}>
+              Ingresa tu correo electrónico y te enviaremos un enlace para recuperar tu cuenta.
+            </p>
+            <div className="field">
+              <label>Correo electrónico</label>
+              <div className="field-icon-wrap">
+                <svg className="field-icon" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                </svg>
+                <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="tostador@ejemplo.com" required />
+              </div>
+            </div>
+            <button type="submit" className="btn-primary" disabled={loading} style={{ marginTop: '0.4rem' }}>
+              {loading ? 'Enviando...' : 'Enviar enlace de recuperación'}
+            </button>
+            <div style={{ textAlign: 'center', marginTop: '0.2rem' }}>
+              <button type="button" onClick={() => { setTab('login'); setError(''); setSuccessMsg(''); }} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', fontSize: '0.8rem', cursor: 'pointer' }}>
+                Volver a Ingresar
+              </button>
+            </div>
           </form>
         ) : (
           /* Sign Up Form */
