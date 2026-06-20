@@ -22,23 +22,23 @@ export default function LandingPage() {
            HERO HEADER: Deep Forest & Rich Espresso Gradient
          ════════════════════════════════════════════════════ */}
       <section style={{
-        background: 'linear-gradient(135deg, #092e1c 0%, #1e110a 50%, #004d2e 100%)',
+        background: 'linear-gradient(135deg, #020a16 0%, #001a17 50%, #003b35 100%)',
         color: '#FFFFFF',
         borderBottomLeftRadius: 'var(--r-2xl)',
         borderBottomRightRadius: 'var(--r-2xl)',
         padding: '0 0 5.5rem',
         position: 'relative',
-        boxShadow: '0 12px 40px rgba(18, 14, 11, 0.25)'
+        boxShadow: '0 12px 40px rgba(5, 23, 48, 0.25)'
       }}>
         {/* Soft Gold Blur Orbs */}
         <div style={{
           position: 'absolute', top: '10%', left: '5%', width: 280, height: 280,
-          background: 'radial-gradient(circle, rgba(158, 118, 63, 0.18) 0%, rgba(0,0,0,0) 70%)',
+          background: 'radial-gradient(circle, rgba(147, 149, 152, 0.18) 0%, rgba(0,0,0,0) 70%)',
           pointerEvents: 'none', zIndex: 1
         }} />
         <div style={{
           position: 'absolute', bottom: '15%', right: '5%', width: 320, height: 320,
-          background: 'radial-gradient(circle, rgba(0, 92, 56, 0.2) 0%, rgba(0,0,0,0) 70%)',
+          background: 'radial-gradient(circle, rgba(0, 96, 86, 0.2) 0%, rgba(0,0,0,0) 70%)',
           pointerEvents: 'none', zIndex: 1
         }} />
 
@@ -55,11 +55,7 @@ export default function LandingPage() {
           zIndex: 10
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <span style={{ fontSize: '1.25rem', color: '#FFFFFF', letterSpacing: '0.02em' }}>
-              <span style={{ fontWeight: 400 }}>be</span>
-              <span style={{ fontWeight: 900 }}>COFFEE</span>
-              <span style={{ fontWeight: 400, color: 'var(--gold)' }}>.pro</span>
-            </span>
+            <img src="/becoffee-logo.svg" alt="Logo" style={{ height: '108px', width: 'auto', objectFit: 'contain', filter: 'brightness(0) invert(1)' }} />
           </div>
 
           <div className="landing-nav-links" style={{ gap: '2rem' }}>
@@ -70,7 +66,7 @@ export default function LandingPage() {
           </div>
           
           <Link href="/admin" style={{
-            background: 'linear-gradient(135deg, var(--gold), #b3884c)',
+            background: 'linear-gradient(135deg, var(--gold), #5A6A7A)',
             border: 'none',
             padding: '0.65rem 1.4rem',
             borderRadius: 'var(--r-sm)',
@@ -80,7 +76,7 @@ export default function LandingPage() {
             textDecoration: 'none',
             textTransform: 'uppercase',
             letterSpacing: '0.08em',
-            boxShadow: '0 4px 14px rgba(158, 118, 63, 0.25)',
+            boxShadow: '0 4px 14px rgba(147, 149, 152, 0.25)',
             transition: 'var(--t)',
           }}>
             Acceso Tostadores
@@ -121,7 +117,7 @@ export default function LandingPage() {
               maxWidth: 640,
               marginBottom: '1.5rem'
             }}>
-              Vende tu café de forma <span style={{ color: 'var(--gold)', fontWeight: 700 }}>ágil y directa</span> por WhatsApp.
+              Vende tu café de forma <span style={{ color: 'var(--wa-green)', fontWeight: 700 }}>ágil y directa</span> por WhatsApp.
             </h1>
 
             <p style={{
@@ -146,7 +142,7 @@ export default function LandingPage() {
             }}>
               <Link href="/admin" style={{
                 background: '#FFFFFF',
-                color: '#004d2e',
+                color: '#006056',
                 padding: '1.1rem 2.2rem',
                 borderRadius: 'var(--r-md)',
                 fontWeight: 600,
@@ -242,7 +238,7 @@ export default function LandingPage() {
           <div style={{ textAlign: 'left' }}>
 
             <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 400, color: 'var(--text-primary)', lineHeight: 1.15, marginBottom: '1.5rem' }}>
-              La experiencia móvil que tus <span style={{ color: 'var(--gold)', fontWeight: 700 }}>clientes amarán</span>.
+              La experiencia móvil que tus <span style={{ color: 'var(--green)', fontWeight: 700 }}>clientes amarán</span>.
             </h2>
             <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.65, marginBottom: '2rem' }}>
               Diseñamos una interfaz súper fluida, libre de fricciones de registro. Tus clientes pueden navegar tu catálogo, elegir sus varietales y configurar cantidades y moliendas exactas en segundos.
@@ -286,21 +282,21 @@ export default function LandingPage() {
 
       {/* Full-width Coffee Background Section */}
       <section id="como-funciona" style={{
-        background: 'linear-gradient(135deg, #1C120C 0%, #100A07 100%)',
+        background: 'linear-gradient(135deg, #051730 0%, #020A16 100%)',
         color: '#FFFFFF',
         padding: '6rem 1.5rem',
-        borderTop: '1px solid rgba(158, 118, 63, 0.12)',
-        borderBottom: '1px solid rgba(158, 118, 63, 0.12)'
+        borderTop: '1px solid rgba(147, 149, 152, 0.12)',
+        borderBottom: '1px solid rgba(147, 149, 152, 0.12)'
       }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', textAlign: 'center' }}>
           <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 400, color: '#FFFFFF', marginBottom: '4rem' }}>
-            Tu tienda en línea, en <span style={{ color: 'var(--gold)', fontWeight: 700 }}>3 simples pasos</span>.
+            Tu tienda en línea, en <span style={{ color: 'var(--green)', fontWeight: 700 }}>3 simples pasos</span>.
           </h2>
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
             
             <div style={{
-              background: '#231812', border: '1px solid rgba(158, 118, 63, 0.15)',
+              background: '#051730', border: '1px solid rgba(147, 149, 152, 0.15)',
               borderRadius: 'var(--r-lg)', padding: '2.5rem 2rem', textAlign: 'left',
               boxShadow: '0 12px 36px rgba(0, 0, 0, 0.25)',
               position: 'relative'
@@ -311,10 +307,10 @@ export default function LandingPage() {
               }}>01</span>
               
               <div className="step-icon-wrap" style={{
-                width: 52, height: 52, background: 'rgba(0, 92, 56, 0.25)', borderRadius: 14,
+                width: 52, height: 52, background: 'rgba(147, 149, 152, 0.15)', borderRadius: 14,
                 display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem'
               }}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 24, height: 24 }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 24, height: 24 }}>
                   <line x1="4" y1="21" x2="4" y2="14" />
                   <line x1="4" y1="10" x2="4" y2="3" />
                   <line x1="12" y1="21" x2="12" y2="12" />
@@ -328,13 +324,13 @@ export default function LandingPage() {
               </div>
 
               <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.6rem' }}>Configura tus cafés</h3>
-              <p style={{ fontSize: '0.8rem', color: '#D7CCC8', lineHeight: 1.55, margin: 0 }}>
+              <p style={{ fontSize: '0.8rem', color: '#94A3B8', lineHeight: 1.55, margin: 0 }}>
                 Crea tu panel de tostador, ingresa tus variedades, notas de cata y el precio correspondiente de cada presentación y molienda.
               </p>
             </div>
 
             <div style={{
-              background: '#231812', border: '1px solid rgba(158, 118, 63, 0.15)',
+              background: '#051730', border: '1px solid rgba(147, 149, 152, 0.15)',
               borderRadius: 'var(--r-lg)', padding: '2.5rem 2rem', textAlign: 'left',
               boxShadow: '0 12px 36px rgba(0, 0, 0, 0.25)',
               position: 'relative'
@@ -345,7 +341,7 @@ export default function LandingPage() {
               }}>02</span>
 
               <div className="step-icon-wrap" style={{
-                width: 52, height: 52, background: 'var(--gold-dim)', borderRadius: 14,
+                width: 52, height: 52, background: 'rgba(147, 149, 152, 0.15)', borderRadius: 14,
                 display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem'
               }}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 24, height: 24 }}>
@@ -355,13 +351,13 @@ export default function LandingPage() {
               </div>
 
               <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.6rem' }}>Comparte tu link</h3>
-              <p style={{ fontSize: '0.8rem', color: '#D7CCC8', lineHeight: 1.55, margin: 0 }}>
+              <p style={{ fontSize: '0.8rem', color: '#94A3B8', lineHeight: 1.55, margin: 0 }}>
                 Envía tu URL exclusiva (`becoffee.pro/tu-marca`) por chat, publícala en Instagram o agrégala mediante códigos QR en tus empaques físicos.
               </p>
             </div>
 
             <div style={{
-              background: '#231812', border: '1px solid rgba(158, 118, 63, 0.15)',
+              background: '#051730', border: '1px solid rgba(147, 149, 152, 0.15)',
               borderRadius: 'var(--r-lg)', padding: '2.5rem 2rem', textAlign: 'left',
               boxShadow: '0 12px 36px rgba(0, 0, 0, 0.25)',
               position: 'relative'
@@ -372,16 +368,16 @@ export default function LandingPage() {
               }}>03</span>
 
               <div className="step-icon-wrap" style={{
-                width: 52, height: 52, background: 'rgba(80, 37, 20, 0.35)', borderRadius: 14,
+                width: 52, height: 52, background: 'rgba(147, 149, 152, 0.15)', borderRadius: 14,
                 display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem'
               }}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="var(--brown)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 24, height: 24 }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 24, height: 24 }}>
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                 </svg>
               </div>
 
               <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.6rem' }}>Despacha pedidos</h3>
-              <p style={{ fontSize: '0.8rem', color: '#D7CCC8', lineHeight: 1.55, margin: 0 }}>
+              <p style={{ fontSize: '0.8rem', color: '#94A3B8', lineHeight: 1.55, margin: 0 }}>
                 Tus compradores eligen el producto, el sistema genera la orden formateada con datos de entrega y el cliente te la envía directo a WhatsApp.
               </p>
             </div>
@@ -405,7 +401,7 @@ export default function LandingPage() {
         <section id="capturas" style={{ textAlign: 'center' }}>
 
           <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 400, color: 'var(--text-primary)', marginBottom: '3.5rem' }}>
-            Así se ve tu <span style={{ color: 'var(--gold)', fontWeight: 700 }}>catálogo en acción</span>.
+            Así se ve tu <span style={{ color: 'var(--green)', fontWeight: 700 }}>catálogo en acción</span>.
           </h2>
           <div style={{
             display: 'flex',
@@ -483,7 +479,7 @@ export default function LandingPage() {
         <section id="precios" style={{ textAlign: 'center' }}>
 
           <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 400, color: 'var(--text-primary)', marginBottom: '1.2rem' }}>
-            Planes a la <span style={{ color: 'var(--gold)', fontWeight: 700 }}>medida de tu negocio</span>.
+            Planes a la <span style={{ color: 'var(--green)', fontWeight: 700 }}>medida de tu negocio</span>.
           </h2>
           <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', maxWidth: 520, margin: '0 auto 4.5rem', lineHeight: 1.6 }}>
             Sin comisiones por transacciones ni costos ocultos. Elige el plan que mejor se adapte al volumen de tu tostaduría.
@@ -559,7 +555,7 @@ export default function LandingPage() {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              boxShadow: '0 12px 40px rgba(158, 118, 63, 0.12)',
+              boxShadow: '0 12px 40px rgba(147, 149, 152, 0.12)',
               position: 'relative',
               textAlign: 'left'
             }} className="pricing-card popular">
@@ -569,7 +565,7 @@ export default function LandingPage() {
                 background: 'var(--gold)', color: '#FFFFFF',
                 padding: '0.4rem 1rem', borderRadius: 25,
                 fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em',
-                textTransform: 'uppercase', boxShadow: '0 4px 12px rgba(158, 118, 63, 0.25)'
+                textTransform: 'uppercase', boxShadow: '0 4px 12px rgba(147, 149, 152, 0.25)'
               }}>
                 Ahorra 2 Meses
               </span>
@@ -592,7 +588,7 @@ export default function LandingPage() {
               </div>
               <a href="https://wa.me/573013970002?text=Hola!%20Me%20interesa%20adquirir%20el%20Plan%20Anual%20de%20beCOFFEE.pro" target="_blank" rel="noopener noreferrer" style={{
                 display: 'block',
-                background: 'linear-gradient(135deg, var(--green), #004d2e)',
+                background: 'linear-gradient(135deg, var(--green), #006056)',
                 color: '#fff',
                 padding: '1rem 1.5rem',
                 borderRadius: 'var(--r-md)',
@@ -618,7 +614,7 @@ export default function LandingPage() {
         borderTop: '1px solid rgba(255, 255, 255, 0.1)',
         padding: '3.5rem 1.5rem',
         color: '#E0EDE6',
-        background: 'linear-gradient(135deg, #092e1c 0%, #1e110a 50%, #004d2e 100%)',
+        background: 'linear-gradient(135deg, #020a16 0%, #001a17 50%, #003b35 100%)',
         position: 'relative',
         zIndex: 10
       }}>

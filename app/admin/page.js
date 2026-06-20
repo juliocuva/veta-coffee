@@ -281,115 +281,9 @@ export default function AdminLogin() {
         </svg>
       </Link>
 
-      {/* Centered beCOFFEE.pro Logo */}
-      <div style={{
-        position: 'absolute',
-        top: '1rem',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        zIndex: 10
-      }}>
-        <img
-          src="/becoffee-logo.svg"
-          alt="beCOFFEE.pro"
-          style={{ height: '52px', width: 'auto', objectFit: 'contain' }}
-        />
-      </div>
 
-      {/* ── PWA Install Banner ──────────────────────────────── */}
-      {!isStandalone && (installPrompt || isIOS) && (
-        <div style={{
-          position: 'absolute',
-          top: '4.2rem',
-          left: '1rem',
-          right: '1rem',
-          background: 'linear-gradient(135deg, rgba(0,92,56,0.95), rgba(0,77,46,0.95))',
-          backdropFilter: 'blur(12px)',
-          border: '1px solid rgba(255,255,255,0.15)',
-          borderRadius: '14px',
-          padding: '0.75rem 1rem',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.75rem',
-          zIndex: 20,
-          boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
-        }}>
-          {/* Ícono */}
-          <div style={{
-            width: 40, height: 40, borderRadius: 10,
-            background: 'rgba(255,255,255,0.15)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            flexShrink: 0,
-          }}>
-            <svg viewBox="0 0 24 24" fill="white" width="22" height="22">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
-              <path d="M5 3H3v18h2V3zm16 0h-2v18h2V3z" style={{display:'none'}}/>
-            </svg>
-            <svg viewBox="0 0 24 24" fill="white" width="22" height="22" style={{position:'absolute'}}>
-              <path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/>
-            </svg>
-          </div>
 
-          {/* Texto + acción */}
-          <div style={{ flex: 1 }}>
-            {installPrompt ? (
-              <>
-                <p style={{ margin: 0, color: 'white', fontWeight: 700, fontSize: '0.8rem' }}>Instalar beCOFFEE en tu móvil</p>
-                <p style={{ margin: '0.1rem 0 0', color: 'rgba(255,255,255,0.75)', fontSize: '0.68rem' }}>Accede al panel sin abrir el navegador</p>
-              </>
-            ) : (
-              <>
-                <p style={{ margin: 0, color: 'white', fontWeight: 700, fontSize: '0.8rem' }}>Instalar en iPhone</p>
-                {!showIOSHint
-                  ? <p style={{ margin: '0.1rem 0 0', color: 'rgba(255,255,255,0.75)', fontSize: '0.68rem' }}>Toca para ver cómo</p>
-                  : <p style={{ margin: '0.1rem 0 0', color: 'rgba(255,255,255,0.9)', fontSize: '0.68rem', lineHeight: 1.4 }}>Toca <strong>⬆️ Compartir</strong> → <strong>Añadir a inicio</strong></p>
-                }
-              </>
-            )}
-          </div>
 
-          {/* Botón de acción */}
-          {installPrompt ? (
-            <button
-              id="pwa-install-btn"
-              onClick={handleInstallClick}
-              style={{
-                background: 'white',
-                color: '#005C38',
-                border: 'none',
-                borderRadius: '8px',
-                padding: '0.4rem 0.85rem',
-                fontWeight: 700,
-                fontSize: '0.75rem',
-                cursor: 'pointer',
-                flexShrink: 0,
-                fontFamily: 'inherit',
-              }}
-            >
-              Instalar
-            </button>
-          ) : (
-            <button
-              id="pwa-ios-hint-btn"
-              onClick={() => setShowIOSHint(h => !h)}
-              style={{
-                background: 'rgba(255,255,255,0.2)',
-                color: 'white',
-                border: '1px solid rgba(255,255,255,0.3)',
-                borderRadius: '8px',
-                padding: '0.4rem 0.75rem',
-                fontWeight: 600,
-                fontSize: '0.75rem',
-                cursor: 'pointer',
-                flexShrink: 0,
-                fontFamily: 'inherit',
-              }}
-            >
-              {showIOSHint ? '✓ Ok' : 'Cómo'}
-            </button>
-          )}
-        </div>
-      )}
 
       <div style={{
         position: 'absolute', top: -80, left: '50%', transform: 'translateX(-50%)',
@@ -399,9 +293,9 @@ export default function AdminLogin() {
 
       <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: 340, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
         
-        {/* Header — logo del tostador */}
-        <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem', marginBottom: '3.5rem' }}>
-          <img src="/logo-sagrado.png" alt="Sagrado Corazón" style={{ height: '70px', width: 'auto', objectFit: 'contain', marginBottom: '0.5rem' }} />
+        {/* Header — logo de la plataforma */}
+        <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem', marginBottom: '1rem' }}>
+          <img src="/becoffee-logo.svg" alt="beCOFFEE.pro" style={{ height: '162px', width: 'auto', objectFit: 'contain' }} />
         </div>
 
         {/* Tab triggers */}
@@ -532,6 +426,40 @@ export default function AdminLogin() {
             </button>
           </form>
         )}
+
+      {/* ── PWA Install Banner ──────────────────────────────── */}
+      {!isStandalone && (installPrompt || isIOS) && (
+        <button
+          onClick={installPrompt ? handleInstallClick : () => setShowIOSHint(h => !h)}
+          style={{
+            width: '100%',
+            marginTop: '0.5rem',
+            background: 'transparent',
+            border: 'none',
+            padding: '0.75rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '0.5rem',
+            cursor: 'pointer',
+            color: 'var(--text-secondary)',
+            transition: 'var(--t)',
+          }}
+          onMouseEnter={e => e.currentTarget.style.color = 'var(--green)'}
+          onMouseLeave={e => e.currentTarget.style.color = 'var(--text-secondary)'}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          <span style={{ fontWeight: 600, fontSize: '0.8rem' }}>
+            {installPrompt 
+              ? 'Instalar App para acceso rápido' 
+              : (showIOSHint ? 'Toca Compartir → Añadir a inicio' : 'Instalar en iPhone')}
+          </span>
+        </button>
+      )}
 
         {savedSlug && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '100%', marginTop: '0.5rem' }}>

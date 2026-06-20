@@ -1,63 +1,68 @@
 :root {
+  /* beCOFFEE pro Logo Colors */
+  --logo-teal:   #006056;
+  --logo-navy:   #051730;
+  --logo-gray:   #939598;
+
   /* Brand Palette - Light Mode Default */
-  --bg:          #FAF7F2;
+  --bg:          #F4F7F6;
   --bg-card:     #FFFFFF;
-  --bg-card-2:   #F3EDE4;
-  --green:       #005C38;
-  --green-dim:   rgba(0, 92, 56, 0.08);
-  --green-glow:  rgba(0, 92, 56, 0.2);
-  --brown:       #502514;
-  --brown-dim:   rgba(80, 37, 20, 0.12);
-  --taupe:       #8A7C72;
-  --taupe-dim:   rgba(138, 124, 114, 0.08);
-  --gold:        #9E763F;
-  --gold-dim:    rgba(158, 118, 63, 0.08);
-  --gold-glow:   rgba(158, 118, 63, 0.2);
+  --bg-card-2:   #EAF1EF;
+  --green:       #006056;
+  --green-dim:   rgba(0, 96, 86, 0.08);
+  --green-glow:  rgba(0, 96, 86, 0.2);
+  --brown:       #051730;
+  --brown-dim:   rgba(5, 23, 48, 0.12);
+  --taupe:       #5C738A;
+  --taupe-dim:   rgba(92, 115, 138, 0.08);
+  --gold:        #939598;
+  --gold-dim:    rgba(147, 149, 152, 0.08);
+  --gold-glow:   rgba(147, 149, 152, 0.2);
 
   /* Text */
-  --text-primary:   #120E0B;  /* High contrast espresso black */
-  --text-secondary: #4A3E36;  /* High contrast medium-dark brown */
-  --text-muted:     #5C4F46;  /* High contrast dark taupe for small details */
+  --text-primary:   #051730;  /* High contrast navy */
+  --text-secondary: #2C3E50;  /* High contrast medium-dark navy */
+  --text-muted:     #5A6A7A;  /* High contrast dark taupe for small details */
 
   /* Badges & Tags */
-  --tag-region-text:   #005C38;  /* Deep green */
-  --tag-region-bg:     rgba(0, 92, 56, 0.08);
-  --tag-default-text:  #502514;  /* Deep brown */
-  --tag-default-bg:    rgba(80, 37, 20, 0.07);
-  --tag-offer-text:    #9E763F;  /* Deep gold */
-  --tag-offer-bg:      rgba(158, 118, 63, 0.12);
+  --tag-region-text:   #006056;  /* Deep green */
+  --tag-region-bg:     rgba(0, 96, 86, 0.08);
+  --tag-default-text:  #051730;  /* Deep navy */
+  --tag-default-bg:    rgba(5, 23, 48, 0.07);
+  --tag-offer-text:    #006056;  /* Deep teal */
+  --tag-offer-bg:      rgba(0, 96, 86, 0.12);
 
   /* Select Buttons (Gramaje, Molienda) */
-  --btn-select-bg:            rgba(80, 37, 20, 0.04);
-  --btn-select-border:        rgba(80, 37, 20, 0.1);
-  --btn-select-text:          #4A3E36;
-  --btn-select-hover-bg:      rgba(80, 37, 20, 0.08);
-  --btn-select-hover-text:    #9E763F;
-  --btn-select-active-bg:     linear-gradient(135deg, var(--gold), #C09A5A);
+  --btn-select-bg:            rgba(5, 23, 48, 0.04);
+  --btn-select-border:        rgba(5, 23, 48, 0.1);
+  --btn-select-text:          #2C3E50;
+  --btn-select-hover-bg:      rgba(5, 23, 48, 0.08);
+  --btn-select-hover-text:    #006056;
+  --btn-select-active-bg:     linear-gradient(135deg, var(--gold), #7A7C7F);
   --btn-select-active-border: var(--gold);
   --btn-select-active-text:   #FFFFFF;
 
   /* Semantic */
-  --success:     #005C38;
+  --success:     #006056;
   --danger:      #C0392B;
-  --warning:     #9E763F;
+  --warning:     #F39C12;
   --wa-green:    #25D366;
 
   /* Glass */
-  --glass:       rgba(80, 37, 20, 0.02);
-  --glass-border:rgba(80, 37, 20, 0.09);
+  --glass:       rgba(5, 23, 48, 0.02);
+  --glass-border:rgba(5, 23, 48, 0.09);
 
   /* Body background & shadows - Light */
-  --body-bg:       #EFEBE4;
-  --body-radial-1: rgba(0, 92, 56, 0.04);
-  --body-radial-2: rgba(80, 37, 20, 0.06);
-  --shadow-color:  rgba(80, 37, 20, 0.12);
-  --shadow-glow:   rgba(0, 92, 56, 0.03);
+  --body-bg:       #F4F7F6;
+  --body-radial-1: rgba(0, 96, 86, 0.04);
+  --body-radial-2: rgba(5, 23, 48, 0.06);
+  --shadow-color:  rgba(5, 23, 48, 0.12);
+  --shadow-glow:   rgba(0, 96, 86, 0.03);
   --shadow-border: rgba(0, 0, 0, 0.05);
 
-  --panel-bg:      rgba(250, 247, 242, 0.92);
-  --login-glow:    rgba(0, 92, 56, 0.05);
-  --card-active-blend: rgba(80, 37, 20, 0.03);
+  --panel-bg:      rgba(244, 247, 246, 0.92);
+  --login-glow:    rgba(0, 96, 86, 0.05);
+  --card-active-blend: rgba(5, 23, 48, 0.03);
   --on-gold:       #FFFFFF;
 
   /* Radii */
@@ -80,48 +85,53 @@
    DARK MODE OVERRIDES
    ═══════════════════════════════════════════════════════ */
 body.dark-theme {
+  /* beCOFFEE pro Logo Colors */
+  --logo-teal:   #006056;
+  --logo-navy:   #051730;
+  --logo-gray:   #939598;
+
   /* Brand Palette */
-  --bg:          #1F1E24;
-  --bg-card:     #27262D;
-  --bg-card-2:   #2E2D35;
-  --green:       #00613C;
-  --green-dim:   rgba(0, 97, 60, 0.18);
-  --green-glow:  rgba(0, 97, 60, 0.35);
-  --brown:       #502514;
-  --brown-dim:   rgba(80, 37, 20, 0.25);
-  --taupe:       #C0B2A7;
-  --taupe-dim:   rgba(192, 178, 167, 0.12);
-  --gold:        #D3B27F;
-  --gold-dim:    rgba(211, 178, 127, 0.15);
-  --gold-glow:   rgba(211, 178, 127, 0.3);
+  --bg:          #161A23;
+  --bg-card:     #1E232E;
+  --bg-card-2:   #252C3A;
+  --green:       #008A7C;
+  --green-dim:   rgba(0, 138, 124, 0.18);
+  --green-glow:  rgba(0, 138, 124, 0.35);
+  --brown:       #1D334A;
+  --brown-dim:   rgba(29, 51, 74, 0.25);
+  --taupe:       #8FA5B8;
+  --taupe-dim:   rgba(143, 165, 184, 0.12);
+  --gold:        #A5A7AA;
+  --gold-dim:    rgba(165, 167, 170, 0.15);
+  --gold-glow:   rgba(165, 167, 170, 0.3);
 
   /* Text */
   --text-primary:   #FFFFFF;  /* Maximum contrast white */
-  --text-secondary: #E3DCD5;  /* Brighter sand/beige */
-  --text-muted:     #B3A79E;  /* Brighter solid muted gray */
+  --text-secondary: #E2E8F0;  /* Slate light */
+  --text-muted:     #94A3B8;  /* Slate gray */
 
   /* Badges & Tags */
   --tag-region-text:   #6FCF97;  /* High contrast bright green */
   --tag-region-bg:     rgba(111, 207, 151, 0.15);
-  --tag-default-text:  #E8D5C4;  /* Light sand beige */
+  --tag-default-text:  #E2E8F0;  /* Slate light */
   --tag-default-bg:    rgba(255, 255, 255, 0.06);
-  --tag-offer-text:    #D3B27F;  /* Warm gold */
-  --tag-offer-bg:      rgba(211, 178, 127, 0.15);
+  --tag-offer-text:    #008A7C;  /* Teal */
+  --tag-offer-bg:      rgba(0, 138, 124, 0.15);
 
   /* Select Buttons (Gramaje, Molienda) */
   --btn-select-bg:            rgba(255, 255, 255, 0.05);
   --btn-select-border:        rgba(255, 255, 255, 0.1);
-  --btn-select-text:          #C0B2A7;
+  --btn-select-text:          #94A3B8;
   --btn-select-hover-bg:      rgba(255, 255, 255, 0.1);
-  --btn-select-hover-text:    #D3B27F;
-  --btn-select-active-bg:     linear-gradient(135deg, var(--gold), #D3B27F);
+  --btn-select-hover-text:    #008A7C;
+  --btn-select-active-bg:     linear-gradient(135deg, var(--gold), #8FA5B8);
   --btn-select-active-border: var(--gold);
-  --btn-select-active-text:   #1F1E24;
+  --btn-select-active-text:   #161A23;
 
   /* Semantic */
-  --success:     #00613C;
+  --success:     #008A7C;
   --danger:      #C0392B;
-  --warning:     #D3B27F;
+  --warning:     #F39C12;
   --wa-green:    #25D366;
 
   /* Glass */
@@ -129,17 +139,17 @@ body.dark-theme {
   --glass-border:rgba(255, 255, 255, 0.07);
 
   /* Body background & shadows - Dark */
-  --body-bg:       #131217;
-  --body-radial-1: rgba(0, 97, 60, 0.07);
-  --body-radial-2: rgba(80, 37, 20, 0.12);
+  --body-bg:       #111827;
+  --body-radial-1: rgba(0, 138, 124, 0.07);
+  --body-radial-2: rgba(29, 51, 74, 0.12);
   --shadow-color:  rgba(0, 0, 0, 0.8);
-  --shadow-glow:   rgba(0, 97, 60, 0.05);
+  --shadow-glow:   rgba(0, 138, 124, 0.05);
   --shadow-border: rgba(255, 255, 255, 0.05);
 
-  --panel-bg:      rgba(27, 26, 32, 0.88);
-  --login-glow:    rgba(0, 97, 60, 0.15);
-  --card-active-blend: rgba(80, 37, 20, 0.35);
-  --on-gold:       #1F1E24;
+  --panel-bg:      rgba(30, 41, 59, 0.88);
+  --login-glow:    rgba(0, 138, 124, 0.15);
+  --card-active-blend: rgba(29, 51, 74, 0.35);
+  --on-gold:       #161A23;
 
   /* Logo filters */
   --logo-filter: none;
