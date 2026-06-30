@@ -303,7 +303,7 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
       notes: fd.get('notes') || 'Notas por definir',
       price_250: parseFormattedPrice(fd.get('price250')),
       price_500: parseFormattedPrice(fd.get('price500')),
-      price_2500: parseFormattedPrice(fd.get('price2500')),
+      price_340: parseFormattedPrice(fd.get('price340')),
       inventory_kg: parseFloat(fd.get('inventoryKg') || 20),
       is_offer: isOffer,
       offer_discount: isOffer ? parseInt(fd.get('discount') || 0) / 100 : 0,
@@ -327,6 +327,8 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
       setAddProcessCustom('')
       setImageFile(null)
       setImagePreview(null)
+    } else if (error) {
+      alert('Error al guardar el producto: ' + error.message)
     }
     setSaving(false)
   }
@@ -383,7 +385,7 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
       notes: fd.get('notes') || 'Notas por definir',
       price_250: parseFormattedPrice(fd.get('price250')),
       price_500: parseFormattedPrice(fd.get('price500')),
-      price_2500: parseFormattedPrice(fd.get('price2500')),
+      price_340: parseFormattedPrice(fd.get('price340')),
       inventory_kg: parseFloat(fd.get('inventoryKg') || 0),
       is_offer: editIsOffer,
       offer_discount: editIsOffer ? parseInt(fd.get('discount') || 0) / 100 : 0,
@@ -582,7 +584,8 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             {products.map(p => {
-              const base = p.price_250
+              const validPrices = [p.price_250, p.price_340, p.price_500].filter(v => v > 0)
+              const base = validPrices.length > 0 ? Math.min(...validPrices) : 0
               const displayPrice = p.is_offer ? Math.round(base * (1 - p.offer_discount)) : base
               const formatPrice = (val) => '$' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
 
@@ -830,11 +833,11 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
                 <div className="field"><label>Altura (msnm)</label><input name="altitude" type="number" required /></div>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem' }}>
-                <div className="field"><label>Precio 250g</label><input name="price250" type="text" inputMode="numeric" onChange={handlePriceInputChange} required /></div>
-                <div className="field"><label>Precio 500g</label><input name="price500" type="text" inputMode="numeric" onChange={handlePriceInputChange} required /></div>
+                <div className="field"><label>Precio 250g</label><input name="price250" type="text" inputMode="numeric" onChange={handlePriceInputChange} /></div>
+                <div className="field"><label>Precio 340g</label><input name="price340" type="text" inputMode="numeric" onChange={handlePriceInputChange} /></div>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem' }}>
-                <div className="field"><label>Precio 2.5kg</label><input name="price2500" type="text" inputMode="numeric" onChange={handlePriceInputChange} required /></div>
+                <div className="field"><label>Precio 500g</label><input name="price500" type="text" inputMode="numeric" onChange={handlePriceInputChange} /></div>
                 <div className="field"><label>Cantidad Disponible (kg)</label><input name="inventoryKg" type="number" step="0.1" required placeholder="Ej: 25" /></div>
               </div>
               <div className="field"><label>Notas de cata</label><textarea name="notes" rows={3} placeholder="Durazno, Panela..." /></div>
@@ -1020,17 +1023,17 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem' }}>
                 <div className="field">
                   <label>Precio 250g</label>
-                  <input name="price250" type="text" inputMode="numeric" onChange={handlePriceInputChange} required defaultValue={editingProduct.price_250 ? editingProduct.price_250.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') : ''} />
+                  <input name="price250" type="text" inputMode="numeric" onChange={handlePriceInputChange} defaultValue={editingProduct.price_250 ? editingProduct.price_250.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') : ''} />
                 </div>
                 <div className="field">
-                  <label>Precio 500g</label>
-                  <input name="price500" type="text" inputMode="numeric" onChange={handlePriceInputChange} required defaultValue={editingProduct.price_500 ? editingProduct.price_500.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') : ''} />
+                  <label>Precio 340g</label>
+                  <input name="price340" type="text" inputMode="numeric" onChange={handlePriceInputChange} defaultValue={editingProduct.price_340 ? editingProduct.price_340.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') : ''} />
                 </div>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem' }}>
                 <div className="field">
-                  <label>Precio 2.5kg</label>
-                  <input name="price2500" type="text" inputMode="numeric" onChange={handlePriceInputChange} required defaultValue={editingProduct.price_2500 ? editingProduct.price_2500.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') : ''} />
+                  <label>Precio 500g</label>
+                  <input name="price500" type="text" inputMode="numeric" onChange={handlePriceInputChange} defaultValue={editingProduct.price_500 ? editingProduct.price_500.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') : ''} />
                 </div>
                 <div className="field">
                   <label>Cantidad Disponible (kg)</label>

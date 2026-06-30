@@ -5,8 +5,8 @@ import { createClient } from '@/lib/supabase/client'
 
 const SIZE_CONFIG = {
   '250gr': { label: '250g',              kg: 0.25 },
+  '340gr': { label: '340gr',             kg: 0.34 },
   '500gr': { label: '500g',              kg: 0.5  },
-  '2.5kg': { label: 'Cuarterón (2.5kg)', kg: 2.5  },
 }
 
 const formatRoastDate = (dateStr) => {
@@ -28,10 +28,11 @@ function mapRow(row) {
     region:        row.region,
     altitude:      row.altitude,
     notes:         row.notes,
-    prices: { '250gr': row.price_250, '500gr': row.price_500, '2.5kg': row.price_2500 },
+    prices: { '250gr': row.price_250, '500gr': row.price_500, '340gr': row.price_340 },
     inventoryKg:   parseFloat(row.inventory_kg),
     isOffer:       row.is_offer,
     offerDiscount: parseFloat(row.offer_discount),
+    imageUrl:      row.image_url,
   }
 }
 
@@ -364,39 +365,6 @@ export default function CatalogPage({ roaster }) {
             alignItems: 'center',
             textAlign: 'center'
           }}>
-            {/* Logos */}
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1.8rem',
-              justifyContent: 'center',
-              flexWrap: 'wrap'
-            }}>
-              {/* Logo 1: MOUSELAB */}
-              <img 
-                src="/logo-mouselab.png" 
-                alt="MOUSELAB" 
-                style={{ 
-                  height: '24px', 
-                  width: 'auto', 
-                  objectFit: 'contain',
-                  filter: 'var(--logo-filter)',
-                  transition: 'var(--t)'
-                }} 
-              />
-
-              {/* Logo 2: SAGRADO CORAZÓN */}
-              <img 
-                src="/logo-sagrado.png" 
-                alt="SAGRADO CORAZÓN" 
-                style={{ 
-                  height: '36px', 
-                  width: 'auto', 
-                  objectFit: 'contain',
-                  transition: 'var(--t)'
-                }} 
-              />
-            </div>
 
             {/* Legal Notice */}
             <div style={{
@@ -464,12 +432,13 @@ export default function CatalogPage({ roaster }) {
           background: activeId ? 'var(--bg-card)' : 'var(--panel-bg)',
           backdropFilter: activeId ? 'none' : 'blur(30px)',
           borderTop: activeId ? 'none' : '1px solid var(--glass-border)',
-          borderTopLeftRadius: 'var(--r-xl)',
-          borderTopRightRadius: 'var(--r-xl)',
+          borderTopLeftRadius: activeId ? 0 : 'var(--r-xl)',
+          borderTopRightRadius: activeId ? 0 : 'var(--r-xl)',
           transform: `translateY(${panelTranslate})`,
           transition: 'transform 0.45s var(--smooth)',
           zIndex: 100,
           boxShadow: activeId ? 'none' : '0 -4px 40px var(--shadow-color)',
+          height: activeId ? '100dvh' : 'auto',
           maxHeight: '100dvh',
           display: 'flex',
           flexDirection: 'column',
@@ -484,20 +453,24 @@ export default function CatalogPage({ roaster }) {
           const cartWeight = cartItemsForProduct.reduce((sum, item) => sum + (SIZE_CONFIG[item.weight].kg * item.quantity), 0)
           const remainingStock = Math.max(0, activeProduct.inventoryKg - cartWeight)
 
-          let bagImg = '/bag-lavado.png'
-          const proc = (activeProduct.process || '').toLowerCase()
-          if (proc.includes('honey')) bagImg = '/bag-honey.png'
-          else if (proc.includes('natural')) bagImg = '/bag-natural.png'
+          let isCustomImg = !!activeProduct.imageUrl
+          let bagImg = activeProduct.imageUrl
+          if (!bagImg) {
+            bagImg = '/bag-lavado.png'
+            const proc = (activeProduct.process || '').toLowerCase()
+            if (proc.includes('honey')) bagImg = '/bag-honey.png'
+            else if (proc.includes('natural')) bagImg = '/bag-natural.png'
+          }
 
           return (
             <div style={{ display: 'flex', flexDirection: 'column', background: 'var(--bg)', minHeight: '100%' }}>
               {/* Header verde premium */}
-              <div className="drawer-green-header">
-                <img src={bagImg} className="drawer-bag-image" alt="Coffee package" />
+              <div className="drawer-green-header" style={isCustomImg ? { height: '50vh', maxHeight: 'none', background: 'transparent', paddingBottom: 0 } : {}}>
+                <img src={bagImg} className={isCustomImg ? "drawer-custom-image" : "drawer-bag-image"} alt="Coffee package" />
               </div>
 
               {/* Tarjeta de detalles blanca superpuesta */}
-              <div className="drawer-details-card">
+              <div className="drawer-details-card" style={isCustomImg ? { marginTop: 0, flex: 1 } : { flex: 1 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.5rem' }}>
                   <div>
                     <h2 className="drawer-title">{activeProduct.variety}</h2>
@@ -571,6 +544,7 @@ export default function CatalogPage({ roaster }) {
                   
                   {Object.entries(SIZE_CONFIG).map(([wKey, cfg]) => {
                     let unitPrice = activeProduct.prices[wKey] || 0
+                    if (unitPrice <= 0) return null
                     if (activeProduct.isOffer) unitPrice = Math.round(unitPrice * (1 - activeProduct.offerDiscount))
 
                     return (
@@ -820,7 +794,8 @@ export default function CatalogPage({ roaster }) {
 // — Sub-components —
 
 function ProductCard({ product: p, remainingStock, isInCart, isDark, animDelay, onClick }) {
-  const base = p.prices['250gr']
+  const validPrices = Object.values(p.prices).filter(v => v > 0)
+  const base = validPrices.length > 0 ? Math.min(...validPrices) : 0
   const displayPrice = p.isOffer ? Math.round(base * (1 - p.offerDiscount)) : base
   const stockClass = remainingStock <= 2 ? 'out' : remainingStock <= 8 ? 'low' : ''
   const stockLabel = remainingStock <= 2 
