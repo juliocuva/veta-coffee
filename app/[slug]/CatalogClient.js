@@ -255,12 +255,17 @@ export default function CatalogPage({ roaster }) {
         flexDirection: 'column',
         alignItems: 'center',
       }}>
-        <h1 style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '1.25rem', fontWeight: 800, letterSpacing: '0.15em', color: '#ffffff', lineHeight: 1.2 }}>
-          {roaster.name}
-        </h1>
-        <p style={{ fontSize: '0.58rem', color: 'rgba(255, 255, 255, 0.65)', marginTop: '0.35rem', letterSpacing: '0.04em' }}>
-          Café de especialidad · Pedido directo
-        </p>
+        {roaster.logo_url ? (
+          <img 
+            src={roaster.logo_url} 
+            alt={roaster.name} 
+            style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '50%', marginBottom: '0.5rem', background: '#ffffff', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }} 
+          />
+        ) : (
+          <h1 style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '1.25rem', fontWeight: 800, letterSpacing: '0.15em', color: '#ffffff', lineHeight: 1.2 }}>
+            {roaster.name}
+          </h1>
+        )}
         {user ? (
           <a href="/admin/dashboard" style={{
             position: 'absolute', left: '1.2rem', top: '50%', transform: 'translateY(-50%)',

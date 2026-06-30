@@ -15,6 +15,7 @@ export default function AdminLogin() {
   const [showPassword, setShowPassword] = useState(false)
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
+  const [logoFile, setLogoFile] = useState(null)
   
   // Status & local storage fields
   const [error, setError] = useState('')
@@ -222,14 +223,34 @@ export default function AdminLogin() {
       return
     }
 
-    // 2. Insert into roasters table
+    // 2. Upload Logo if present
+    let logoUrl = null
+    if (logoFile) {
+      const fileExt = logoFile.name.split('.').pop()
+      const fileName = `logo-reg-${user.id}-${Math.random().toString(36).substring(2, 15)}.${fileExt}`
+      const filePath = `logos/${fileName}`
+
+      const { error: uploadError } = await supabase.storage
+        .from('product-images')
+        .upload(filePath, logoFile)
+
+      if (!uploadError) {
+        const { data: { publicUrl } } = supabase.storage
+          .from('product-images')
+          .getPublicUrl(filePath)
+        logoUrl = publicUrl
+      }
+    }
+
+    // 3. Insert into roasters table
     const { error: roasterError } = await supabase
       .from('roasters')
       .insert({
         slug,
         name,
         phone,
-        user_id: user.id
+        user_id: user.id,
+        logo_url: logoUrl
       })
 
     if (roasterError) {
@@ -456,6 +477,24 @@ export default function AdminLogin() {
                 </svg>
                 <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Ej: Sagrado Corazón" required />
               </div>
+            </div>
+
+            <div className="field">
+              <label>Logo de la Empresa (Opcional)</label>
+              <input 
+                type="file" 
+                accept="image/*"
+                onChange={e => {
+                  if (e.target.files && e.target.files[0]) setLogoFile(e.target.files[0])
+                }} 
+              />
+              {logoFile && (
+                <img 
+                  src={URL.createObjectURL(logoFile)} 
+                  alt="Logo preview" 
+                  style={{ marginTop: '0.5rem', maxHeight: '50px', objectFit: 'contain', background: 'rgba(255,255,255,0.1)', padding: '4px', borderRadius: '4px' }} 
+                />
+              )}
             </div>
 
             <div className="field">

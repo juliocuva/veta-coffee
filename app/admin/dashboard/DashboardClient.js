@@ -65,6 +65,8 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
   const [profileDescription, setProfileDescription] = useState(initialRoaster.description || '')
   const [profileSlug, setProfileSlug] = useState(initialRoaster.slug)
   const [profileEmail, setProfileEmail] = useState('')
+  const [profileLogoUrl, setProfileLogoUrl] = useState(initialRoaster.logo_url || '')
+  const [profileLogoFile, setProfileLogoFile] = useState(null)
   const [profilePassword, setProfilePassword] = useState('')
   const [showProfilePassword, setShowProfilePassword] = useState(false)
   const [savingProfile, setSavingProfile] = useState(false)
@@ -220,7 +222,26 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
       }
     }
 
-    // 3. Update Roaster profile table (name, phone, slug)
+    // 3. Upload Logo if present
+    let updatedLogoUrl = profileLogoUrl
+    if (profileLogoFile) {
+      const fileExt = profileLogoFile.name.split('.').pop()
+      const fileName = `logo-${roaster.id}-${Math.random().toString(36).substring(2, 15)}.${fileExt}`
+      const filePath = `logos/${fileName}`
+
+      const { error: uploadError } = await supabase.storage
+        .from('product-images')
+        .upload(filePath, profileLogoFile)
+
+      if (!uploadError) {
+        const { data: { publicUrl } } = supabase.storage
+          .from('product-images')
+          .getPublicUrl(filePath)
+        updatedLogoUrl = publicUrl
+      }
+    }
+
+    // 4. Update Roaster profile table (name, phone, slug, logo)
     const cleanSlug = profileSlug
       .toLowerCase()
       .normalize("NFD")
@@ -233,7 +254,8 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
         name: profileName.trim(), 
         phone: profilePhone.trim(),
         slug: cleanSlug,
-        description: profileDescription.trim()
+        description: profileDescription.trim(),
+        logo_url: updatedLogoUrl
       })
       .eq('id', roaster.id)
       .select()
@@ -417,20 +439,32 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
         borderBottom: '1px solid rgba(110, 207, 151, 0.15)', 
         flexShrink: 0,
         display: 'flex', 
-        flexDirection: 'column', 
-        gap: '0.65rem'
+        justifyContent: 'space-between', 
+        alignItems: 'center',
+        gap: '1rem'
       }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-          <h1 style={{ 
-            fontFamily: 'var(--font-montserrat), sans-serif', 
-            fontSize: '1rem', 
-            fontWeight: 800, 
-            color: '#6FCF97', 
-            letterSpacing: '0.04em',
-            margin: 0
-          }}>
-            Panel de {roaster.name}
-          </h1>
+        <div>
+          {roaster.logo_url ? (
+            <img 
+              src={roaster.logo_url} 
+              alt={roaster.name} 
+              style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '50%', background: '#ffffff', boxShadow: '0 2px 8px rgba(0,0,0,0.2)' }} 
+            />
+          ) : (
+            <h1 style={{ 
+              fontFamily: 'var(--font-montserrat), sans-serif', 
+              fontSize: '1rem', 
+              fontWeight: 800, 
+              color: '#6FCF97', 
+              letterSpacing: '0.04em',
+              margin: 0
+            }}>
+              Panel de {roaster.name}
+            </h1>
+          )}
+        </div>
+        
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.8rem' }}>
           <button 
             onClick={toggleTheme} 
             style={{
@@ -443,74 +477,47 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
             title="Cambiar tema"
           >
             {isDark ? (
-              <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13">
-                <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 2.293a1 1 0 010 1.414L13.293 6.7a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 9a1 1 0 000 2h1a1 1 0 100-2h-1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm-4-2.293a1 1 0 010-1.414l.707-.707a1 1 0 111.414 1.414l-.707.707a1 1 0 01-1.414 0zM4 10a1 1 0 00-2 0v1a1 1 0 100 2h1a1 1 0 100-2H4zm.293-4.293a1 1 0 00-1.414 0L2.172 6.42a1 1 0 001.414 1.414l.707-.707a1 1 0 000-1.414zM10 5a5 5 0 100 10 5 5 0 000-10z" clipRule="evenodd" />
+              <svg fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" width="16" height="16">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
               </svg>
             ) : (
-              <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13">
-                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+              <svg fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" width="16" height="16">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
               </svg>
             )}
           </button>
-        </div>
-        <div style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'space-between', 
-          width: '100%', 
-          flexWrap: 'wrap',
-          gap: '0.5rem' 
-        }}>
-          {/* Left Side: Catalog and Store Link */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-            <a 
-              href={`/${roaster.slug}`} 
-              style={{ 
-                fontSize: '0.55rem', 
-                fontWeight: 700,
-                color: '#6FCF97', 
-                textDecoration: 'none',
-                border: '1px solid rgba(110, 207, 151, 0.4)',
-                borderRadius: 6,
-                padding: '0.25rem 0.55rem',
-                background: 'rgba(110, 207, 151, 0.05)',
-                transition: 'var(--t)',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.2rem',
-                height: '24px'
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.15)'}
-              onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.05)'}
-            >
-              Ver Catálogo
-            </a>
+          
+          {/* Right Side: Link, Edit User, Logout */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
             <button 
               onClick={handleCopyLink} 
               style={{
-                background: 'rgba(110, 207, 151, 0.05)',
-                border: '1px solid rgba(110, 207, 151, 0.4)',
-                borderRadius: 6,
-                padding: '0.25rem 0.55rem',
-                fontSize: '0.55rem',
-                fontWeight: 700,
-                color: '#6FCF97',
+                background: 'transparent',
+                border: 'none',
+                fontSize: '0.6rem',
+                fontWeight: 600,
+                color: 'rgba(255, 255, 255, 0.7)',
                 cursor: 'pointer',
-                transition: 'var(--t)',
+                transition: 'color 0.2s',
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.25rem',
-                height: '24px'
+                gap: '0.3rem',
+                padding: '0.2rem'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.15)'}
-              onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.05)'}
+              onMouseEnter={(e) => e.currentTarget.style.color = '#6FCF97'}
+              onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}
             >
-              {copied ? '¡Copiado! ✅' : 'Link de mi tienda'}
+              {copied ? (
+                <>✅ ¡Copiado!</>
+              ) : (
+                <>
+                  <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+                    <path d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" />
+                  </svg>
+                  Link Catálogo
+                </>
+              )}
             </button>
-          </div>
-
-          {/* Right Side: Edit User and Logout */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
             <button 
               onClick={() => {
                 setProfileName(roaster.name)
@@ -520,46 +527,48 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
                 setProfileModalOpen(true)
               }} 
               style={{
-                background: 'rgba(110, 207, 151, 0.05)', 
-                border: '1px solid rgba(110, 207, 151, 0.4)', 
-                cursor: 'pointer', 
-                fontSize: '0.55rem', 
-                fontWeight: 700,
-                color: '#6FCF97',
-                padding: '0.25rem 0.55rem', 
-                borderRadius: '6px',
+                background: 'transparent',
+                border: 'none',
+                fontSize: '0.6rem',
+                fontWeight: 600,
+                color: 'rgba(255, 255, 255, 0.7)',
+                cursor: 'pointer',
+                transition: 'color 0.2s',
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.25rem',
-                transition: 'var(--t)',
-                height: '24px'
+                gap: '0.3rem',
+                padding: '0.2rem'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.15)'}
-              onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.05)'}
+              onMouseEnter={(e) => e.currentTarget.style.color = '#6FCF97'}
+              onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}
               title="Editar Perfil / Datos"
             >
+              <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+              </svg>
               Editar Usuario
             </button>
             <button 
               onClick={handleLogout} 
               style={{
-                background: 'rgba(110, 207, 151, 0.05)', 
-                border: '1px solid rgba(110, 207, 151, 0.4)', 
-                borderRadius: 6,
-                fontSize: '0.55rem', 
-                fontWeight: 700, 
-                color: '#6FCF97', 
-                padding: '0.25rem 0.6rem',
-                cursor: 'pointer', 
-                textTransform: 'uppercase',
-                height: '24px',
+                background: 'transparent',
+                border: 'none',
+                fontSize: '0.6rem',
+                fontWeight: 600,
+                color: 'rgba(255, 255, 255, 0.7)',
+                cursor: 'pointer',
+                transition: 'color 0.2s',
                 display: 'inline-flex',
                 alignItems: 'center',
-                transition: 'var(--t)'
+                gap: '0.3rem',
+                padding: '0.2rem'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.15)'}
-              onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(110, 207, 151, 0.05)'}
+              onMouseEnter={(e) => e.currentTarget.style.color = '#FF6B6B'}
+              onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}
             >
+              <svg fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" width="14" height="14">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5.636 5.636a9 9 0 1012.728 0M12 3v9" />
+              </svg>
               Salir
             </button>
           </div>
@@ -569,14 +578,58 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
       {/* Content */}
       <main className="scroll-area">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-          <h2 style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '0.04em' }}>Mis Variedades</h2>
-          {!isPreviewMode && (
-            <button onClick={() => setModalOpen(true)} style={{
-              background: 'var(--green)', color: '#fff', border: 'none', width: 32, height: 32,
-              borderRadius: '50%', fontSize: '1.2rem', cursor: 'pointer',
-              display: 'flex', alignItems: 'center', justifyContent: 'center'
-            }}>+</button>
-          )}
+          <a 
+            href={`/${roaster.slug}`} 
+            style={{ 
+              fontSize: '0.6rem', 
+              fontWeight: 600,
+              color: 'var(--text-secondary)', 
+              textDecoration: 'none',
+              background: 'transparent',
+              border: 'none',
+              transition: 'color 0.2s',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.3rem',
+              padding: '0.2rem'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.color = 'var(--green)'}
+            onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
+          >
+            <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+              <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+            </svg>
+            Ver Catálogo
+          </a>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+            {!isPreviewMode && (
+              <button onClick={() => setModalOpen(true)} style={{
+                background: 'transparent', 
+                color: 'var(--text-primary)', 
+                fontFamily: 'var(--font-montserrat), sans-serif',
+                border: 'none', 
+                cursor: 'pointer',
+                display: 'inline-flex', 
+                alignItems: 'center', 
+                gap: '0.4rem',
+                fontSize: '0.6rem',
+                fontWeight: 600,
+                letterSpacing: '0.04em',
+                padding: '0.2rem',
+                transition: 'color 0.2s'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.color = 'var(--green)'}
+              onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
+              >
+                <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+                  <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                </svg>
+                Agregar Variedades
+              </button>
+            )}
+          </div>
         </div>
 
         {products.length === 0 ? (
@@ -1094,6 +1147,26 @@ export default function DashboardClient({ initialRoaster, initialProducts }) {
                   onChange={e => setProfileName(e.target.value)} 
                   required 
                 />
+              </div>
+
+              <div className="field">
+                <label>Logo del Cliente (Opcional)</label>
+                <input 
+                  type="file" 
+                  accept="image/*"
+                  onChange={e => {
+                    if(e.target.files && e.target.files[0]) {
+                      setProfileLogoFile(e.target.files[0])
+                    }
+                  }} 
+                />
+                {(profileLogoFile || profileLogoUrl) && (
+                  <img 
+                    src={profileLogoFile ? URL.createObjectURL(profileLogoFile) : profileLogoUrl} 
+                    alt="Logo preview" 
+                    style={{ marginTop: '0.5rem', maxHeight: '50px', objectFit: 'contain', background: 'rgba(255,255,255,0.1)', padding: '4px', borderRadius: '4px' }} 
+                  />
+                )}
               </div>
 
               <div className="field">
