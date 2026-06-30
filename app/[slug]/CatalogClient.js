@@ -382,12 +382,6 @@ export default function CatalogPage({ roaster }) {
               <p style={{ fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 0.3rem 0' }}>
                 Aviso de Propiedad Intelectual © 2026 Mouselab. Todos los derechos reservados.
               </p>
-              <p style={{ margin: '0 0 0.3rem 0' }}>
-                Mouselab es la entidad titular de todos los derechos de propiedad intelectual, secretos industriales y derechos de autor sobre la arquitectura de software, algoritmos de Inteligencia Artificial y diseños visuales presentados.
-              </p>
-              <p style={{ margin: 0 }}>
-                AXISONE COFFEE es una marca comercial propiedad de Mouselab. El acceso a este material o enlaces no constituye una licencia de uso. Cualquier uso no autorizado será perseguido bajo las leyes de propiedad intelectual globales.
-              </p>
             </div>
 
             {/* Powered by AxisONE Coffee */}
