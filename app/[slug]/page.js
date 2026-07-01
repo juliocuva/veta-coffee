@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import CatalogClient from './CatalogClient'
 
+export const revalidate = 60 // Revalidate every 60 seconds (ISR)
+
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const supabase = await createClient()

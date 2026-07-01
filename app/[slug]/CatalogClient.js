@@ -2,6 +2,9 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import CatalogHeader from '@/components/catalog/CatalogHeader'
+import CatalogProductCard from '@/components/catalog/CatalogProductCard'
+import Link from 'next/link'
 
 const SIZE_CONFIG = {
   '250gr': { label: '250g',              kg: 0.25 },
@@ -240,89 +243,15 @@ export default function CatalogPage({ roaster }) {
   const panelTranslate = !panelVisible ? '100%' : panelOpen ? '0%' : 'calc(100% - 68px)'
 
   return (
-    <div className="app-shell">
+    <div className="app-shell" data-palette={roaster.theme_palette || 'default'}>
 
       {/* Header */}
-      <header style={{
-        padding: '1.2rem 1.2rem 1.0rem',
-        background: 'linear-gradient(180deg, #092617 0%, #0d311e 100%)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-        textAlign: 'center',
-        flexShrink: 0,
-        position: 'relative',
-        zIndex: 10,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}>
-        {roaster.logo_url ? (
-          <img 
-            src={roaster.logo_url} 
-            alt={roaster.name} 
-            style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '50%', marginBottom: '0.5rem', background: '#ffffff', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }} 
-          />
-        ) : (
-          <h1 style={{ fontFamily: 'var(--font-montserrat), sans-serif', fontSize: '1.25rem', fontWeight: 800, letterSpacing: '0.15em', color: '#ffffff', lineHeight: 1.2 }}>
-            {roaster.name}
-          </h1>
-        )}
-        {user ? (
-          <a href="/admin/dashboard" style={{
-            position: 'absolute', left: '1.2rem', top: '50%', transform: 'translateY(-50%)',
-            background: 'rgba(110, 207, 151, 0.2)', border: '1px solid rgba(110, 207, 151, 0.4)',
-            borderRadius: '16px',
-            padding: '0.3rem 0.7rem',
-            fontSize: '0.62rem',
-            fontWeight: 700,
-            color: '#6FCF97',
-            textDecoration: 'none',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.25rem',
-            transition: 'var(--t)',
-          }} title="Volver al panel de variedades">
-            <svg viewBox="0 0 20 20" fill="currentColor" width="12" height="12">
-              <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
-            </svg>
-            <span>Volver</span>
-          </a>
-        ) : (
-          <a href="/admin" style={{
-            position: 'absolute', left: '1.2rem', top: '50%', transform: 'translateY(-50%)',
-            width: 32, height: 32, borderRadius: '50%',
-            background: 'rgba(255, 255, 255, 0.15)', border: '1px solid rgba(255, 255, 255, 0.08)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: '#ffffff', textDecoration: 'none',
-            transition: 'var(--t)',
-          }} title="Acceso tostador">
-            <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15">
-              <path fillRule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14H8v2H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 1 1 0 000-2z" clipRule="evenodd" />
-            </svg>
-          </a>
-        )}
-        <button 
-          onClick={toggleTheme} 
-          style={{
-            position: 'absolute', right: '1.2rem', top: '50%', transform: 'translateY(-50%)',
-            width: 32, height: 32, borderRadius: '50%',
-            background: 'rgba(255, 255, 255, 0.15)', border: '1px solid rgba(255, 255, 255, 0.08)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: '#ffffff', cursor: 'pointer',
-            transition: 'var(--t)',
-          }}
-          title="Cambiar tema"
-        >
-          {isDark ? (
-            <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15">
-              <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 2.293a1 1 0 010 1.414L13.293 6.7a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 9a1 1 0 000 2h1a1 1 0 100-2h-1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm-4-2.293a1 1 0 010-1.414l.707-.707a1 1 0 111.414 1.414l-.707.707a1 1 0 01-1.414 0zM4 10a1 1 0 00-2 0v1a1 1 0 100 2h1a1 1 0 100-2H4zm.293-4.293a1 1 0 00-1.414 0L2.172 6.42a1 1 0 001.414 1.414l.707-.707a1 1 0 000-1.414zM10 5a5 5 0 100 10 5 5 0 000-10z" clipRule="evenodd" />
-            </svg>
-          ) : (
-            <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15">
-              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-            </svg>
-          )}
-        </button>
-      </header>
+      <CatalogHeader 
+        roaster={roaster}
+        user={user}
+        isDark={isDark}
+        toggleTheme={toggleTheme}
+      />
 
       {/* Product list */}
       <main style={{
@@ -341,7 +270,7 @@ export default function CatalogPage({ roaster }) {
             const remainingStock = Math.max(0, p.inventoryKg - cartWeight)
 
             return (
-              <ProductCard
+              <CatalogProductCard
                 key={p.id}
                 product={p}
                 remainingStock={remainingStock}
@@ -792,113 +721,6 @@ export default function CatalogPage({ roaster }) {
 
 // — Sub-components —
 
-function ProductCard({ product: p, remainingStock, isInCart, isDark, animDelay, onClick }) {
-  const validPrices = Object.values(p.prices).filter(v => v > 0)
-  const base = validPrices.length > 0 ? Math.min(...validPrices) : 0
-  const displayPrice = p.isOffer ? Math.round(base * (1 - p.offerDiscount)) : base
-  const stockClass = remainingStock <= 2 ? 'out' : remainingStock <= 8 ? 'low' : ''
-  const stockLabel = remainingStock <= 2 
-    ? 'AGOTADO' 
-    : remainingStock <= 8 
-      ? `SOLO ${remainingStock.toFixed(2).replace(/\.00$/, '')}KG` 
-      : `${remainingStock.toFixed(2).replace(/\.00$/, '')}KG DISPONIBLE`
-
-  const formatPrice = (val) => '$' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-
-  // Dynamic colors for differentiation based on process (unified to green-tinted Bourbon tone)
-  let cardBg = 'var(--bg-card)'
-  let cardBorder = 'var(--glass-border)'
-  const cardShadow = isDark
-    ? '0 4px 16px rgba(0, 0, 0, 0.35)'
-    : '0 4px 14px rgba(80, 37, 20, 0.05)'
-  
-  if (!isInCart) {
-    cardBg = isDark 
-      ? 'linear-gradient(145deg, #1A2D23 0%, #111E17 100%)' 
-      : 'linear-gradient(145deg, #F5FAF6 0%, #E5F1EB 100%)'
-    cardBorder = isDark ? 'rgba(111, 207, 151, 0.25)' : 'rgba(0, 92, 56, 0.2)'
-  } else {
-    cardBg = 'linear-gradient(145deg, var(--bg-card) 0%, rgba(80,37,20,0.35) 100%)'
-    cardBorder = 'var(--gold)'
-  }
-
-  return (
-    <div
-      onClick={onClick}
-      style={{
-        position: 'relative',
-        background: cardBg,
-        border: `1px solid ${cardBorder}`,
-        borderRadius: 'var(--r-lg)',
-        padding: '0.8rem 1.0rem',
-        marginBottom: '0.5rem',
-        cursor: 'pointer',
-        transition: 'var(--t)',
-        overflow: 'hidden',
-        animation: `cardIn 0.4s var(--smooth) ${animDelay}s backwards`,
-        boxShadow: isInCart ? '0 0 0 1px rgba(211,178,127,0.2), 0 8px 24px rgba(0,0,0,0.4)' : cardShadow,
-      }}
-    >
-      {isInCart && (
-        <div style={{
-          position: 'absolute', top: '0.85rem', right: '0.85rem',
-          background: 'var(--gold)', color: '#1F1E24',
-          width: 26, height: 26, borderRadius: '50%',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: '0.7rem', fontWeight: 900,
-          animation: 'popIn 0.35s var(--spring)',
-          zIndex: 5,
-        }}>✓</div>
-      )}
-
-      {/* Card Top: Variety */}
-      <div style={{ marginBottom: '0.3rem', paddingRight: isInCart ? '2.5rem' : 0 }}>
-        <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0, letterSpacing: '0.01em', lineHeight: 1.3 }}>
-          {p.variety}
-        </h3>
-      </div>
-
-      {/* Row 2: Metadata tags (Region, Process) */}
-      <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.35rem' }}>
-        <span className="tag tag-region">
-          {p.region}
-        </span>
-        <span className="tag tag-default">
-          {p.process}
-        </span>
-        {p.isOffer && (
-          <span className="tag tag-offer">
-            −{Math.round(p.offerDiscount * 100)}% oferta
-          </span>
-        )}
-      </div>
-
-      {/* Divider and bottom section (always visible) */}
-      <div style={{
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        paddingTop: '0.6rem',
-        borderTop: '1px solid var(--glass-border)',
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem',
-          fontSize: '0.58rem', fontWeight: 800, textTransform: 'uppercase',
-          letterSpacing: '0.07em', color: 'var(--text-muted)' }}>
-          <span style={{
-            width: 6, height: 6, borderRadius: '50%', flexShrink: 0,
-            background: stockClass === 'out' ? 'var(--danger)' : stockClass === 'low' ? 'var(--gold)' : 'var(--green)',
-          }} />
-          {stockLabel}
-        </div>
-        
-        <div style={{ textAlign: 'right', display: 'flex', alignItems: 'baseline', gap: '0.2rem', justifyContent: 'flex-end' }}>
-          <span style={{ fontSize: '0.52rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>desde</span>
-          <div style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--gold)', letterSpacing: '-0.02em', lineHeight: 1 }}>
-            {formatPrice(displayPrice)}
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
 
 function SelectBtn({ active, onClick, children }) {
   return (

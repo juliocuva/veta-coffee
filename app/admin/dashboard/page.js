@@ -18,10 +18,12 @@ export default async function DashboardPage() {
     .single()
 
   if (!roaster) {
+    const LogoutButton = (await import('@/components/dashboard/LogoutButton')).default
     return (
       <div className="app-shell" style={{ alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '2rem' }}>
         <h2>Perfil no encontrado</h2>
         <p style={{ color: 'var(--text-muted)' }}>No tienes un perfil de tostador asociado a esta cuenta.</p>
+        <LogoutButton />
       </div>
     )
   }

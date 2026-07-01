@@ -657,3 +657,59 @@ html:has(.landing-container) {
   object-fit: cover;
   object-position: top center;
 }
+
+/* --- Theme Palettes --- */
+
+/* Theme: Citrico / Bosque */
+[data-palette="citrico"] {
+  --green: #01212B; 
+  --green-dim: rgba(1, 33, 43, 0.08);
+  --green-glow: rgba(1, 33, 43, 0.2);
+  --brown: #C94C03;
+  --taupe: #FFD6A0;
+  --gold: #FFD134;
+  --bg-card: #FFFFFF;
+  --bg: #C9EDE4;
+  --tag-region-text: #C94C03;
+  --tag-offer-text: #01212B;
+}
+
+[data-theme="dark"][data-palette="citrico"],
+[data-palette="citrico"] [data-theme="dark"] {
+  --green: #FFD134; 
+  --green-dim: rgba(255, 209, 52, 0.15);
+  --green-glow: rgba(255, 209, 52, 0.3);
+  --brown: #FFD6A0;
+  --taupe: #C94C03;
+  --gold: #C9EDE4;
+  --bg: #01141A;
+  --bg-card: #01212B;
+  --bg-card-2: #022B38;
+}
+
+/* Theme: Frutos Rojos / Berries */
+[data-palette="berries"] {
+  --green: #D94169;
+  --green-dim: rgba(217, 65, 105, 0.08);
+  --green-glow: rgba(217, 65, 105, 0.2);
+  --brown: #BF3939;
+  --taupe: #F2D2B6;
+  --gold: #F25E3D;
+  --bg-card: #FFFFFF;
+  --bg: #F4F7F6;
+  --tag-region-text: #BF3939;
+  --tag-offer-text: #D94169;
+}
+
+[data-theme="dark"][data-palette="berries"],
+[data-palette="berries"] [data-theme="dark"] {
+  --green: #F25E3D;
+  --green-dim: rgba(242, 94, 61, 0.15);
+  --green-glow: rgba(242, 94, 61, 0.3);
+  --brown: #F2D2B6;
+  --taupe: #D94169;
+  --gold: #F25E3D;
+  --bg: #1A3E4D;
+  --bg-card: #265D73;
+  --bg-card-2: #2E708A;
+}

@@ -16,6 +16,8 @@ export default function AdminLogin() {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [logoFile, setLogoFile] = useState(null)
+  const [logoPreview, setLogoPreview] = useState(null)
+  const [themePalette, setThemePalette] = useState('default')
   
   // Status & local storage fields
   const [error, setError] = useState('')
@@ -250,7 +252,8 @@ export default function AdminLogin() {
         name,
         phone,
         user_id: user.id,
-        logo_url: logoUrl
+        logo_url: logoUrl,
+        theme_palette: themePalette
       })
 
     if (roasterError) {
@@ -298,7 +301,7 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="app-shell" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', padding: '8.5rem 1.5rem 2rem', height: '100dvh', overflow: 'hidden', position: 'relative' }}>
+    <div className="app-shell" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', gap: '2rem', padding: '4.5rem 1.5rem 2rem', minHeight: '100dvh', overflowY: 'auto', position: 'relative' }}>
       {/* Back to Landing Page / Home Icon */}
       <Link href="/" style={{
         position: 'absolute',
@@ -537,6 +540,50 @@ export default function AdminLogin() {
                     <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /><path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" /></svg>
                   )}
                 </button>
+              </div>
+            </div>
+
+            <div className="field">
+              <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Tema de Colores</label>
+              <div style={{ display: 'flex', gap: '0.4rem', marginTop: '0.4rem', flexWrap: 'nowrap', justifyContent: 'space-between' }}>
+                <label style={{
+                  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.3rem', cursor: 'pointer',
+                  padding: '0.35rem', borderRadius: 'var(--r-md)', border: themePalette === 'default' ? '2px solid var(--green)' : '2px solid transparent',
+                  background: 'var(--bg-card-2)', flex: 1
+                }}>
+                  <input type="radio" name="themePalette" value="default" checked={themePalette === 'default'} onChange={(e) => setThemePalette(e.target.value)} style={{ display: 'none' }} />
+                  <div style={{ display: 'flex', gap: '0.2rem' }}>
+                    <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#006056' }} />
+                    <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#051730' }} />
+                  </div>
+                  <span style={{ fontSize: '0.65rem', fontWeight: 600, color: 'var(--text-secondary)', textAlign: 'center' }}>Clásico</span>
+                </label>
+
+                <label style={{
+                  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.3rem', cursor: 'pointer',
+                  padding: '0.35rem', borderRadius: 'var(--r-md)', border: themePalette === 'citrico' ? '2px solid var(--green)' : '2px solid transparent',
+                  background: 'var(--bg-card-2)', flex: 1
+                }}>
+                  <input type="radio" name="themePalette" value="citrico" checked={themePalette === 'citrico'} onChange={(e) => setThemePalette(e.target.value)} style={{ display: 'none' }} />
+                  <div style={{ display: 'flex', gap: '0.2rem' }}>
+                    <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#01212B' }} />
+                    <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#FFD134' }} />
+                  </div>
+                  <span style={{ fontSize: '0.65rem', fontWeight: 600, color: 'var(--text-secondary)', textAlign: 'center' }}>Cítrico</span>
+                </label>
+
+                <label style={{
+                  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.3rem', cursor: 'pointer',
+                  padding: '0.35rem', borderRadius: 'var(--r-md)', border: themePalette === 'berries' ? '2px solid var(--green)' : '2px solid transparent',
+                  background: 'var(--bg-card-2)', flex: 1
+                }}>
+                  <input type="radio" name="themePalette" value="berries" checked={themePalette === 'berries'} onChange={(e) => setThemePalette(e.target.value)} style={{ display: 'none' }} />
+                  <div style={{ display: 'flex', gap: '0.2rem' }}>
+                    <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#D94169' }} />
+                    <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#265D73' }} />
+                  </div>
+                  <span style={{ fontSize: '0.65rem', fontWeight: 600, color: 'var(--text-secondary)', textAlign: 'center' }}>Berries</span>
+                </label>
               </div>
             </div>
 
